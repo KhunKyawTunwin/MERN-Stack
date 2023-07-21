@@ -5,12 +5,39 @@ import createError from "../utils/createError.js";
 
 export const register = async (req, res, next) => {
   const { username, email, password, country } = req.body;
-
+  const saltRounds = 10;
   try {
-    const hashedPw = await bcrypt.hash(password, 12);
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists." });
+    }
 
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(200).json(userExists);
+    if ((!username || !email, !password)) {
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (!/^[a-zA-Z ]*$/.test(username)) {
+      return res.status(400).json({
+        status: "FAILED",
+        message: "Invalid name entered",
+      });
+    }
+
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      return res.status(400).json({
+        status: "FAILED",
+        message: "Invalid email entered",
+      });
+    }
+
+    if (password.length < 5) {
+      return res.status(400).json({
+        status: "FAILED",
+        message: "Password is too short!",
+      });
+    }
+
+    const hashedPw = await bcrypt.hash(password, saltRounds);
 
     const user = await User.create({
       username,

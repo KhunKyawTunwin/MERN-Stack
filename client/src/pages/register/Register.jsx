@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { newRequest } from "../../api/url";
+import upload from "../../utils/upload";
+import { useNavigate } from "react-router-dom";
+
 import "./Register.scss";
 
 function Register() {
@@ -13,15 +17,39 @@ function Register() {
     desc: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setUser((prev) => {
-      return { ...prev, [e.target.name]: [e.target.value] };
+      return { ...prev, [e.target.name]: e.target.value };
     });
+  };
+
+  const handleSeller = (e) => {
+    setUser((prev) => {
+      return { ...prev, isSeller: e.target.checked };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = await upload(file);
+    try {
+      const response = await newRequest.post("/auth/register", {
+        ...user,
+        img: url,
+      });
+      if (!response.status === 201) console.log(response.data.message);
+
+      // navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="register">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="left">
           <h1>Create a new account</h1>
           <label htmlFor="">Username</label>
@@ -41,7 +69,12 @@ function Register() {
           <label htmlFor="">Password</label>
           <input name="password" type="password" onChange={handleChange} />
           <label htmlFor="">Profile Picture</label>
-          <input type="file" />
+          <input
+            type="file"
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+            }}
+          />
           <label htmlFor="">Country</label>
           <input
             name="country"
@@ -56,7 +89,7 @@ function Register() {
           <div className="toggle">
             <label htmlFor="">Activate the seller account</label>
             <label className="switch">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={handleSeller} />
               <span className="slider round"></span>
             </label>
           </div>
