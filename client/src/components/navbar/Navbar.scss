@@ -1,0 +1,132 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #013914;
+  color: white !important;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  right: 0;
+
+  &.active {
+    background-color: white;
+    color: black !important;
+  }
+
+  .container {
+    width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0px;
+
+    .logo {
+      font-size: 34px;
+      font-weight: bold;
+      cursor: pointer;
+
+      .text {
+        color: rgb(255, 1, 1);
+      }
+
+      .dot {
+        color: #1dbf73;
+      }
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-weight: 500;
+      font-family: "Montserrat", sans-serif;
+
+      span {
+        cursor: pointer;
+      }
+
+      .user {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .curPointer {
+          cursor: pointer;
+        }
+
+        .userName {
+          cursor: pointer;
+        }
+
+        .options {
+          position: absolute;
+          top: 56px;
+          right: 0;
+          padding: 20px;
+          background-color: white;
+          border-radius: 10px;
+          border: 1px solid lightgray;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          color: rgb(107, 107, 107);
+          width: 200px;
+          font-weight: 300;
+        }
+      }
+      .userInfo {
+        // .sign {
+        //   color: #fff;
+        // }
+        // .join {
+        //   color: #fff;
+        // }
+        button {
+          color: #000000;
+          font-weight: 500;
+          padding: 8px 20px;
+          border-radius: 5px;
+          border: 1px solid rgb(5, 216, 150);
+          cursor: pointer;
+          background-color: transparent;
+
+          &:hover {
+            background-color: #1dbf73;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  hr {
+    width: 100%;
+    height: 0;
+    border: 1px solid rgb(205, 205, 206);
+  }
+
+  .menu {
+    width: 1400px;
+    padding: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 300;
+
+    span {
+      border-radius: 5px;
+      padding: 4px 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(228, 249, 227);
+      }
+    }
+  }
+}
