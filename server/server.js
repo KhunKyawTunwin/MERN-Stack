@@ -6,6 +6,7 @@ import "dotenv/config";
 
 // import userRoute from "./routes/user.js";
 import authRoute from "./routes/auth.js";
+import gigRoute from "./routes/gig.js";
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
@@ -22,7 +23,7 @@ const mongodbConnect = async () => {
 };
 
 app.use("/api/auth", authRoute);
-// app.use("/api/gigs", gigRoute);
+app.use("/api/gigs", gigRoute);
 // app.use("/api/orders", orderRoute);
 // app.use("/api/conversation", conversationRoute);
 // app.use("/api/message", messageRoute);

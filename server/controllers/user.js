@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-import createError from "../utils/createError.js";
+import { createError } from "../utils/createError.js";
 
 export const deleteUser = async (req, res, next) => {
   const { Id } = req.params;

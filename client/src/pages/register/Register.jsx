@@ -7,6 +7,7 @@ import "./Register.scss";
 
 function Register() {
   const [file, setFile] = useState(null);
+  const [load, setLoad] = useState(false);
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -16,7 +17,7 @@ function Register() {
     isSeller: false,
     desc: "",
   });
-
+  // console.log(user);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,17 +34,17 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = await upload(file);
     try {
-      const response = await newRequest.post("/auth/register", {
+      const imgUrl = await upload(file, user);
+      await newRequest.post("/auth/register", {
         ...user,
-        img: url,
+        img: imgUrl,
       });
-      if (!response.status === 201) console.log(response.data.message);
-
-      // navigate("/");
-    } catch (error) {
-      console.log(error);
+      setLoad(true);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      throw err;
     }
   };
 
@@ -56,7 +57,7 @@ function Register() {
           <input
             name="username"
             type="text"
-            placeholder="johndoe"
+            placeholder="mrkhuncode"
             onChange={handleChange}
           />
           <label htmlFor="">Email</label>
@@ -82,7 +83,9 @@ function Register() {
             placeholder="Myanmar"
             onChange={handleChange}
           />
-          <button type="submit">Register</button>
+          <button type="submit" onClick={() => setLoad(!load)}>
+            {load ? "Loading ..." : "Register"}
+          </button>
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>

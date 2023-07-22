@@ -60,7 +60,7 @@ const Navbar = () => {
                 }
                 alt=""
               />
-              <span className="userName">{currentUser?.email}</span>
+              <span className="userName">{currentUser?.username}</span>
               {toggle && (
                 <div className="options">
                   {currentUser?.isSeller && (

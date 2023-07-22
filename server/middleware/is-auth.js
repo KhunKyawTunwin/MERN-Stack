@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import createError from "../utils/createError.js";
+import { createError } from "../utils/createError.js";
 
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.accessToken;
@@ -8,9 +8,9 @@ export const verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
     if (err) return next(createError(403, "Not authenticated."));
 
-    req.userId = payload.id;
+    req.userId = payload.userId;
     req.isSeller = payload.isSeller;
-
     next();
   });
+  // console.log(`payload.userId is ${payload.userId} `);
 };
