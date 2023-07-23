@@ -5,3 +5,5 @@ export { default as Footer } from "./footer/Footer";
 export { default as Navbar } from "./navbar/Navbar";
 export { default as TrustedBy } from "./trustedBy/TrustedBy";
 export { default as GigCard } from "./gigCard/GigCard";
+export { default as Reviews } from "./reviews/Reviews";
+export { default as Review } from "./review/Review";

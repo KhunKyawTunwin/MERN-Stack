@@ -4,14 +4,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
 
-// import userRoute from "./routes/user.js";
+import userRoute from "./routes/user.js";
 import authRoute from "./routes/auth.js";
 import gigRoute from "./routes/gig.js";
+import reviewRoute from "./routes/review.js";
+
+mongoose.set("strictQuery", true);
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-app.use(express.json());
-app.use(cookieParser());
 
 const mongodbConnect = async () => {
   try {
@@ -22,12 +22,17 @@ const mongodbConnect = async () => {
   }
 };
 
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 app.use("/api/gigs", gigRoute);
 // app.use("/api/orders", orderRoute);
 // app.use("/api/conversation", conversationRoute);
 // app.use("/api/message", messageRoute);
-// app.use("/api/reviews", reviewRoute);
+app.use("/api/reviews", reviewRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

@@ -52,14 +52,7 @@ const Navbar = () => {
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {currentUser ? (
             <div className="user" onClick={() => setToggle(!toggle)}>
-              <img
-                className="curPointer"
-                src={
-                  currentUser.img ||
-                  "https://plus.unsplash.com/premium_photo-1688700437975-0ea63cfa59e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                }
-                alt=""
-              />
+              <img className="curPointer" src={currentUser?.img} alt="" />
               <span className="userName">{currentUser?.username}</span>
               {toggle && (
                 <div className="options">

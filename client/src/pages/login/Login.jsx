@@ -45,7 +45,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" onClick={() => setLoading(!loading)}>
-          {loading & error ? "Loading ..." : "Login"}
+          {loading && error ? "Loading ..." : "Login"}
         </button>
         {error && error}
       </form>

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Featured, Slide, TrustedBy } from "../../components";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 
@@ -43,13 +44,13 @@ const Home = () => {
             <h1>A whole world of freelance talent at your fingertips</h1>
             {constextList.map(({ id, img, title, desc }) => {
               return (
-                <>
-                  <div className="title" key={id}>
+                <Fragment key={id}>
+                  <div className="title">
                     <img src={img} alt="checkIcon" />
                     {title}
                   </div>
                   <p>{desc}</p>
-                </>
+                </Fragment>
               );
             })}
           </div>
@@ -72,12 +73,12 @@ const Home = () => {
 
             {constextList.map(({ id, img, title }) => {
               return (
-                <>
-                  <div className="title" key={id}>
+                <Fragment key={id}>
+                  <div className="title">
                     <img src={img} alt="checkIcon" />
-                    {title}
+                    <p>{title}</p>
                   </div>
-                </>
+                </Fragment>
               );
             })}
             <button>Explore Ethnic Business</button>

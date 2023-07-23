@@ -15,14 +15,23 @@ import {
   Register,
 } from "./pages";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+
 function App() {
+  const queryClient = new QueryClient();
+
   const Layout = () => {
     return (
-      <div className="app">
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </div>
+      <React.StrictMode>
+        <div className="app">
+          <QueryClientProvider client={queryClient}>
+            <Navbar />
+            <Outlet />
+            <Footer />
+          </QueryClientProvider>
+        </div>
+      </React.StrictMode>
     );
   };
 

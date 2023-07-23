@@ -54,10 +54,10 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user)
-      return next(
-        createError(404, "A user with this email could not be found.")
-      );
+    if (!user) throw new Error("User not registered!");
+    // return next(
+    //   createError(404, "A user with this email could not be found.")
+    // );
 
     const isEqual = await bcrypt.compare(password, user.password);
     if (!isEqual) return next(createError(401, "Password doesn't match!"));
@@ -69,12 +69,15 @@ export const login = async (req, res, next) => {
         isSeller: user.isSeller,
       },
       process.env.JWT_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "10h" }
     );
+    // const { password, ...info } = user._doc;
     res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
       userId: user._id,
       username: user.username,
       email: user.email,
+      img: user.img,
+      isSeller: user.isSeller,
     });
   } catch (err) {
     next(err);

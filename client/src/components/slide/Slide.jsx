@@ -24,8 +24,8 @@ const Slide = () => {
           className="mySwiper"
         >
           {cards.map((card) => (
-            <SwiperSlide>
-              <CartCard item={card} key={card.id} />
+            <SwiperSlide key={card.id}>
+              <CartCard item={card} />
             </SwiperSlide>
           ))}
         </Swiper>
