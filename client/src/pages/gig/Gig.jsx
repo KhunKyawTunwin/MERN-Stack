@@ -1,10 +1,17 @@
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import { useParams } from "react-router-dom";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+
 import "./Gig.scss";
+import "./slide.css";
 import { Reviews } from "../../components";
 
 const Gig = () => {
@@ -23,7 +30,6 @@ const Gig = () => {
     queryFn: () =>
       newRequest.get(`/users/${data.userId}`).then((res) => res.data),
   });
-  // console.log("User data is :", data);
   return (
     <div className="gig">
       {isLoading ? (
@@ -53,8 +59,8 @@ const Gig = () => {
                   <div className="stars">
                     {Array(Math.round(data.totalStars / data.starNumber))
                       .fill()
-                      .map((item, i) => (
-                        <img src="/img/star.png" alt="starIcon" key={i} />
+                      .map((item) => (
+                        <img src="/img/star.png" alt="starIcon" key={item} />
                       ))}
                     <span>{Math.round(data.totalStars / data.starNumber)}</span>
                   </div>
@@ -62,20 +68,20 @@ const Gig = () => {
               </div>
             )}
 
-            <div className="imgSlide">
-              {data.images.map((img) => (
-                <img
-                  className="imgDetail"
-                  key={img}
-                  src={img}
-                  alt="imagesPng"
-                />
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              className="mySlide"
+            >
+              {data.images.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <img className="imgDetail" key={i} src={img} />
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
+
             <h2>About This Property</h2>
-
             <p>{data.desc}</p>
-
             {isLoadingUser ? (
               "Loading ..."
             ) : errorUser ? (
@@ -84,15 +90,19 @@ const Gig = () => {
               <div className="seller">
                 <h2>About The Seller</h2>
                 <div className="user">
-                  <img src={dataUser.img} alt="" />
+                  <img src={dataUser.img || "/img/person.gif"} alt="" />
                   <div className="info">
                     <span>{dataUser.username}</span>
                     {!isNaN(data.totalStars / data.starNumber) && (
                       <div className="stars">
                         {Array(Math.round(data.totalStars / data.starNumber))
                           .fill()
-                          .map((item, i) => (
-                            <img src="/img/star.png" alt="starIcon" key={i} />
+                          .map((item) => (
+                            <img
+                              src="/img/star.png"
+                              alt="starIcon"
+                              key={item}
+                            />
                           ))}
                         <span>
                           {Math.round(data.totalStars / data.starNumber)}
@@ -126,7 +136,7 @@ const Gig = () => {
                 </div>
               </div>
             )}
-            <Reviews gidId={id} />
+            <Reviews gigId={id} />
           </div>
 
           <div className="right">

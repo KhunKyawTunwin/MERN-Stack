@@ -26,9 +26,7 @@ export const deleteGig = async (req, res, next) => {
       return next(createError(404, "Gig not found."));
     }
     if (gig.userId !== req.userId) {
-      throw new Error("You can delete only at your gigs!");
-      // const error = createError(403, "You can delete only at your gigs!");
-      // throw next(error);
+      return next(createError(403, "You can delete only at your gigs!"));
     }
 
     await Gig.findByIdAndDelete(gitId);
@@ -43,7 +41,8 @@ export const getGig = async (req, res, next) => {
 
   try {
     const gig = await Gig.findById(id);
-    if (!gig || !id) throw new Error("Gig not found related with this ID!");
+    if (!gig || !id)
+      return next(createError(404, "Gig not found related with this ID!"));
 
     return res.status(200).send(gig);
     //  success: true,

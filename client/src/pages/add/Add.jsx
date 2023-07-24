@@ -32,6 +32,7 @@ const Add = () => {
             ></textarea>
             <button>Create</button>
           </div>
+
           <div className="right">
             <label style={{ marginBottom: "10px" }}>Service Title</label>
             <input type="text" placeholder="One-age web design." />

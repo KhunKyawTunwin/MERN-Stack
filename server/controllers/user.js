@@ -6,7 +6,7 @@ export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(id);
     if (!user || !id)
-      throw new Error("A user with this ID could not be found.");
+      return next(createError(404, "A user with this ID could not be found."));
 
     res.status(200).send(user);
   } catch (err) {

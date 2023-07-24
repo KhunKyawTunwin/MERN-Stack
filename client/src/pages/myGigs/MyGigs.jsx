@@ -48,7 +48,7 @@ const MyGigs = () => {
             <td>
               <img className="delete" src="/img/Del.png" alt="" />
             </td>
-          </tr>{" "}
+          </tr>
           <tr>
             <td>
               <img

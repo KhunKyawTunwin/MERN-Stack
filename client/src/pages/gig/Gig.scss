@@ -55,14 +55,12 @@
         }
       }
 
-      .imgSlide {
-        margin-left: 5rem;
+      .mySlide {
+        margin-left: 4rem;
         width: fit-content;
-        background-color: #f5f5f5;
-        border-radius: 15px;
 
         .imgDetail {
-          max-height: 300px;
+          max-height: 400px;
           padding: 10px;
           object-fit: contain;
         }

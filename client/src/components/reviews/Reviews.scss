@@ -1,8 +1,46 @@
 .reviews {
   margin-top: 50px;
-  // hr {
-  //   height: 0;
-  //   border: 0.5px solid lightgray;
-  //   margin: 50px 0px;
-  // }
+
+  .add {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .formInput {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 20px;
+      outline: none;
+    }
+
+    select {
+      width: 100px;
+      padding: 10px;
+      align-self: flex-end;
+      outline: none;
+      border-radius: 5px;
+    }
+
+    button {
+      align-self: flex-end;
+      width: 100px;
+      border: none;
+      padding: 10px;
+      color: white;
+      background-color: #1dbf73;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+  hr {
+    height: 0;
+    border: 0.5px solid lightgray;
+    margin: 50px 0px;
+  }
 }
