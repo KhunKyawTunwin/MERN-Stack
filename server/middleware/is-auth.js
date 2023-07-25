@@ -4,7 +4,7 @@ import { createError } from "../utils/createError.js";
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.accessToken;
   if (!token) {
-    next(createError(401, "Authorization token not found."));
+    return next(createError(401, "Authorization token not found."));
   }
 
   let decodedToken;
@@ -16,7 +16,7 @@ export const verifyToken = (req, res, next) => {
   }
 
   if (!decodedToken) {
-    next(createError(401, "Not authenticated."));
+    return next(createError(401, "Not authenticated."));
   }
 
   req.userId = decodedToken.userId;

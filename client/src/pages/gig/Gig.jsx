@@ -21,14 +21,15 @@ const Gig = () => {
     queryFn: () => newRequest(`gigs/single/${id}`).then((res) => res.data),
   });
 
+  const userId = data?.userId;
   const {
     isLoading: isLoadingUser,
     error: errorUser,
     data: dataUser,
   } = useQuery({
     queryKey: ["user"],
-    queryFn: () =>
-      newRequest.get(`/users/${data.userId}`).then((res) => res.data),
+    queryFn: () => newRequest.get(`/users/${userId}`).then((res) => res.data),
+    enabled: !!userId,
   });
   return (
     <div className="gig">

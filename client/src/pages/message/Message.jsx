@@ -1,73 +1,70 @@
-import { Link } from "react-router-dom";
+import { Link, json, useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { newRequest } from "../../api/url";
+
 import "./Message.scss";
 
 const Message = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["messages"],
+    queryFn: () => newRequest.get(`/messages/${id}`).then((res) => res.data),
+  });
+
+  const mutation = useMutation({
+    mutationFn: (message) => {
+      return newRequest.post(`/messages`, message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["messages"]);
+    },
+  });
+
+  const handdleSubmit = (e) => {
+    e.preventDefault();
+    mutation.mutate({
+      conversationId: id,
+      desc: e.target[0].value,
+    });
+  };
+
   return (
     <div className="message">
       <div className="container">
         <span className="breadcrumbs">
-          <Link className="link"> Message</Link> - Mr Khun
+          <Link className="link"> Message</Link> - {currentUser.username}
         </span>
-        <div className="messages">
-          <div className="item">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
+        {isLoading ? (
+          "Loading ..."
+        ) : error ? (
+          "something went wrong!"
+        ) : (
+          <div className="messages">
+            {data.map((message) => (
+              <div
+                className={
+                  message.userId === currentUser.userId ? "owner item" : "item"
+                }
+              >
+                <img
+                  src={
+                    message.userId === currentUser.userId
+                      ? currentUser.img
+                      : "/img/person.gif"
+                  }
+                  alt="userProfile"
+                />
+                <p>{message.desc}</p>
+              </div>
+            ))}
           </div>
-          <div className="item owner">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item owner">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item owner">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-          <div className="item owner">
-            <img src="/img/man.png" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ad
-              quos fugiat nobis nostrum minima!
-            </p>
-          </div>
-        </div>
+        )}
         <hr />
-        <div className="write">
+        <form className="write" onSubmit={handdleSubmit}>
           <textarea
             name=""
             placeholder="Write a message ...."
@@ -75,8 +72,8 @@ const Message = () => {
             cols="30"
             rows="10"
           />
-          <button>Send</button>
-        </div>
+          <button type="submit">Send</button>
+        </form>
       </div>
     </div>
   );

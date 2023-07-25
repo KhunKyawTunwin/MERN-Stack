@@ -5,17 +5,17 @@ import Gig from "../models/gig.js";
 export const createReview = async (req, res, next) => {
   const { gigId, desc, star } = req.body;
 
-  try {
-    if (req.isSeller) {
-      return next(createError(403, "Seller can't to create review!"));
-    }
-    const newReview = new Review({
-      userId: req.userId,
-      gigId,
-      desc,
-      star,
-    });
+  if (req.isSeller) {
+    return next(createError(403, "Seller can't create review!"));
+  }
 
+  const newReview = new Review({
+    userId: req.userId,
+    gigId,
+    desc,
+    star,
+  });
+  try {
     const review = await Review.findOne({
       userId: req.userId,
       gigId,
@@ -27,11 +27,11 @@ export const createReview = async (req, res, next) => {
       );
 
     //TODO: check if the user purchased the gig.
-
+    // how to check if the user purchased the gig using order model?
     const savedReview = await newReview.save();
 
-    await Gig.findByIdAndUpdate(req.body.gigId, {
-      $inc: { totalStars: req.body.star, starNumber: 1 },
+    await Gig.findByIdAndUpdate(gigId, {
+      $inc: { totalStars: star, starNumber: 1 },
     });
     res.status(201).send(savedReview);
   } catch (err) {
@@ -40,8 +40,9 @@ export const createReview = async (req, res, next) => {
 };
 
 export const getReviews = async (req, res, next) => {
+  const { gigId } = req.params;
   try {
-    const reviews = await Review.find({ gigId: req.params.id });
+    const reviews = await Review.find({ gigId });
     res.status(200).send(reviews);
   } catch (err) {
     next(err);

@@ -3,6 +3,7 @@
   justify-content: center;
 
   .container {
+    margin-top: 5px;
     width: 1400px;
     padding: 130px 0 0 0px;
 
@@ -37,7 +38,6 @@
           button {
             background-color: #1dbf73;
             color: white;
-            padding: 10px;
             border: none;
             cursor: pointer;
           }

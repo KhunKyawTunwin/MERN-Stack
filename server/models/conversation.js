@@ -8,7 +8,7 @@ const ConversationSchem = new Schema(
       unique: true,
     },
     sellerId: {
-      type: Number,
+      type: String,
       required: true,
     },
     buyerId: {
@@ -25,7 +25,7 @@ const ConversationSchem = new Schema(
     },
     lastMessage: {
       type: String,
-      default: false,
+      required: false,
     },
   },
   { timestamps: true }
