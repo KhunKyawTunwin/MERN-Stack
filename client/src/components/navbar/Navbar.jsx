@@ -49,7 +49,11 @@ const Navbar = () => {
           <span>Ethnic Business</span>
           <span>Explore</span>
           <span>English</span>
-          {!currentUser?.isSeller && <span>Become a Seller</span>}
+          {!currentUser?.isSeller && (
+            <Link to="/register" className="link">
+              <span>Become a Seller</span>
+            </Link>
+          )}
           {currentUser ? (
             <div className="user" onClick={() => setToggle(!toggle)}>
               <img className="curPointer" src={currentUser?.img} alt="" />

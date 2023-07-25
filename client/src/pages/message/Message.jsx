@@ -30,13 +30,18 @@ const Message = () => {
       conversationId: id,
       desc: e.target[0].value,
     });
+    e.target[0].value = "";
   };
 
   return (
     <div className="message">
       <div className="container">
         <span className="breadcrumbs">
-          <Link className="link"> Message</Link> - {currentUser.username}
+          <Link to="/message" className="link">
+            {" "}
+            Message
+          </Link>{" "}
+          - {currentUser.username}
         </span>
         {isLoading ? (
           "Loading ..."

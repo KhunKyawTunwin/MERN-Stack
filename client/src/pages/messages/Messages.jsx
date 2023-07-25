@@ -10,16 +10,16 @@ const Messages = () => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["conversation"],
+    queryKey: ["conversations"],
     queryFn: () => newRequest.get("/conversations").then((res) => res.data),
   });
 
   const mutation = useMutation({
     mutationFn: (id) => {
-      return newRequest.put(`/conversations/${id}`, review);
+      return newRequest.put(`/conversations/${id}`, id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["reviews"]);
+      queryClient.invalidateQueries(["conversations"]);
     },
   });
 
