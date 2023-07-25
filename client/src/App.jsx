@@ -12,7 +12,9 @@ import {
   Messages,
   MyGigs,
   Orders,
+  Pay,
   Register,
+  Success,
 } from "./pages";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -79,6 +81,14 @@ function App() {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/pay/:id",
+          element: <Pay />,
+        },
+        {
+          path: "/success",
+          element: <Success />,
         },
       ],
     },

@@ -1,14 +1,22 @@
 import Gig from "../models/gig.js";
 import Order from "../models/order.js";
 import { createError } from "../utils/createError.js";
+import Stripe from "stripe";
 
-export const createOrder = async (req, res, next) => {
-  const { gigId } = req.params;
+export const paymentAmount = async (req, res, next) => {
+  const { id } = req.params;
 
   try {
-    const gig = await Gig.findById(gigId);
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const gig = await Gig.findById(id);
 
-    // console.log(gig._id.toString());
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: gig.price * 100,
+      currency: "usd",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
 
     const newOrder = new Order({
       gigId: gig._id,
@@ -17,11 +25,13 @@ export const createOrder = async (req, res, next) => {
       buyerId: req.userId,
       sellerId: gig.userId,
       price: gig.price,
-      payment_intent: "temporary",
+      payment_intent: paymentIntent.id,
     });
 
     await newOrder.save();
-    res.status(200).send("Order Successful!🌞");
+    res.status(200).send({
+      clientSecret: paymentIntent.client_secret,
+    });
   } catch (err) {
     next(err);
   }
@@ -34,6 +44,25 @@ export const getOrders = async (req, res) => {
       isCompleted: true,
     });
     res.status(200).send(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const paymentConfirm = async (req, res) => {
+  const { payment_intent } = req.body;
+  try {
+    const orders = await Order.findOneAndUpdate(
+      {
+        payment_intent,
+      },
+      {
+        $set: {
+          isCompleted: true,
+        },
+      }
+    );
+    res.status(200).send("Orders has been confirmed!👏");
   } catch (err) {
     next(err);
   }

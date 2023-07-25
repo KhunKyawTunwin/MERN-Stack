@@ -17,9 +17,9 @@ export const createGig = async (req, res, next) => {
 };
 
 export const deleteGig = async (req, res, next) => {
-  const gitId = req.params.id;
+  const { id } = req.params;
   try {
-    const gig = await Gig.findById(gitId);
+    const gig = await Gig.findById(id);
     if (!req.isSeller)
       return next(createError(403, "Only sellers can create a gig!"));
     if (!gig) {
@@ -28,8 +28,7 @@ export const deleteGig = async (req, res, next) => {
     if (gig.userId !== req.userId) {
       return next(createError(403, "You can delete only at your gigs!"));
     }
-
-    await Gig.findByIdAndDelete(gitId);
+    await Gig.findByIdAndDelete(id);
     res.status(200).send("Gig has been deleted");
   } catch (err) {
     next(err);
@@ -38,16 +37,11 @@ export const deleteGig = async (req, res, next) => {
 
 export const getGig = async (req, res, next) => {
   const { id } = req.params;
-
   try {
     const gig = await Gig.findById(id);
     if (!gig || !id)
       return next(createError(404, "Gig not found related with this ID!"));
-
     return res.status(200).send(gig);
-    //  success: true,
-    //   data: gig,
-    //   message: "Gig retrieved successfully.",
   } catch (err) {
     next(err);
   }

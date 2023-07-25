@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -164,7 +164,9 @@ const Gig = () => {
                 </div>
               ))}
             </div>
-            <button>Continue</button>
+            <Link to={`/pay/${id}`} className="link">
+              <button>Continue</button>
+            </Link>
           </div>
         </div>
       )}

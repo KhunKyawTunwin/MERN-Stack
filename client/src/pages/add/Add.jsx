@@ -1,6 +1,14 @@
+import { useReducer, useState } from "react";
 import "./Add.scss";
+import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
 
 const Add = () => {
+  const [singleFile, setSingleFile] = useState(undefined);
+  const [files, setFiles] = useState([]);
+  const [uploading, setUploading] = useState(false);
+
+  const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
+
   return (
     <div className="add">
       <div className="container">
@@ -8,9 +16,14 @@ const Add = () => {
         <div className="sections">
           <div className="left">
             <label htmlFor="">Title</label>
-            <input type="text" placeholder="I'm full-stack Webdeveloper." />
+            <input
+              type="text"
+              name="title"
+              onChange={handleChange}
+              placeholder="I'm full-stack Webdeveloper."
+            />
             <label htmlFor="">Category</label>
-            <select name="web" id="web">
+            <select name="cat" onChange={handleChange} id="web">
               <option value="design">Design</option>
               <option value="backend">Backend</option>
               <option value="frontend">Frontend</option>
@@ -22,7 +35,6 @@ const Add = () => {
             <label htmlFor="">Upload Images</label>
             <input type="file" multiple />
             <label>Description</label>
-
             <textarea
               name=""
               id=""
@@ -35,25 +47,39 @@ const Add = () => {
 
           <div className="right">
             <label style={{ marginBottom: "10px" }}>Service Title</label>
-            <input type="text" placeholder="One-age web design." />
+            <input
+              onChange={handleChange}
+              type="text"
+              name="shortTitle"
+              placeholder="One-age web design."
+            />
             <label htmlFor="">Short Description</label>
             <textarea
-              name=""
+              onChange={handleChange}
+              name="shortDesc"
               id=""
               cols="30"
               rows="10"
               placeholder="Short description of your service."
             ></textarea>
             <label htmlFor="">Delivery Time</label>
-            <input type="number" min={1} />
+            <input
+              type="number"
+              name="deliveryTime"
+              min={1}
+              onChange={handleChange}
+            />
             <label htmlFor="">Country Code</label>
-            <input type="number" min={2} />
+            <input
+              type="number"
+              name="revisionNumber"
+              min={2}
+              onChange={handleChange}
+            />
             <label htmlFor="">Add Features</label>
             <input type="text" placeholder="Project page design" />
-            <input type="text" placeholder="Project file uploading" />
-            <input type="text" placeholder="Project details usefull words." />
             <label htmlFor="">Price</label>
-            <input type="number" min={1} />
+            <input type="number" name="price" onChange={handleChange} min={1} />
           </div>
         </div>
       </div>
