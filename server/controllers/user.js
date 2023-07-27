@@ -22,5 +22,5 @@ export const deleteUser = async (req, res, next) => {
     return next(createError(403, "You can delete only your account!"));
 
   await User.findByIdAndDelete(id);
-  res.status(200).json({ message: "Have been deleted!" });
+  res.status(200).json({ message: "Account have been deleted!" });
 };

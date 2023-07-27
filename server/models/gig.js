@@ -62,6 +62,11 @@ const GigSchema = new Schema(
       type: Number,
       default: 0,
     },
+    // creator: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: false,
+    // },
   },
   { timestamps: true }
 );

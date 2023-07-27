@@ -6,8 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import { Link, useParams } from "react-router-dom";
 
-import "swiper/css";
-import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
 import "./Gig.scss";

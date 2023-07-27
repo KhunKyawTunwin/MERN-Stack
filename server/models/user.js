@@ -41,6 +41,12 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    // gigs: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Post",
+    //   },
+    // ],
   },
   { timestamps: true }
 );

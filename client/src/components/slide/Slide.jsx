@@ -11,7 +11,7 @@ const Slide = () => {
   return (
     <div className="slide">
       <div className="container">
-        <h1>Polur Service</h1>
+        <h1>Categories lists for invester</h1>
         <Swiper
           slidesPerView={4}
           spaceBetween={20}

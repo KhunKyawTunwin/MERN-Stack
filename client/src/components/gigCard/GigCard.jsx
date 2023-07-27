@@ -9,8 +9,6 @@ const GigCard = ({ item }) => {
     queryFn: () =>
       newRequest.get(`/users/${item.userId}`).then((res) => res.data),
   });
-  // console.log(res.data);
-  // console.log(item.userId);
   return (
     <div className="gigCard">
       <Link to={`/gig/${item._id}`} className="link">

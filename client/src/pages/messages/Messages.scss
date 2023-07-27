@@ -1,12 +1,11 @@
 .messages {
   display: flex;
   justify-content: center;
-  min-height: 50vh;
+  min-height: 60vh;
 
   .container {
-    margin-top: 5px;
-    width: 1400px;
-    padding: 5px 0;
+    width: 100%;
+    padding: 1rem 4rem;
 
     .title {
       display: flex;

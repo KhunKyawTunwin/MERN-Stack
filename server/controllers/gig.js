@@ -4,13 +4,31 @@ import { createError } from "../utils/createError.js";
 export const createGig = async (req, res, next) => {
   if (!req.isSeller || false)
     return next(createError(403, "You must be a seller to create a gig."));
+
+  const { title, desc, cover } = req.body;
+  const existingGig = await Gig.findOne({
+    title,
+    desc,
+    cover,
+  });
+
+  if (existingGig) {
+    return next(
+      createError(
+        409,
+        `Gig with the same userId and Related wiht ${title} and ${desc} / ${cover}
+        } gigs already exists.`
+      )
+    );
+  }
+
   const newGig = new Gig({
     userId: req.userId,
     ...req.body,
   });
   try {
     const savedGig = await newGig.save();
-    res.status(201).json(savedGig);
+    res.status(201).json({ savedGig, message: "Gig created successfully!" });
   } catch (err) {
     next(err);
   }

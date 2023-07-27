@@ -5,9 +5,9 @@
   background-color: white;
 
   .container {
-    width: 1400px;
-    padding: 10px 0;
+    padding: 1rem 4rem;
     display: flex;
+    // justify-content: space-between;
     gap: 50px;
 
     .left {
@@ -57,12 +57,14 @@
 
       .mySlide {
         margin-left: 4rem;
-        width: fit-content;
+        padding: 10px 0px;
+        width: 700px;
+        height: 500px;
 
         .imgDetail {
-          max-height: 400px;
-          padding: 10px;
-          object-fit: contain;
+          width: 100%;
+          object-fit: cover;
+          border-radius: 15px;
         }
       }
 

@@ -15,15 +15,16 @@ function Gigs() {
 
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigs"],
+
     queryFn: () =>
       newRequest
-        .get(
-          `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`
-        )
+        .get(`/gigs/`)
+        //${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}
         .then((res) => {
           return res.data;
         }),
   });
+  console.log();
 
   const reSort = (type) => {
     setSort(type);
@@ -44,7 +45,7 @@ function Gigs() {
         <span className="breadcrumbs">
           <span>Liverr</span> / <span>Graphics</span> & <span>Design</span>
         </span>
-        <h1>AI Artists</h1>
+        <h1>Land and Free Field</h1>
         <p>
           Explore the boundaries of art and technology with Liverr's AI artists
         </p>

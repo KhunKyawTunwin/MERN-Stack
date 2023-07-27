@@ -1,6 +1,7 @@
 .gigs {
   display: flex;
   justify-content: center;
+  min-height: 50vh;
 
   .container {
     width: 1400px;
@@ -96,7 +97,7 @@
     .cards {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      padding: 20px 0px;
       gap: 20px;
     }
   }

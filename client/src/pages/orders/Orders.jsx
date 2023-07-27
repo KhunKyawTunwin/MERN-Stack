@@ -19,15 +19,14 @@ const Orders = () => {
     const id = sellerId + buyerId;
 
     try {
-      const { data } = await newRequest.get(`/conversations/single/${id}`);
-      navigate(`/message/${data.id}`);
-      // console.log(data.id);
+      const res = await newRequest.get(`/conversations/single/${id}`);
+      navigate(`/message/${res.data.id}`);
     } catch (err) {
       if (err.response.status === 404) {
-        const { data } = await newRequest.post(`/conversations`, {
+        const res = await newRequest.post(`/conversations`, {
           to: currentUser.isSeller ? buyerId : sellerId,
         });
-        navigate(`/message/${data.id}`);
+        navigate(`/message/${res.data.id}`);
       }
     }
   };
@@ -43,6 +42,7 @@ const Orders = () => {
           <div className="title">
             <h1>Investment Orders Lists</h1>
           </div>
+
           <table>
             <tr>
               <th>Image</th>

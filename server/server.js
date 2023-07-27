@@ -16,15 +16,6 @@ mongoose.set("strictQuery", true);
 
 const app = express();
 
-const mongodbConnect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URL);
-    console.log("Connected to mongoDB");
-  } catch (error) {
-    console.log(`Error with ${error}`);
-  }
-};
-
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -43,6 +34,15 @@ app.use((err, req, res, next) => {
 
   return res.status(errorStatus).send(errorMessage);
 });
+
+const mongodbConnect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL);
+    console.log("Connected to mongoDB");
+  } catch (error) {
+    console.log(`Error with ${error}`);
+  }
+};
 
 // Server
 app.listen(process.env.PORT, () => {

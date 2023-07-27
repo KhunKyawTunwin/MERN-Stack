@@ -1,6 +1,5 @@
 import Gig from "../models/gig.js";
 import Order from "../models/order.js";
-import { createError } from "../utils/createError.js";
 import Stripe from "stripe";
 
 export const paymentAmount = async (req, res, next) => {
@@ -37,7 +36,7 @@ export const paymentAmount = async (req, res, next) => {
   }
 };
 
-export const getOrders = async (req, res) => {
+export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
       ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
@@ -49,7 +48,7 @@ export const getOrders = async (req, res) => {
   }
 };
 
-export const paymentConfirm = async (req, res) => {
+export const paymentConfirm = async (req, res, next) => {
   const { payment_intent } = req.body;
   try {
     const orders = await Order.findOneAndUpdate(
