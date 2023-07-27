@@ -26,6 +26,7 @@ const ConversationSchem = new Schema(
     lastMessage: {
       type: String,
       required: false,
+      default: "Hello, Welcome to Ethnic!",
     },
   },
   { timestamps: true }

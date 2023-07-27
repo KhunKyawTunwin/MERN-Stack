@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./GigCard.scss";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
+import moment from "moment";
 
 const GigCard = ({ item }) => {
   const { isLoading, error, data } = useQuery({
@@ -9,6 +10,7 @@ const GigCard = ({ item }) => {
     queryFn: () =>
       newRequest.get(`/users/${item.userId}`).then((res) => res.data),
   });
+
   return (
     <div className="gigCard">
       <Link to={`/gig/${item._id}`} className="link">
@@ -39,9 +41,11 @@ const GigCard = ({ item }) => {
       </div>
       <hr />
       <div className="details">
-        <img src="./img/heart.png" alt="" />
+        <img className="heartIcon" src="./img/heart.png" alt="" />
+        <span>{moment(item.createdAt).fromNow()}</span>
         <div className="price">
           <samp>Starting At</samp>
+          <hr />
           <h2>${item.price}</h2>
         </div>
       </div>

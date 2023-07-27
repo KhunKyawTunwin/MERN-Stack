@@ -5,7 +5,6 @@ import "swiper/css/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import { Link, useParams } from "react-router-dom";
-
 import { Navigation } from "swiper/modules";
 
 import "./Gig.scss";
@@ -40,7 +39,7 @@ const Gig = () => {
         <div className="container">
           <div className="left">
             <span className="breadCrumbs">
-              Ethnic Property {">"} Hospital investment lists
+              Ethnic Property {">"} {data.cat.toUpperCase()}
             </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
@@ -109,7 +108,7 @@ const Gig = () => {
                         </span>
                       </div>
                     )}
-                    <button>Contact Me</button>
+                    <button className="contactBtn">Contact Me</button>
                   </div>
                 </div>
                 <div className="box">
@@ -147,7 +146,7 @@ const Gig = () => {
             <p>{data.shortDesc}</p>
             <div className="details">
               <div className="item">
-                <img src="/img/clock.png" alt="" />
+                <img src="/img/clock.png" alt="ClockIcon" />
                 <span>{data.deliveryTime} Delivery</span>
               </div>
               <div className="item">

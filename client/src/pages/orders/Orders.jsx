@@ -44,31 +44,35 @@ const Orders = () => {
           </div>
 
           <table>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>{currentUser?.isSeller ? "Buyer" : "Seller"}</th>
-              <th>Contact</th>
-            </tr>
-            {data.map((order) => (
-              <tr key={order._id}>
-                <td>
-                  <img className="imgOrder" src={order.img} alt="" />
-                </td>
-                <td>{order.title}</td>
-                <td>$ {order.price} M</td>
-                <td>Hi There</td>
-                <td>
-                  <img
-                    className="delete"
-                    src="/img/message.png"
-                    alt="chatboxIcon"
-                    onClick={() => handleContact(order)}
-                  />
-                </td>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>{currentUser?.isSeller ? "Buyer" : "Seller"}</th>
+                <th>Contact</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {data.map((order) => (
+                <tr key={order._id}>
+                  <td>
+                    <img className="imgOrder" src={order.img} alt="" />
+                  </td>
+                  <td>{order.title}</td>
+                  <td>$ {order.price} M</td>
+                  <td>Hi There</td>
+                  <td>
+                    <img
+                      className="delete"
+                      src="/img/message.png"
+                      alt="chatboxIcon"
+                      onClick={() => handleContact(order)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )}

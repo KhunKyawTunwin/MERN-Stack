@@ -18,7 +18,7 @@ function Gigs() {
 
     queryFn: () =>
       newRequest
-        .get(`/gigs/`)
+        .get(`/gigs`)
         //${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}
         .then((res) => {
           return res.data;

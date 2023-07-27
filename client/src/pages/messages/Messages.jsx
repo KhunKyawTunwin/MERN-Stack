@@ -40,41 +40,47 @@ const Messages = () => {
             <h1>Investment Orders Lists</h1>
           </div>
           <table>
-            <tr>
-              <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
-              <th>Last Message</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-            {data.map((conver) => (
-              <tr
-                className={
-                  (currentUser.isSeller && !conver.readBySeller) ||
-                  (!currentUser.isSeller && !conver.readByBuyer && "active")
-                }
-                key={conver.id}
-              >
-                <td>
-                  {currentUser.isSeller ? conver.buyerId : conver.sellerId}
-                </td>
-                <td>
-                  <Link className="link" to={`/message/${conver.id}`}>
-                    {conver?.lastMessage?.substring(0, 100)} ....
-                  </Link>
-                </td>
-                <td>{moment(conver.updatedAt).fromNow()}</td>
-                <td>
-                  {(currentUser.isSeller && !conver.readBySeller) ||
-                    (!currentUser.isSeller && !conver.readByBuyer && (
-                      <Link to={`/message/${currentUser.userId}`}>
-                        <button onClick={() => handleRead(conver.id)}>
-                          Mark as Read
-                        </button>
-                      </Link>
-                    ))}
-                </td>
+            <thead>
+              <tr>
+                <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+                <th>Last Message</th>
+                <th>Date</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {data.map((conver) => (
+                <tr
+                  className={
+                    (currentUser.isSeller && !conver.readBySeller) ||
+                    (!currentUser.isSeller && !conver.readByBuyer
+                      ? "active"
+                      : "")
+                  }
+                  key={conver.id}
+                >
+                  <td>
+                    {currentUser.isSeller ? conver.buyerId : conver.sellerId}
+                  </td>
+                  <td>
+                    <Link className="link" to={`/message/${conver.id}`}>
+                      {conver?.lastMessage?.substring(0, 50)} ....
+                    </Link>
+                  </td>
+                  <td>{moment(conver.updatedAt).fromNow()}</td>
+                  <td>
+                    {(currentUser.isSeller && !conver.readBySeller) ||
+                      (!currentUser.isSeller && !conver.readByBuyer && (
+                        <Link to={`/message/${currentUser.userId}`}>
+                          <button onClick={() => handleRead(conver.id)}>
+                            Mark as Read
+                          </button>
+                        </Link>
+                      ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )}

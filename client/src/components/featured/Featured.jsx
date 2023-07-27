@@ -70,7 +70,10 @@ const Featured = () => {
         </div>
 
         <div className="gpt3__header-image">
-          <img src={ai} alt="ailogo" />
+          <img
+            src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            alt="ailogo"
+          />
         </div>
       </div>
     </>

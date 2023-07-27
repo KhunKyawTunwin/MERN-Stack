@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { newRequest } from "../../api/url";
 
 // import onClickOutside from "react-onclickoutside";
@@ -19,9 +19,20 @@ const Navbar = () => {
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
   };
+
+  const menuRef = useRef();
+  useEffect(() => {
+    let handler = (e) => {
+      if (!menuRef.current.contains(e.target)) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    // return document.removeEventListener("mousedown", handler);
+  });
+
   useEffect(() => {
     window.addEventListener("scroll", isActive);
-
     return () => window.removeEventListener("scroll", isActive);
   }, []);
 
@@ -38,8 +49,6 @@ const Navbar = () => {
     }
   };
 
-  let dat = 2;
-
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
@@ -49,7 +58,7 @@ const Navbar = () => {
           </Link>
           <span className="dot">.</span>
         </div>
-        <div className="links">
+        <div className="links" ref={menuRef}>
           <span>Ethnic Business</span>
           <span>Explore</span>
           <span>English</span>
@@ -61,9 +70,16 @@ const Navbar = () => {
           {currentUser ? (
             <div className="user" onClick={() => setToggle(!toggle)}>
               <img className="curPointer" src={currentUser?.img} alt="" />
-              <span className="userName">{currentUser?.username}</span>
+              <span className="userName">
+                {currentUser?.username.substring(0, 4)}...
+              </span>
               {toggle && (
                 <div className="options">
+                  {/* <p className="userInfo">
+                    <Link to="/mygigs" className="link">
+                      Profile
+                    </Link>
+                  </p> */}
                   {currentUser?.isSeller && (
                     <>
                       <p className="userInfo">

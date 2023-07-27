@@ -1,11 +1,8 @@
 .gigs {
   display: flex;
-  justify-content: center;
-  min-height: 50vh;
+  padding: 1rem 4rem;
 
   .container {
-    width: 1400px;
-    padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -54,6 +51,7 @@
           border-radius: 5px;
         }
       }
+
       .right {
         display: flex;
         align-items: center;
@@ -97,8 +95,8 @@
     .cards {
       display: flex;
       flex-wrap: wrap;
-      padding: 20px 0px;
-      gap: 20px;
+      justify-content: space-between;
+      gap: 40px;
     }
   }
 }

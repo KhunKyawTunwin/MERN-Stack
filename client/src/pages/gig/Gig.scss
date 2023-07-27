@@ -118,15 +118,14 @@
               }
             }
 
-            button {
-              background-color: white;
+            .contactBtn {
               border-radius: 5px;
               padding: 10px;
               border: 1px solid gray;
               cursor: pointer;
 
               &:hover {
-                background-color: rgb(66, 228, 158);
+                background-color: #42e49e !important;
               }
             }
           }
