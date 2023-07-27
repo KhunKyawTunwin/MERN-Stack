@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import moment from "moment";
@@ -8,6 +8,7 @@ import "./Messages.scss";
 const Messages = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const queryClient = useQueryClient();
+  // const navigate = useNavigate();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["conversations"],
@@ -63,14 +64,14 @@ const Messages = () => {
                 </td>
                 <td>{moment(conver.updatedAt).fromNow()}</td>
                 <td>
-                  <button>
-                    {(currentUser.isSeller && !conver.readBySeller) ||
-                      (!currentUser.isSeller && !conver.readByBuyer && (
+                  {(currentUser.isSeller && !conver.readBySeller) ||
+                    (!currentUser.isSeller && !conver.readByBuyer && (
+                      <Link to={`/message/${currentUser.userId}`}>
                         <button onClick={() => handleRead(conver.id)}>
                           Mark as Read
                         </button>
-                      ))}
-                  </button>
+                      </Link>
+                    ))}
                 </td>
               </tr>
             ))}

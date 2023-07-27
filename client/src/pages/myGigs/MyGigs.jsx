@@ -37,7 +37,7 @@ const MyGigs = () => {
         <div className="container">
           <div className="title">
             <h1>Ethnics</h1>
-            <Link to="/add">
+            <Link to="/add" className="link">
               <button>Add New</button>
             </Link>
           </div>

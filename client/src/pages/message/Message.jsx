@@ -38,9 +38,8 @@ const Message = () => {
       <div className="container">
         <span className="breadcrumbs">
           <Link to="/message" className="link">
-            {" "}
-            Message
-          </Link>{" "}
+            Message{">"}
+          </Link>
           - {currentUser.username}
         </span>
         {isLoading ? (

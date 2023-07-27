@@ -3,6 +3,10 @@ import { Featured, Slide, TrustedBy } from "../../components";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 
 import "./Home.scss";
+import Brand from "../../components/brand/Brand";
+import Blog from "../blog/Blog";
+import Possibility from "../possibility/Possibility";
+import Features from "../features/Features";
 
 const constextList = [
   {
@@ -35,10 +39,13 @@ const Home = () => {
   return (
     <div>
       <Featured />
-      <TrustedBy />
+      {/* <TrustedBy /> */}
+      <Brand />
       <Slide />
+      {/* <Blog /> */}
 
-      <div className="features">
+      <Possibility />
+      {/* <div className="features">
         <div className="container">
           <div className="item">
             <h1>A whole world of freelance talent at your fingertips</h1>
@@ -59,9 +66,10 @@ const Home = () => {
             <video src="./img/video.mp4" controls></video>
           </div>
         </div>
-      </div>
+      </div> */}
+      <Features />
 
-      <div className="features dark">
+      {/* <div className="features dark">
         <div className="container">
           <div className="item">
             <h1>Fiverr Business</h1>
@@ -91,7 +99,7 @@ const Home = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <ProjectCard />
     </div>

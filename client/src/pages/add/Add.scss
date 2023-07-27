@@ -1,12 +1,11 @@
 .add {
   display: flex;
-  margin-top: 0;
 
   .container {
     justify-content: center;
-    margin: 5rem auto;
     width: 1400px;
-    padding: 50px 0px;
+    padding: 30px 0px;
+    margin: 0 auto;
 
     h1 {
       color: gray;

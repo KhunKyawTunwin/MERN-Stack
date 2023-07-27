@@ -1,4 +1,4 @@
-import "./CheckoutForm.scss";
+import "./CheckoutForm.css";
 import React, { useEffect, useState } from "react";
 import {
   PaymentElement,

@@ -9,6 +9,9 @@ export const createReview = async (req, res, next) => {
     return next(createError(403, "Seller can't create review!"));
   }
 
+  if (!req.userId)
+    return next(createError(404, "A user with this email could not be found."));
+
   const newReview = new Review({
     userId: req.userId,
     gigId,

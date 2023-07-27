@@ -33,8 +33,12 @@ const Navbar = () => {
       localStorage.setItem("currentUser", null);
 
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  let dat = 2;
 
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
@@ -111,7 +115,7 @@ const Navbar = () => {
 
       {(active || pathname !== "/") && (
         <>
-          <hr />
+          {/* <hr />
           <div className="menu">
             <span>Graphic & Design</span>
             <span>Video & Animation</span>
@@ -123,7 +127,7 @@ const Navbar = () => {
             <span>LifeStyle</span>
             <span>Programming & Tech</span>
           </div>
-          <hr />
+          <hr /> */}
         </>
       )}
     </div>

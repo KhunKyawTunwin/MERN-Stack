@@ -15,35 +15,38 @@ const GigCard = ({ item }) => {
     <div className="gigCard">
       <Link to={`/gig/${item._id}`} className="link">
         <img src={item.cover} alt="" />
-        <div className="info">
-          {isLoading ? (
-            "Loading ..."
-          ) : error ? (
-            "Something went wrong!"
-          ) : (
-            <div className="user">
-              <img src={data.img || "/img/eth.png"} alt="" />
-              <span>{data.username}</span>
-            </div>
-          )}
-          <p>{item.desc}</p>
-          <div className="star">
-            <img src="./img/star.png" alt="" />
-            <span>
-              {!isNaN(item.totalStars / item.startNumber) &&
-                Math.round(item.totalStars / item.startNumber)}
-            </span>
-          </div>
-        </div>
-        <hr />
-        <div className="details">
-          <img src="./img/heart.png" alt="" />
-          <div className="price">
-            <samp>Starting At</samp>
-            <h2>${item.price}</h2>
-          </div>
-        </div>
       </Link>
+
+      <div className="info">
+        {isLoading ? (
+          "Loading ..."
+        ) : error ? (
+          "Something went wrong!"
+        ) : (
+          <div className="user">
+            <img src={data.img || "/img/eth.png"} alt="" />
+            <span>{data.username}</span>
+          </div>
+        )}
+        <Link to={`/gig/${item._id}`}>
+          <p>{item.desc}</p>
+        </Link>
+        <div className="star">
+          <img src="./img/star.png" alt="" />
+          <span>
+            {!isNaN(item.totalStars / item.startNumber) &&
+              Math.round(item.totalStars / item.startNumber)}
+          </span>
+        </div>
+      </div>
+      <hr />
+      <div className="details">
+        <img src="./img/heart.png" alt="" />
+        <div className="price">
+          <samp>Starting At</samp>
+          <h2>${item.price}</h2>
+        </div>
+      </div>
     </div>
   );
 };

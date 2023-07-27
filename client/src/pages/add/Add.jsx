@@ -1,6 +1,7 @@
 import { useReducer, useState } from "react";
 import "./Add.scss";
 import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
+import upload from "../../utils/upload";
 
 const Add = () => {
   const [singleFile, setSingleFile] = useState(undefined);
@@ -8,6 +9,37 @@ const Add = () => {
   const [uploading, setUploading] = useState(false);
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
+
+  const handleChange = (e) => {
+    dispatch({
+      type: "CHANGE_INPUT",
+      payload: { name: e.target.name, value: e.target.value },
+    });
+  };
+
+  const handleFeature = (e) => {
+    e.preventDefault();
+    dispatch({ type: "ADD_FEATURE", payload: e.target[0].value });
+    e.target[0].value = "";
+  };
+
+  const handleUpload = async (e) => {
+    setUploading(true);
+    try {
+      const cover = await upload(singleFile);
+
+      const images = await Promise.all(
+        [...files].map(async (file) => {
+          const url = await upload(file);
+          return url;
+        })
+      );
+      setUploading(false);
+      dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="add">
@@ -31,9 +63,16 @@ const Add = () => {
               <option value="ios">Flutter Developer</option>
             </select>
             <label htmlFor="">Cover Image</label>
-            <input type="file" />
+            <input
+              type="file"
+              onChange={(e) => setSingleFile(e.target.files[0])}
+            />
             <label htmlFor="">Upload Images</label>
-            <input type="file" multiple />
+            <input
+              type="file"
+              multiple
+              onChange={(e) => setFiles(e.target.files)}
+            />
             <label>Description</label>
             <textarea
               name=""
@@ -77,7 +116,10 @@ const Add = () => {
               onChange={handleChange}
             />
             <label htmlFor="">Add Features</label>
-            <input type="text" placeholder="Project page design" />
+            <form onSubmit={handleFeature} action="">
+              <input type="text" placeholder="Project page design" />
+              <button type="submit">Add</button>
+            </form>
             <label htmlFor="">Price</label>
             <input type="number" name="price" onChange={handleChange} min={1} />
           </div>

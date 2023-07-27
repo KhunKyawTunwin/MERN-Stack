@@ -31,6 +31,7 @@ const Gig = () => {
     queryFn: () => newRequest.get(`/users/${userId}`).then((res) => res.data),
     enabled: !!userId,
   });
+
   return (
     <div className="gig">
       {isLoading ? (
@@ -74,9 +75,9 @@ const Gig = () => {
               modules={[Navigation]}
               className="mySlide"
             >
-              {data.images.map((img, i) => (
-                <SwiperSlide key={i}>
-                  <img className="imgDetail" key={i} src={img} />
+              {data.images.map((img) => (
+                <SwiperSlide key={img.length}>
+                  <img className="imgDetail" src={img} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -164,7 +165,7 @@ const Gig = () => {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`} className="link">
+            <Link to={`/pay/${id}`} className="">
               <button>Continue</button>
             </Link>
           </div>
