@@ -1,6 +1,7 @@
 import Gig from "../models/gig.js";
 import Order from "../models/order.js";
 import Stripe from "stripe";
+import { createError } from "../utils/createError.js";
 
 export const paymentAmount = async (req, res, next) => {
   const { id } = req.params;
@@ -36,6 +37,41 @@ export const paymentAmount = async (req, res, next) => {
   }
 };
 
+export const paymentConfirm = async (req, res, next) => {
+  const { payment_intent } = req.body;
+
+  try {
+    const order = await Order.findOne({
+      payment_intent,
+    });
+
+    if (!order) {
+      return next(createError(404, "Order not found or saleAmount mismatch."));
+    }
+
+    if (order.isCompleted && order.payment_intent) {
+      return next(
+        createError(200, "Order has already been confirmed and paid.")
+      );
+    }
+
+    order.isCompleted = true;
+    order.payment_intent = payment_intent;
+
+    await order.save();
+
+    await Gig.findByIdAndUpdate(
+      order.gigId,
+      { $inc: { sales: 1 } },
+      { new: true }
+    );
+
+    res.status(200).send("Orders has been confirmed!👏");
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
@@ -43,25 +79,6 @@ export const getOrders = async (req, res, next) => {
       isCompleted: true,
     });
     res.status(200).send(orders);
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const paymentConfirm = async (req, res, next) => {
-  const { payment_intent } = req.body;
-  try {
-    const orders = await Order.findOneAndUpdate(
-      {
-        payment_intent,
-      },
-      {
-        $set: {
-          isCompleted: true,
-        },
-      }
-    );
-    res.status(200).send("Orders has been confirmed!👏");
   } catch (err) {
     next(err);
   }

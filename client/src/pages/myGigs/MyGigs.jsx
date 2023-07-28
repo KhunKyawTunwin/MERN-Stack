@@ -29,21 +29,27 @@ const MyGigs = () => {
     mutation.mutate(id);
   };
 
+  const handleEdit = (id) => {
+    mutation.mutate(id);
+  };
+
   return (
     <div className="myGigs">
-      <div className="container">
-        <div className="title">
-          <h1>{currentUser.username} #Gigs</h1>
-          <Link to="/add" className="link">
-            <button>Add New</button>
-          </Link>
-        </div>
-        <hr />
-        {isLoading ? (
-          "Loading ..."
-        ) : error ? (
-          "Something went Wrong! and Gig is Empty! 😩"
-        ) : (
+      {isLoading ? (
+        "Loading ..."
+      ) : error ? (
+        "Something went Wrong! and Gig is Empty! 😩"
+      ) : (
+        <div className="container">
+          <div className="title">
+            <h1>{currentUser.username} #Gigs</h1>
+            {currentUser.isSeller && (
+              <Link to="/add" className="link">
+                <button>Add New</button>
+              </Link>
+            )}
+          </div>
+          <hr />
           <div>
             <table>
               <thead>
@@ -64,7 +70,13 @@ const MyGigs = () => {
                     <td>{gig.title}</td>
                     <td>{gig.price} MMK</td>
                     <td>{gig.sales}</td>
-                    <td>
+                    <td className="editIcons">
+                      <img
+                        className="edit"
+                        src={isLoading ? "Editing ..." : "/img/edit.png"}
+                        alt="DeleteIcon"
+                        onClick={() => handleEdit(gig._id)}
+                      />{" "}
                       <img
                         className="delete"
                         src={isLoading ? "Deleting" : "/img/Del.png"}
@@ -77,8 +89,8 @@ const MyGigs = () => {
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

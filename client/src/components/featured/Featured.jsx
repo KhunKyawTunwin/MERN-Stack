@@ -45,22 +45,30 @@ const Featured = () => {
     //     </div>
     //   </div>
     // </div>
+    /* 
+    
+    Investors  
+    */
     <>
       <div className="gpt3__header section__padding" id="home">
         <div className="gpt3__header-content">
           <h1 className="gradient__text">
-            Let&apos;s Build Something amazing with GPT-3 OpenAI
+            Investors&apos; Invest in founders building the future
           </h1>
           <p>
-            Yet bed any for travelling assistance indulgence unpleasing. Not
-            thoughts all exercise blessing. Indulgence way everything joy
-            alteration boisterous the attachment. Party we years to order allow
-            asked of.
+            Get equity and front row seats to the startups and small businesses
+            you love—⁠for as little as $100.
           </p>
 
           <div className="gpt3__header-content__input">
-            <input type="email" placeholder="Your Email Address" />
-            <button type="button">Get Started</button>
+            <input
+              type="text"
+              placeholder="Try to find the best investment products!"
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <button type="submit" onClick={handleSubmit}>
+              Search
+            </button>
           </div>
 
           <div className="gpt3__header-content__people">

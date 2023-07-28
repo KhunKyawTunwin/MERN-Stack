@@ -22,6 +22,11 @@ const Success = () => {
     makeRequest();
   }, []);
 
-  return <div>Success</div>;
+  return (
+    <div>
+      Payment successful. You are being redirected to the orders page. Please do
+      not close the Page !
+    </div>
+  );
 };
 export default Success;

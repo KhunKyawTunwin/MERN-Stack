@@ -50,8 +50,6 @@ const CheckoutForm = () => {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -90,7 +88,6 @@ const CheckoutForm = () => {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
   );

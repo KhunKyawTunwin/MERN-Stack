@@ -1,15 +1,15 @@
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
+import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import { Link, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
+import { Reviews } from "../../components";
 
 import "./Gig.scss";
 import "./slide.css";
-import { Reviews } from "../../components";
 
 const Gig = () => {
   const { id } = useParams();
@@ -17,6 +17,8 @@ const Gig = () => {
     queryKey: ["gig"],
     queryFn: () => newRequest(`gigs/single/${id}`).then((res) => res.data),
   });
+
+  console.log(data);
 
   const userId = data?.userId;
   const {
@@ -72,14 +74,14 @@ const Gig = () => {
               modules={[Navigation]}
               className="mySlide"
             >
-              {data.images.map((img) => (
-                <SwiperSlide key={img.length}>
+              {data.images.map((img, i) => (
+                <SwiperSlide key={i}>
                   <img className="imgDetail" src={img} />
                 </SwiperSlide>
               ))}
             </Swiper>
 
-            <h2>About This Property</h2>
+            <h2>About This {data.cat}</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (
               "Loading ..."
@@ -87,7 +89,7 @@ const Gig = () => {
               "Something went wrong!"
             ) : (
               <div className="seller">
-                <h2>About The Seller</h2>
+                <h2>About The Investment Owner</h2>
                 <div className="user">
                   <img src={dataUser.img || "/img/person.gif"} alt="" />
                   <div className="info">

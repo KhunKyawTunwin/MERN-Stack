@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
 import "./GigCard.scss";
+import moment from "moment";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
-import moment from "moment";
 
 const GigCard = ({ item }) => {
   const { isLoading, error, data } = useQuery({
-    queryKey: ["gigUser"],
+    queryKey: [item.userId],
     queryFn: () =>
-      newRequest.get(`/users/${item.userId}`).then((res) => res.data),
+      newRequest.get(`/users/${item.userId}`).then((res) => {
+        return res.data;
+      }),
   });
 
   return (
@@ -46,7 +48,7 @@ const GigCard = ({ item }) => {
         <div className="price">
           <samp>Starting At</samp>
           <hr />
-          <h2>${item.price}</h2>
+          <h2>{item.price} MMK</h2>
         </div>
       </div>
     </div>

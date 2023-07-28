@@ -55,27 +55,32 @@ const Add = () => {
               placeholder="I'm full-stack Webdeveloper."
             />
             <label htmlFor="">Category</label>
-            <select name="cat" onChange={handleChange} id="web">
-              <option value="design">Design</option>
-              <option value="backend">Backend</option>
-              <option value="frontend">Frontend</option>
-              <option value="andriod">Andriod Dev</option>
-              <option value="ios">Flutter Developer</option>
+            <select name="cat" onChange={handleChange} id="Property">
+              <option value="design">Houses</option>
+              <option value="backend">Land</option>
+              <option value="frontend">Free Land</option>
+              <option value="andriod">Hotels</option>
+              <option value="ios">Apartments</option>
             </select>
-            <label htmlFor="">Cover Image</label>
-            <input
-              type="file"
-              onChange={(e) => setSingleFile(e.target.files[0])}
-            />
-            <label htmlFor="">Upload Images</label>
-            <input
-              type="file"
-              multiple
-              onChange={(e) => setFiles(e.target.files)}
-            />
-            <label>Description</label>
+            <div className="images">
+              <div className="imagesInputs">
+                <label htmlFor="">Cover Image</label>
+                <input
+                  type="file"
+                  onChange={(e) => setSingleFile(e.target.files[0])}
+                />
+                <label htmlFor="">Upload Images</label>
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => setFiles(e.target.files)}
+                />
+              </div>
+              <button>{uploading ? "Uploading" : "Upload"}</button>
+            </div>
+            <label>Short Description</label>
             <textarea
-              name=""
+              name="desc"
               id=""
               cols="30"
               rows="10"
