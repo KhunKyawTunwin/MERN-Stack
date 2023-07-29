@@ -30,8 +30,8 @@ const Review = ({ review }) => {
       <div className="stars">
         {Array(review.star)
           .fill()
-          .map((item) => (
-            <img src="/img/star.png" alt="" key={item._id} />
+          .map((_, i) => (
+            <img src="/img/star.png" alt="" key={i} />
           ))}
         <span>{review.star}</span>
       </div>

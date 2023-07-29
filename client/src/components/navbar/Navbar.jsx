@@ -59,7 +59,9 @@ const Navbar = () => {
           <span className="dot">.</span>
         </div>
         <div className="links" ref={menuRef}>
-          <span>Ethnic Business</span>
+          <Link to="business">
+            <span>Ethnic Business</span>
+          </Link>
           <span>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && (

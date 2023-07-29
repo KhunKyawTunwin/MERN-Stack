@@ -48,7 +48,7 @@ const Reviews = ({ gigId }) => {
             <option value={4}>4 Stars</option>
             <option value={5}>5 Stars</option>
           </select>
-          <button>Send</button>
+          <button type="submit">Send</button>
         </form>
       </div>
       <hr />

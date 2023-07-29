@@ -15,8 +15,6 @@ const Slide = () => {
     queryFn: () => newRequest(`/gigs`).then((res) => res.data),
   });
 
-  console.log(data);
-
   return (
     <div className="slide">
       <div className="container">

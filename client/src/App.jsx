@@ -20,6 +20,7 @@ import {
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import Possibility from "./pages/possibility/Possibility";
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,6 +52,10 @@ function App() {
         {
           path: "/gigs",
           element: <Gigs />,
+        },
+        {
+          path: "/business",
+          element: <Possibility />,
         },
         {
           path: "/gig/:id",

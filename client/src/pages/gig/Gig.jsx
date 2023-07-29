@@ -18,8 +18,6 @@ const Gig = () => {
     queryFn: () => newRequest(`gigs/single/${id}`).then((res) => res.data),
   });
 
-  console.log(data);
-
   const userId = data?.userId;
   const {
     isLoading: isLoadingUser,
@@ -76,11 +74,10 @@ const Gig = () => {
             >
               {data.images.map((img, i) => (
                 <SwiperSlide key={i}>
-                  <img className="imgDetail" src={img} />
+                  <img className="imgDetail" src={img} alt={i} />
                 </SwiperSlide>
               ))}
             </Swiper>
-
             <h2>About This {data.cat}</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (

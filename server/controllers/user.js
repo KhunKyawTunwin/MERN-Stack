@@ -1,6 +1,17 @@
 import User from "../models/user.js";
 import { createError } from "../utils/createError.js";
 
+export const getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    if (!users) return next(createError(404, "Users could not be found."));
+
+    res.status(200).send(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getUser = async (req, res, next) => {
   const { id } = req.params;
   try {
