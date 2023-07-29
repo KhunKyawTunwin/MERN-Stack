@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { newRequest } from "../../api/url";
 import upload from "../../utils/upload";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
@@ -41,7 +41,7 @@ function Register() {
         img: imgUrl,
       });
       setLoad(true);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       console.log(err);
       throw err;
@@ -86,6 +86,12 @@ function Register() {
           <button type="submit" onClick={() => setLoad(!load)}>
             {load ? "Loading ..." : "Register"}
           </button>
+          <div className="loginForm">
+            <p>Already have an account ?</p>
+            <Link to="/login">
+              <span>Login</span>
+            </Link>
+          </div>
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>
@@ -111,7 +117,7 @@ function Register() {
             cols="30"
             rows="10"
             onChange={handleChange}
-          ></textarea>
+          />
         </div>
       </form>
     </div>

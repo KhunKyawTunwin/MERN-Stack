@@ -12,16 +12,14 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
   });
-  console.log("Data in oreders is ", data);
-  console.log(`Current user Data is ${currentUser.username}`);
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
     const buyerId = order.buyerId;
     const id = sellerId + buyerId;
 
     try {
-      const res = await newRequest.get(`/conversations/single/${id}`);
-      navigate(`/message/${res.data.id}`);
+      const { data } = await newRequest.get(`/conversations/single/${id}`);
+      navigate(`/message/${data.id}`);
     } catch (err) {
       if (err.response.status === 404) {
         const res = await newRequest.post(`/conversations`, {
@@ -32,6 +30,7 @@ const Orders = () => {
     }
   };
 
+  const regex = /0\d{3}\.\.\.\d{3}/;
   return (
     <div className="orders">
       {isLoading ? (
@@ -58,19 +57,18 @@ const Orders = () => {
             <tbody>
               {data.map((order) => (
                 <tr key={order._id}>
-                  <td>
-                    <img className="imgOrder" src={order.img} alt="" />
-                  </td>
+                  <Link to={`/order/${order._id}`} className="link">
+                    <td>
+                      <img className="imgOrder" src={order.img} alt="" />
+                    </td>
+                  </Link>
                   <td>{order.title.substring(0, 50)} ...</td>
                   <td>{order.price} MMK</td>
                   <td>
-                    {currentUser?.isSeller ? order.buyerId : order.sellerId}
-                    {/* 
                     {currentUser?.isSeller
-                      ? buyerNames[order._id] // Display buyer's username
-                      : sellerNames[order._id]} // Display seller's username
-                    
-                     */}
+                      ? order.buyerId.substring(0, 5)
+                      : order.sellerId.substring(0, 10)}
+                    &nbsp;...
                   </td>
                   <td>
                     <img

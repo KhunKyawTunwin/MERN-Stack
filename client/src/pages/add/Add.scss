@@ -35,6 +35,7 @@
         select,
         textarea {
           padding: 15px;
+          outline: none;
         }
 
         .images {
@@ -57,6 +58,34 @@
           font-weight: 500;
           font-size: 18px;
           cursor: pointer;
+          width: fit-content;
+        }
+
+        .add {
+          display: flex;
+          gap: 1rem;
+          justify-content: space-between;
+
+          input {
+            width: 99%;
+          }
+        }
+
+        .addedFeatures {
+          display: flex;
+          gap: 20px;
+
+          button {
+            height: 30px;
+            font-size: 12px;
+            font-weight: 400;
+            background: transparent;
+            color: tomato;
+            border: 0.5px solid tomato;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+          }
         }
       }
     }

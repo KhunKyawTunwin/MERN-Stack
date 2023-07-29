@@ -1,10 +1,6 @@
 import axios from "axios";
 
-const upload = async (file, user) => {
-  if (!user) {
-    throw new Error("User not authorized for image upload");
-  }
-
+const upload = async (file) => {
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", "Ethnic Property");
@@ -18,7 +14,6 @@ const upload = async (file, user) => {
     return secure_url;
   } catch (err) {
     console.log(err);
-    throw err;
   }
 };
 

@@ -49,8 +49,8 @@ const Slide = () => {
             modules={[FreeMode, Pagination]}
             className="mySwiper"
           >
-            {data.map((card) => (
-              <SwiperSlide key={card.id}>
+            {data.map((card, i) => (
+              <SwiperSlide key={i}>
                 <CatCard item={card} />
               </SwiperSlide>
             ))}

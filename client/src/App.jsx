@@ -24,7 +24,6 @@ import Possibility from "./pages/possibility/Possibility";
 
 function App() {
   const queryClient = new QueryClient();
-
   const Layout = () => {
     return (
       <React.StrictMode>

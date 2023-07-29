@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-  userId: JSON.parse(localStorage.getItem("currentUser"))?._id,
+  userId: JSON.parse(localStorage.getItem("currentUser"))?.userId,
   title: "",
   cat: "",
   cover: "",
@@ -25,7 +25,7 @@ export const gigReducer = (state, action) => {
       };
     case "ADD_FEATURES":
       return { ...state, features: [...state.features, action.payload] };
-    case "REMOVE_FEATURES":
+    case "REMOVE_FEATURE":
       return {
         ...state,
         features: state.features.filter(

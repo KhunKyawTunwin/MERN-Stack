@@ -1,8 +1,6 @@
 import React from "react";
-// import { Article } from "../../components";
 import Article from "../../components/article/Article";
 
-// import { blog01, blog02, blog03, blog04, blog05 } from "./imports";
 import "./blog.css";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
@@ -27,7 +25,7 @@ const Blog = () => {
       ) : (
         <div className="gpt3__blog-container">
           {data.map((user) => (
-            <div className="gpt3__blog-container_groupA">
+            <div className="gpt3__blog-container_groupA" key={user._id}>
               <Article
                 imgUrl={user.img}
                 date="Sep 26, 2021"

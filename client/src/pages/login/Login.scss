@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 60vh;
+  padding: 2rem 0;
 
   form {
     width: 360px;
-    padding: 20px 0px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -34,6 +35,23 @@
       font-size: 18px;
       background-color: #1dbf73;
       cursor: pointer;
+    }
+
+    .registerForm {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      gap: 20px;
+
+      p {
+        font-weight: 500;
+      }
+
+      span {
+        color: blue;
+        font-weight: 600;
+        font-size: 16px;
+      }
     }
 
     span {

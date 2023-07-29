@@ -64,9 +64,11 @@ const MyGigs = () => {
               <tbody>
                 {data.map((gig) => (
                   <tr key={gig._id}>
-                    <td>
-                      <img className="imgGis" src={gig.cover} alt="" />
-                    </td>
+                    <Link to={`/gig/${gig._id}`} className="link">
+                      <td>
+                        <img className="imgGis" src={gig.cover} alt="" />
+                      </td>
+                    </Link>
                     <td>{gig.title}</td>
                     <td>{gig.price} MMK</td>
                     <td>{gig.sales}</td>

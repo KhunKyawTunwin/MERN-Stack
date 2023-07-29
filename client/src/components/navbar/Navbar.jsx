@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { newRequest } from "../../api/url";
 
-// import onClickOutside from "react-onclickoutside";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 
@@ -12,9 +10,6 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  // Navbar.handleClickOutside = () => {
-  //   setToggle(false);
-  // };
   const { pathname } = useLocation();
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -116,11 +111,11 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <p className="userInfo">
+              {/* <p className="userInfo">
                 <Link to="/login" className="link sign">
                   Sign in
                 </Link>
-              </p>
+              </p> */}
               <p className="userInfo">
                 <Link className="link join" to="/register">
                   <button>Join</button>
@@ -151,9 +146,5 @@ const Navbar = () => {
     </div>
   );
 };
-
-// const clickOutsideConfig = {
-//   handleClickOutside: () => Navbar.handleClickOutside,
-// };
 
 export default Navbar;

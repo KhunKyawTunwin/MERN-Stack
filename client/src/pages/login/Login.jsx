@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { newRequest } from "../../api/url";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Login.scss";
 
@@ -47,6 +47,12 @@ const Login = () => {
         <button type="submit" onClick={() => setLoading(!loading)}>
           {loading && error ? "Loading ..." : "Login"}
         </button>
+        <div className="registerForm">
+          <p>Don't have an account ?</p>
+          <Link to="/register">
+            <span>Signup</span>
+          </Link>
+        </div>
         {error && error}
       </form>
     </div>
