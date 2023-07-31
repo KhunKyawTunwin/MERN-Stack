@@ -81,12 +81,12 @@ const Navbar = () => {
                     <>
                       <p className="userInfo">
                         <Link to="/mygigs" className="link">
-                          Gigs
+                          Assets
                         </Link>
                       </p>
                       <p className="userInfo">
                         <Link to="/add" className="link">
-                          Add New Gig
+                          Add New Assets1
                         </Link>
                       </p>
                     </>

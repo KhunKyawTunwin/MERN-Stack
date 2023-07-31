@@ -35,64 +35,66 @@ const MyGigs = () => {
 
   return (
     <div className="myGigs">
-      {isLoading ? (
-        "Loading ..."
-      ) : error ? (
-        "Something went Wrong! and Gig is Empty! 😩"
-      ) : (
-        <div className="container">
-          <div className="title">
-            <h1>{currentUser.username} #Gigs</h1>
-            {currentUser.isSeller && (
-              <Link to="/add" className="link">
-                <button>Add New</button>
-              </Link>
-            )}
-          </div>
-          <hr />
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Price</th>
-                  <th>Sales</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((gig) => (
-                  <tr key={gig._id}>
-                    <Link to={`/gig/${gig._id}`} className="link">
-                      <td>
-                        <img className="imgGis" src={gig.cover} alt="" />
-                      </td>
-                    </Link>
-                    <td>{gig.title}</td>
-                    <td>{gig.price} MMK</td>
-                    <td>{gig.sales}</td>
-                    <td className="editIcons">
-                      <img
-                        className="edit"
-                        src={isLoading ? "Editing ..." : "/img/edit.png"}
-                        alt="DeleteIcon"
-                        onClick={() => handleEdit(gig._id)}
-                      />{" "}
-                      <img
-                        className="delete"
-                        src={isLoading ? "Deleting" : "/img/Del.png"}
-                        alt="DeleteIcon"
-                        onClick={() => handleDelete(gig._id)}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <div className="container">
+        <div className="title">
+          <h1>{currentUser.username} #Gigs</h1>
+          {currentUser.isSeller && (
+            <Link to="/add" className="link">
+              <button>Add New</button>
+            </Link>
+          )}
         </div>
-      )}
+        <hr />
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Sales</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {isLoading ? (
+              "Loading ..."
+            ) : error ? (
+              "Create new assets. 😩"
+            ) : (
+              <>
+                <tbody>
+                  {data.map((gig) => (
+                    <tr key={gig._id}>
+                      <Link to={`/gig/${gig._id}`} className="link">
+                        <td>
+                          <img className="imgGis" src={gig.cover} alt="" />
+                        </td>
+                      </Link>
+                      <td>{gig.title}</td>
+                      <td>{gig.price} MMK</td>
+                      <td>{gig.sales}</td>
+                      <td className="editIcons">
+                        <img
+                          className="edit"
+                          src={isLoading ? "Editing ..." : "/img/edit.png"}
+                          alt="DeleteIcon"
+                          onClick={() => handleEdit(gig._id)}
+                        />{" "}
+                        <img
+                          className="delete"
+                          src={isLoading ? "Deleting" : "/img/Del.png"}
+                          alt="DeleteIcon"
+                          onClick={() => handleDelete(gig._id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </>
+            )}
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

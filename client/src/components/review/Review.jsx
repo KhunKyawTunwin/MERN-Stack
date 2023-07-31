@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import "./Review.scss";
-import { newRequest } from "../../api/url";
 
 const Review = ({ review }) => {
   const { isLoading, error, data } = useQuery({

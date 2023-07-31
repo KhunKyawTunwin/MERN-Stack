@@ -5,10 +5,14 @@ import "./brand.css";
 const Brand = () => (
   <div className="gpt3__brand section__padding">
     <div>
-      <img src={google} />
+      <a href="https://www.myanfobase.com/" target="_blank">
+        <img src={google} />
+      </a>
     </div>
     <div>
-      <img src={slack} />
+      <a href="https://slack.com/" target="_blank">
+        <img src={slack} />
+      </a>
     </div>
     <div>
       <img src={atlassian} />

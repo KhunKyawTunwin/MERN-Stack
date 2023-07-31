@@ -47,7 +47,11 @@
         display: flex;
         justify-content: center;
         gap: 20px;
-        padding: 10px;
+        padding: 15px 0 10px;
+
+        p {
+          font-weight: 500;
+        }
 
         span {
           color: blue;

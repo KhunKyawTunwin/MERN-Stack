@@ -15,7 +15,6 @@ function Gigs() {
 
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["gigs"],
-
     queryFn: () =>
       newRequest
         .get(
@@ -39,6 +38,10 @@ function Gigs() {
 
   const apply = () => {
     refetch();
+    setTimeout(() => {
+      minRef.current.value = "";
+      maxRef.current.value = "";
+    }, 2000);
   };
 
   return (
