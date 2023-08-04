@@ -1,8 +1,6 @@
 import React from "react";
 import Feature from "../../components/feature/Feature";
 import "./features.css";
-import { useQuery } from "@tanstack/react-query";
-import { newRequest } from "../../api/url";
 
 const featuresData = [
   {
@@ -24,11 +22,6 @@ const featuresData = [
 ];
 
 const Features = () => {
-  // const { isLoading, error, data } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: () => newRequest.get(`/${userId}`).then((res) => res.data),
-  // });
-
   return (
     <div className="gpt3__features section__padding" id="features">
       <div className="gpt3__features-heading">

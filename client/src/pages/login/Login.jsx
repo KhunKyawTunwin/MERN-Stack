@@ -32,6 +32,9 @@ const Login = () => {
         <h1>Sign in</h1>
         <label htmlFor="">Email</label>
         <input
+          // autoComplete="off"
+          required
+          aria-describedby="uidnote"
           name="email"
           type="email"
           placeholder="example.20@gmail.com"
@@ -40,6 +43,9 @@ const Login = () => {
 
         <label htmlFor="">Password</label>
         <input
+          autoComplete="off"
+          required
+          aria-describedby="uidnote"
           name="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}

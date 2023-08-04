@@ -101,7 +101,7 @@ const Home = () => {
           </div> */}
 
       {/* <ProjectCard /> */}
-      <Blog />
+      {/* <Blog /> */}
     </div>
   );
 };

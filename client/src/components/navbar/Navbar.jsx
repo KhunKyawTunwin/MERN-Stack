@@ -3,6 +3,7 @@ import { newRequest } from "../../api/url";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
+import UserLists from "../../pages/userLists/UserLists";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -72,11 +73,13 @@ const Navbar = () => {
               </span>
               {toggle && (
                 <div className="options">
-                  {/* <p className="userInfo">
-                    <Link to="/mygigs" className="link">
-                      Profile
-                    </Link>
-                  </p> */}
+                  {currentUser?.isAdmin && (
+                    <p className="userInfo">
+                      <Link to="/userslists" className="link">
+                        Register Users Lists
+                      </Link>
+                    </p>
+                  )}
                   {currentUser?.isSeller && (
                     <>
                       <p className="userInfo">
@@ -86,7 +89,7 @@ const Navbar = () => {
                       </p>
                       <p className="userInfo">
                         <Link to="/add" className="link">
-                          Add New Assets1
+                          Add New Assets
                         </Link>
                       </p>
                     </>

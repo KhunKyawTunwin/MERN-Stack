@@ -5,7 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
-function Register() {
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+const Register = () => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
   const [user, setUser] = useState({
@@ -17,6 +20,7 @@ function Register() {
     isSeller: false,
     desc: "",
   });
+
   // console.log(user);
   const navigate = useNavigate();
 
@@ -57,18 +61,31 @@ function Register() {
           <input
             name="username"
             type="text"
+            // autoComplete="off"
+            required
+            aria-describedby="uidnote"
             placeholder="mrkhuncode"
             onChange={handleChange}
           />
           <label htmlFor="">Email</label>
           <input
+            autoComplete="off"
+            required
+            aria-describedby="uidnote"
             name="email"
             type="email"
             placeholder="email"
             onChange={handleChange}
           />
           <label htmlFor="">Password</label>
-          <input name="password" type="password" onChange={handleChange} />
+          <input
+            name="password"
+            autoComplete="off"
+            required
+            aria-describedby="uidnote"
+            type="password"
+            onChange={handleChange}
+          />
           <label htmlFor="">Profile Picture</label>
           <input
             type="file"
@@ -84,7 +101,7 @@ function Register() {
             onChange={handleChange}
           />
           <button type="submit" onClick={() => setLoad(!load)}>
-            {load ? "Loading ..." : "Register"}
+            {"Register"}
           </button>
           <div className="loginForm">
             <p>Already have an account ?</p>
@@ -122,6 +139,6 @@ function Register() {
       </form>
     </div>
   );
-}
+};
 
 export default Register;

@@ -1,7 +1,6 @@
 import "./App.scss";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
-import Navbars from "./constants/navbar/Navbars";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/home/Home";
 import {
@@ -21,6 +20,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import Possibility from "./pages/possibility/Possibility";
+import UserLists from "./pages/userLists/UserLists";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,7 +30,6 @@ function App() {
         <div className="app">
           <QueryClientProvider client={queryClient}>
             <Navbar />
-            {/* <Navbars /> */}
             <Outlet />
             <Footer />
           </QueryClientProvider>
@@ -49,12 +48,16 @@ function App() {
           element: <Home />,
         },
         {
+          path: "/business",
+          element: <Possibility />,
+        },
+        {
           path: "/gigs",
           element: <Gigs />,
         },
         {
-          path: "/business",
-          element: <Possibility />,
+          path: "/userslists",
+          element: <UserLists />,
         },
         {
           path: "/gig/:id",

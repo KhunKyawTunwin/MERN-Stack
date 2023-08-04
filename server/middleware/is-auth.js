@@ -23,3 +23,10 @@ export const verifyToken = (req, res, next) => {
   req.isSeller = decodedToken.isSeller;
   next();
 };
+
+export const verifyAdmin = (req, res, next) => {
+  verifyToken(req, res, next, () => {
+    if (!req.isAdmin) return next(createError(403, "You are not authorized!"));
+    next();
+  });
+};

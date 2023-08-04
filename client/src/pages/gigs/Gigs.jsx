@@ -25,8 +25,6 @@ function Gigs() {
           return res.data;
         }),
   });
-  console.log();
-
   const reSort = (type) => {
     setSort(type);
     setOpen(false);
@@ -48,7 +46,7 @@ function Gigs() {
     <div className="gigs">
       <div className="container">
         <span className="breadcrumbs">
-          <span>Liverr</span> / <span>Graphics</span> & <span>Design</span>
+          <span>Land</span> / <span>Graphics</span> & <span>Design</span>
         </span>
         <h1>Land and Free Field</h1>
         <p>

@@ -1,3 +1,4 @@
+import "./success.css";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { newRequest } from "../../api/url";
@@ -23,7 +24,7 @@ const Success = () => {
   }, []);
 
   return (
-    <div>
+    <div className="success">
       Payment successful. You are being redirected to the orders page. Please do
       not close the Page !
     </div>

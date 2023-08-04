@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { createError } from "../utils/createError.js";
 
 export const register = async (req, res, next) => {
-  const { username, email, password, country } = req.body;
+  const { username, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -78,6 +78,7 @@ export const login = async (req, res, next) => {
       email: user.email,
       img: user.img,
       isSeller: user.isSeller,
+      isAdmin: user.isAdmin,
     });
   } catch (err) {
     next(err);
@@ -85,11 +86,14 @@ export const login = async (req, res, next) => {
 };
 
 export const logout = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.accessToken) return res.sendStatus(204); // No content
   res
     .clearCookie("accessToken", {
-      sameSite: "none",
+      httpOnly: true,
+      sameSite: "None",
       secure: true,
     })
     .status(200)
-    .send("User has been logged out!");
+    .json({ message: "User has been logged out!" });
 };

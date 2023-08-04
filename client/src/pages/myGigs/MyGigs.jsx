@@ -37,7 +37,7 @@ const MyGigs = () => {
     <div className="myGigs">
       <div className="container">
         <div className="title">
-          <h1>{currentUser.username} #Gigs</h1>
+          <h1>{currentUser.username} #Assets</h1>
           {currentUser.isSeller && (
             <Link to="/add" className="link">
               <button>Add New</button>
@@ -61,8 +61,8 @@ const MyGigs = () => {
             ) : error ? (
               "Create new assets. 😩"
             ) : (
-              <>
-                <tbody>
+              <tbody>
+                <>
                   {data.map((gig) => (
                     <tr key={gig._id}>
                       <Link to={`/gig/${gig._id}`} className="link">
@@ -89,8 +89,8 @@ const MyGigs = () => {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </>
+                </>
+              </tbody>
             )}
           </table>
         </div>

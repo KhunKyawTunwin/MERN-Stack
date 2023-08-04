@@ -12,7 +12,7 @@ import CatCard from "../catCard/CatCard";
 const Slide = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["gigs"],
-    queryFn: () => newRequest(`/gigs`).then((res) => res.data),
+    queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
   });
 
   return (

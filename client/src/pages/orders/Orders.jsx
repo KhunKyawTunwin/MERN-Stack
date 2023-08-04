@@ -12,6 +12,7 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
   });
+
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
     const buyerId = order.buyerId;
@@ -57,11 +58,11 @@ const Orders = () => {
             <tbody>
               {data.map((order) => (
                 <tr key={order._id}>
-                  <Link to={`/order/${order._id}`} className="link">
-                    <td>
+                  <td>
+                    <Link to={`/gig/${order.gigId}`} className="link">
                       <img className="imgOrder" src={order.img} alt="" />
-                    </td>
-                  </Link>
+                    </Link>
+                  </td>
                   <td>{order.title.substring(0, 50)} ...</td>
                   <td>{order.price} MMK</td>
                   <td>

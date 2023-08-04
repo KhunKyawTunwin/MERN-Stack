@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./catcard.scss";
+// const { search } = useLocation();
 
 const CatCard = ({ item }) => {
   return (
