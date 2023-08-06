@@ -55,20 +55,28 @@ export const getGig = async (req, res, next) => {
 };
 
 export const getGigs = async (req, res, next) => {
-  const q = req.query;
+  // const q = req.query;
+  const { userId, search, min, max, sort, cat } = req.query;
+
+  console.log("Data with {} :");
+  // console.log("Data with q:", q.cat);
+  // console.log("Data with q:", q.search);
+
   const filters = {
-    ...(q.userId && { userId: q.userId }),
-    ...(q.cat && { cat: q.cat }),
-    ...((q.min || q.max) && {
+    ...(userId && { userId }),
+    // ...(cat && { cat }),
+    ...((min || max) && {
       price: {
-        ...(q.min && { $gt: q.min }),
-        ...(q.max && { $lt: q.max }),
+        ...(min && { $gte: min }),
+        ...(max && { $lte: max }),
       },
     }),
-    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+    ...(search && { title: { $regex: search, $options: "i" } }),
   };
+
+  console.log("Filter dat is :", filters);
   try {
-    const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
+    const gigs = await Gig.find(filters).sort({ [sort]: -1 });
     if (!gigs || gigs.length === 0) {
       return next(createError(404, "Gigs not found!"));
     }

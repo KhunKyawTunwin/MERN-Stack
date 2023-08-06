@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import "./catcard.scss";
 // const { search } = useLocation();
 
-const CatCard = ({ item }) => {
+const CatCard = ({ cat, cover, title }) => {
   return (
     <div className="catCard">
-      <Link to={`/gigs?search=${item.cat}`} className="link">
-        <img src={item.cover} alt="" />
-        <span className="desc">{item.title}</span>
-        <span className="title">{item.cat}</span>
+      <Link to={`/gigs?search=${cat}`} className="link">
+        <img src={cover} alt="" />
+        <span className="desc">{title}</span>
+        <span className="title">{cat}</span>
       </Link>
     </div>
   );

@@ -1,12 +1,71 @@
-import { useReducer, useState } from "react";
+/* import {
+  update,
+  addFeatures,
+  addImages,
+  removeFeature,
+} from "../../features/addasset/addassetSlice";
 import "./Add.scss";
-import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
+import { useDispatch, useSelector } from "react-redux";
+
+import { useReducer, useState } from "react";
+// import { INITIAL_STATE, gigReducer } from "../../reducers/gigReducer";
 import upload from "../../utils/upload";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 import { useNavigate } from "react-router-dom";
-
+*/
 const Add = () => {
+  /*
+  const [singleFile, setSingleFile] = useState(undefined);
+  const [files, setFiles] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const { features } = useSelector((store) => store.addAsset);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (gig) => {
+      return newRequest.post("/gigs", gig);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["myGigs"]);
+    },
+  });
+
+  const handleChange = (name, value) => {
+    // e.preventDefault();
+    dispatch(update({ name, value }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // await mutation.mutateAsync(state);
+    navigate("/mygigs");
+  };
+  // console.log(state);
+
+  const handleFeature = (e) => {
+    e.preventDefault();
+    dispatch(addFeatures());
+  };
+
+  const handleUpload = async () => {
+    setUploading(true);
+    try {
+      const cover = await upload(singleFile);
+      const images = await Promise.all(
+        [...files].map(async (file) => {
+          const url = await upload(file);
+          return url;
+        })
+      );
+      setUploading(false);
+      dispatch(addImages(cover, images));
+    } catch (err) {
+      console.log(err.stack);
+    }
+  }; */
+
   const [singleFile, setSingleFile] = useState(undefined);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -59,6 +118,7 @@ const Add = () => {
       console.log(err.stack);
     }
   };
+  const { userId } = useSelector((store) => store.addAsset);
 
   return (
     <div className="add">
@@ -77,6 +137,8 @@ const Add = () => {
             <select name="cat" onChange={handleChange} id="Property">
               <option value="houses">Houses</option>
               <option value="land">Land</option>
+              <option value="farm">Farm</option>
+              <option value="fields">Field</option>
               <option value="free land">Free Land</option>
               <option value="hotels">Hotels</option>
               <option value="apartments">Apartments</option>
@@ -146,13 +208,9 @@ const Add = () => {
               <button type="submit">Add</button>
             </form>
             <div className="addedFeatures">
-              {state?.features?.map((feature) => (
+              {features?.map((feature) => (
                 <div className="item" key={feature}>
-                  <button
-                    onClick={() =>
-                      dispatch({ type: "REMOVE_FEATURE", payload: feature })
-                    }
-                  >
+                  <button onClick={() => dispatch(removeFeature)}>
                     {feature} <span>X</span>
                   </button>
                 </div>

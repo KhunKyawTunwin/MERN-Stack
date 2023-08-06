@@ -17,7 +17,7 @@ const Gig = () => {
     queryKey: ["gig"],
     queryFn: () => newRequest(`/gigs/single/${id}`).then((res) => res.data),
   });
-  console.log(data);
+
   const userId = data?.userId;
   const {
     isLoading: isLoadingUser,

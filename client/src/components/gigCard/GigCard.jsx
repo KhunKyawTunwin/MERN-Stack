@@ -31,7 +31,11 @@ const GigCard = ({ item }) => {
           </div>
         )}
         <Link to={`/gig/${item._id}`}>
-          <p>{item.desc}</p>
+          <p>
+            {item.desc.length <= 100
+              ? item.desc
+              : `${item.desc.substr(0, 100)}   Read more ...`}
+          </p>
         </Link>
         <div className="star">
           <img src="./img/star.png" alt="" />
