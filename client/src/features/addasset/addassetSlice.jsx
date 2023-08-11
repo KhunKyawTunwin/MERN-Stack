@@ -1,4 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+const fetchApiAssets = createAsyncThunk(
+  "addAsset/fetchApiAssets",
+  async () => {}
+);
 
 export const initialState = {
   userId: JSON.parse(localStorage.getItem("currentUser"))?.userId,
@@ -19,10 +24,7 @@ const addAssetSlice = createSlice({
   name: "addAsset",
   initialState,
   reducers: {
-    update: (state, { payload }) => {
-      const { name, value } = payload || {};
-      state[name] = value;
-    },
+    update: (state, action) => {},
     addImages: (state, action) => {
       const { cover, images } = action.payload;
       state.cover = cover;
@@ -38,9 +40,18 @@ const addAssetSlice = createSlice({
       );
     },
   },
+  extraReducers: {
+    [fetchApiAssets.pending]: () => {
+      console.log(pending);
+    },
+    [fetchApiAssets.fulfilled]: (state, payload) => {
+      console.log(payload);
+    },
+  },
 });
 
 export const { update, addImages, addFeatures, removeFeature } =
   addAssetSlice.actions;
 
 export default addAssetSlice.reducer;
+ */
