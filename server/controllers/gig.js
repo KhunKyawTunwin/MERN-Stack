@@ -4,7 +4,7 @@ import { createError } from "../utils/createError.js";
 export const createGig = async (req, res, next) => {
   const { title, desc, cover, price } = req.body;
   try {
-    if (!req.isSeller)
+    if (!req.roles === "Seller")
       return next(createError(403, "You must be a seller to create a gig."));
 
     if (!title || !desc || !cover || !price) {
@@ -23,11 +23,35 @@ export const createGig = async (req, res, next) => {
   }
 };
 
+export const gigUpdate = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Gig.findById(id);
+    try {
+      if (!post.userId) {
+        return next(createError(401, "You can update only your post!"));
+      }
+      const updatedPost = await Gig.findByIdAndUpdate(
+        id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedPost);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export const deleteGig = async (req, res, next) => {
   const { id } = req.params;
   try {
     const gig = await Gig.findById(id);
-    if (!req.isSeller)
+    if (!req.roles === "Admin")
       return next(createError(403, "Only sellers can create a gig!"));
     if (!gig) {
       return next(createError(404, "Gig not found."));
@@ -58,13 +82,9 @@ export const getGigs = async (req, res, next) => {
   // const q = req.query;
   const { userId, search, min, max, sort, cat } = req.query;
 
-  console.log("Data with {} :");
-  // console.log("Data with q:", q.cat);
-  // console.log("Data with q:", q.search);
-
   const filters = {
     ...(userId && { userId }),
-    // ...(cat && { cat }),
+    ...(cat && { cat }),
     ...((min || max) && {
       price: {
         ...(min && { $gte: min }),
@@ -74,7 +94,6 @@ export const getGigs = async (req, res, next) => {
     ...(search && { title: { $regex: search, $options: "i" } }),
   };
 
-  console.log("Filter dat is :", filters);
   try {
     const gigs = await Gig.find(filters).sort({ [sort]: -1 });
     if (!gigs || gigs.length === 0) {

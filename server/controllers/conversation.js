@@ -3,11 +3,14 @@ import { createError } from "../utils/createError.js";
 
 export const createConversation = async (req, res, next) => {
   const newConversation = new Conversation({
-    id: req.isSeller ? req.userIdd + req.body.to : req.body.to + req.userId,
-    sellerId: req.isSeller ? req.userId : req.body.to,
-    buyerId: req.isSeller ? req.body.to : req.userId,
-    readBySeller: req.isSeller,
-    readByBuyer: !req.isSeller,
+    id:
+      req.roles === "Seller"
+        ? req.userId + req.body.to
+        : req.body.to + req.userId,
+    sellerId: (req.roles = "Seller" ? req.userId : req.body.to),
+    buyerId: req.roles === "Seller" ? req.body.to : req.userId,
+    readBySeller: req.roles === "Seller ",
+    readByBuyer: !req.roles,
   });
 
   try {
@@ -21,7 +24,7 @@ export const createConversation = async (req, res, next) => {
 export const getConversations = async (req, res, next) => {
   try {
     const conversations = await Conversation.find(
-      req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }
+      req.roles ? { sellerId: req.userId } : { buyerId: req.userId }
     ).sort({ updatedAt: -1 });
     res.status(200).send(conversations);
   } catch (err) {
@@ -51,7 +54,7 @@ export const updateConversation = async (req, res, next) => {
           // readBySeller: true,
           // readByBuyer: true,
 
-          ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
+          ...(req.roles ? { readBySeller: true } : { readByBuyer: true }),
         },
       },
       { new: true }

@@ -51,7 +51,7 @@ const Slide = () => {
           >
             {data.map((card) => (
               <SwiperSlide key={card._id}>
-                <CatCard cat={card.cat} cover={card.cover} title={card.title} />
+                <CatCard items={card} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -29,16 +29,12 @@ const MyGigs = () => {
     mutation.mutate(id);
   };
 
-  const handleEdit = (id) => {
-    mutation.mutate(id);
-  };
-
   return (
     <div className="myGigs">
       <div className="container">
         <div className="title">
           <h1>{currentUser.username} #Assets</h1>
-          {currentUser.isSeller && (
+          {currentUser.roles === ("Admin" || "Seller") && (
             <Link to="/add" className="link">
               <button>Add New</button>
             </Link>
@@ -52,6 +48,7 @@ const MyGigs = () => {
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
+                <th>Status</th>
                 <th>Sales</th>
                 <th>Action</th>
               </tr>
@@ -72,14 +69,17 @@ const MyGigs = () => {
                       </Link>
                       <td>{gig.title}</td>
                       <td>{gig.price} MMK</td>
+                      <td>{"Pending"}</td>
                       <td>{gig.sales}</td>
                       <td className="editIcons">
-                        <img
-                          className="edit"
-                          src={isLoading ? "Editing ..." : "/img/edit.png"}
-                          alt="DeleteIcon"
-                          onClick={() => handleEdit(gig._id)}
-                        />{" "}
+                        <Link to={`/add`}>
+                          <img
+                            className="edit"
+                            src={isLoading ? "Editing ..." : "/img/edit.png"}
+                            alt="DeleteIcon"
+                            onClick=""
+                          />
+                        </Link>
                         <img
                           className="delete"
                           src={isLoading ? "Deleting" : "/img/Del.png"}

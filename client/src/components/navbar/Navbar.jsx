@@ -3,7 +3,6 @@ import { newRequest } from "../../api/url";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-import UserLists from "../../pages/userLists/UserLists";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -24,7 +23,6 @@ const Navbar = () => {
       }
     };
     document.addEventListener("mousedown", handler);
-    // return document.removeEventListener("mousedown", handler);
   });
 
   useEffect(() => {
@@ -60,7 +58,7 @@ const Navbar = () => {
           </Link>
           <span>Explore</span>
           <span>English</span>
-          {!currentUser?.isSeller && (
+          {!currentUser?.roles === "Seller" && (
             <Link to="/register" className="link">
               <span>Become a Seller</span>
             </Link>
@@ -73,14 +71,20 @@ const Navbar = () => {
               </span>
               {toggle && (
                 <div className="options">
-                  {currentUser?.isAdmin && (
+                  <p className="userInfo">
+                    <Link to="/profile" className="link">
+                      Profile
+                    </Link>
+                  </p>
+                  {currentUser?.roles === "Admin" && (
                     <p className="userInfo">
                       <Link to="/userslists" className="link">
                         Register Users Lists
                       </Link>
                     </p>
                   )}
-                  {currentUser?.isSeller && (
+                  {currentUser?.roles.includes("Admin") |
+                    currentUser?.roles.includes("Seller") && (
                     <>
                       <p className="userInfo">
                         <Link to="/mygigs" className="link">

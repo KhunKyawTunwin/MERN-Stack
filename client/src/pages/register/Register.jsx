@@ -11,17 +11,18 @@ import "./Register.scss";
 const Register = () => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
+  const [error, setError] = useState(false);
+
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
     img: "",
     country: "",
-    isSeller: false,
     desc: "",
+    roles: "User",
   });
 
-  // console.log(user);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -30,9 +31,15 @@ const Register = () => {
     });
   };
 
-  const handleSeller = (e) => {
+  // const handleSeller = (e) => {
+  //   setUser((prev) => {
+  //     return { ...prev, isSeller: e.target.checked };
+  //   });
+  // };
+
+  const handleUserRole = (e) => {
     setUser((prev) => {
-      return { ...prev, isSeller: e.target.checked };
+      return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
@@ -69,7 +76,7 @@ const Register = () => {
           />
           <label htmlFor="">Email</label>
           <input
-            autoComplete="off"
+            // autoComplete="off"
             required
             aria-describedby="uidnote"
             name="email"
@@ -88,6 +95,7 @@ const Register = () => {
           />
           <label htmlFor="">Profile Picture</label>
           <input
+            required
             type="file"
             onChange={(e) => {
               setFile(e.target.files[0]);
@@ -101,7 +109,7 @@ const Register = () => {
             onChange={handleChange}
           />
           <button type="submit" onClick={() => setLoad(!load)}>
-            {"Register"}
+            {load ? "Registering" : "Register"}
           </button>
           <div className="loginForm">
             <p>Already have an account ?</p>
@@ -114,10 +122,19 @@ const Register = () => {
           <h1>I want to become a seller</h1>
           <div className="toggle">
             <label htmlFor="">Activate the seller account</label>
-            <label className="switch">
+            <select
+              name="roles"
+              className="selectData"
+              onChange={handleUserRole}
+            >
+              <option value="user">Default</option>
+              <option value="user">User</option>
+              <option value="seller">Seller</option>
+            </select>
+            {/* <label className="switch">
               <input type="checkbox" onChange={handleSeller} />
               <span className="slider round"></span>
-            </label>
+            </label> */}
           </div>
           <label htmlFor="">Phone Number</label>
           <input

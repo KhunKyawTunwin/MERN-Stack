@@ -1,6 +1,9 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import mailer from "nodemailer";
+
 import { createError } from "../utils/createError.js";
 
 export const register = async (req, res, next) => {
@@ -38,15 +41,78 @@ export const register = async (req, res, next) => {
     const saltRounds = 10;
     const hashedPw = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({
-      ...req.body,
-      password: hashedPw,
+    // const id = uuidv4();
+
+    const certificate = jwt.sign(
+      { username, email, password },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "20m",
+      }
+    );
+
+    const transporter = mailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.GENPASSWORD,
+      },
     });
 
-    await newUser.save();
-    res.status(201).json({ message: "User created!", userId: newUser._id });
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: req.body.email,
+      subject: "How about our mail.",
+      html: `
+        <h2>Please click on given link to activate </h2>
+        <p>${process.env.CLIENT_URL}/api/auth/verify/${certificate}/${email}</p>
+
+      
+      `,
+    };
+    // Click to comfirm your mail link
+    //localhost:${5000}/api/auth/verify/${certificate}
+
+    transporter.sendMail(mailOptions, async (err, info) => {
+      if (err) {
+        res.status(500).send("Internet Server Error!");
+        return;
+      }
+
+      const newUser = new User({
+        ...req.body,
+        password: hashedPw,
+        verified: false,
+      });
+
+      await newUser.save();
+      res.status(201).json({ message: "User created!", userId: newUser._id });
+    });
   } catch (err) {
     next(err);
+  }
+};
+
+export const verifyGenToken = async (req, res) => {
+  const { genToken, email } = req.params;
+  try {
+    const verifiedTokenLink = jwt.verify(genToken, process.env.JWT_KEY);
+    const user = await User.findOne({ email });
+
+    if (!user === verifiedTokenLink) {
+      return res.status(404).send("User not found");
+    }
+
+    if (user.verified) {
+      return res.status(400).send("Email already verified");
+    }
+    user.verified = true;
+    await user.save();
+
+    res.redirect("http://localhost:5173/login");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(`${error}`);
   }
 };
 
@@ -54,9 +120,9 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user)
+    if (!user.verified)
       return next(
-        createError(404, "A user with this email could not be found.")
+        createError(400, "A user with this email need to verify account!")
       );
 
     const isEqual = await bcrypt.compare(password, user.password);
@@ -66,7 +132,7 @@ export const login = async (req, res, next) => {
       {
         email: user.email,
         userId: user._id,
-        isSeller: user.isSeller,
+        roles: user.roles,
       },
       process.env.JWT_KEY,
       { expiresIn: "10h" }
@@ -76,8 +142,7 @@ export const login = async (req, res, next) => {
       username: user.username,
       email: user.email,
       img: user.img,
-      isSeller: user.isSeller,
-      isAdmin: user.isAdmin,
+      roles: user.roles,
     });
   } catch (err) {
     next(err);

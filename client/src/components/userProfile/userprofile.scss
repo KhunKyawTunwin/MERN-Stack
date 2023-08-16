@@ -1,0 +1,33 @@
+.user-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 2rem;
+  min-height: 90vh;
+
+  .user-profile {
+    width: 340px;
+    height: 340px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .about {
+      margin-top: 1rem;
+      text-align: justify;
+
+      h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .user-info {
+    justify-content: center;
+  }
+}

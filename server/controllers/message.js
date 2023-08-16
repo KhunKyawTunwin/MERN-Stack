@@ -15,8 +15,8 @@ export const createMessage = async (req, res, next) => {
       { id: conversationId },
       {
         $set: {
-          readBySeller: req.isSeller,
-          readByBuyer: !req.isSeller,
+          readBySeller: req.roles === "Seller",
+          readByBuyer: req.roles === "User",
           lastMessage: desc,
         },
       },

@@ -24,14 +24,14 @@ const Orders = () => {
     } catch (err) {
       if (err.response.status === 404) {
         const res = await newRequest.post(`/conversations`, {
-          to: currentUser.isSeller ? buyerId : sellerId,
+          to: currentUser.roles === "Seller" ? buyerId : sellerId,
         });
         navigate(`/message/${res.data.id}`);
       }
     }
   };
 
-  const regex = /0\d{3}\.\.\.\d{3}/;
+  // const regex = /0\d{3}\.\.\.\d{3}/;
   return (
     <div className="orders">
       {isLoading ? (
@@ -50,7 +50,9 @@ const Orders = () => {
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
-                <th>{currentUser?.isSeller ? "Buyer" : "Seller"} ID</th>
+                <th>
+                  {currentUser?.roles === "Seller" ? "Buyer" : "Seller"} ID
+                </th>
                 <th>Contact</th>
               </tr>
             </thead>
@@ -66,7 +68,7 @@ const Orders = () => {
                   <td>{order.title.substring(0, 50)} ...</td>
                   <td>{order.price} MMK</td>
                   <td>
-                    {currentUser?.isSeller
+                    {currentUser?.roles === "Seller"
                       ? order.buyerId.substring(0, 5)
                       : order.sellerId.substring(0, 10)}
                     &nbsp;...

@@ -58,6 +58,10 @@ const GigSchema = new Schema(
       type: [String],
       required: false,
     },
+    postAccept: {
+      type: Boolean,
+      default: false,
+    },
     sales: {
       type: Number,
       default: 0,

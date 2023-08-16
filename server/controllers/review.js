@@ -5,7 +5,7 @@ import Gig from "../models/gig.js";
 export const createReview = async (req, res, next) => {
   const { gigId, desc, star } = req.body;
 
-  if (req.isSeller) {
+  if (req.roles === "Seller") {
     return next(createError(403, "Seller can't create review!"));
   }
 

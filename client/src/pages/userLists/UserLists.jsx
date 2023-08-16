@@ -35,9 +35,9 @@ const UserLists = () => {
                 </div>
                 <div className="datalist">
                   <h3>
-                    {user.isAdmin & user.isSeller
+                    {(user.roles === "Admin") & (user.roles === "Seller")
                       ? "Admin"
-                      : user.isSeller
+                      : user.roles === "Seller"
                       ? "Seller & Buyer"
                       : "Normal & Buyer"}
                   </h3>

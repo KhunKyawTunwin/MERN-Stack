@@ -6,6 +6,7 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Username is required!"],
       unique: true,
+      trim: true,
       match: [
         /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9]+(?<![_.])$/,
         "Username invalid, it should contain 8-20 alphanumeric letters and be unique!",
@@ -15,15 +16,17 @@ const UserSchema = new Schema(
       type: String,
       unique: [true, "Email already exits!"],
       required: [true, "Email is required!"],
+      trim: true,
     },
     password: {
       type: String,
       required: true,
+      trim: true,
     },
     img: {
       type: String,
       required: false,
-      default: "",
+      // default: "",
     },
     country: {
       type: String,
@@ -37,14 +40,23 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
-    isSeller: {
+    verified: {
       type: Boolean,
       default: false,
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
+    roles: {
+      type: String,
+      default: "User",
+      enum: ["User", "Seller", "Admin"],
     },
+    // isSeller: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // isAdmin: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   { timestamps: true }
 );

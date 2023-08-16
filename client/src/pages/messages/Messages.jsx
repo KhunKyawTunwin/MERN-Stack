@@ -42,7 +42,7 @@ const Messages = () => {
           <table>
             <thead>
               <tr>
-                <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+                <th>{currentUser.roles === "Seller" ? "Buyer" : "Seller"}</th>
                 <th>Last Message</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -52,15 +52,17 @@ const Messages = () => {
               {data.map((conver) => (
                 <tr
                   className={
-                    (currentUser.isSeller && !conver.readBySeller) ||
-                    (!currentUser.isSeller && !conver.readByBuyer
+                    (currentUser.roles === "Seller" && !conver.readBySeller) ||
+                    (!currentUser.roles === "Seller" && !conver.readByBuyer
                       ? "active"
                       : "")
                   }
                   key={conver.id}
                 >
                   <td>
-                    {currentUser.isSeller ? conver.buyerId : conver.sellerId}
+                    {currentUser.roles === "Seller"
+                      ? conver.buyerId
+                      : conver.sellerId}
                   </td>
                   <td>
                     <Link className="link" to={`/message/${conver.id}`}>
@@ -69,14 +71,15 @@ const Messages = () => {
                   </td>
                   <td>{moment(conver.updatedAt).fromNow()}</td>
                   <td>
-                    {(currentUser.isSeller && !conver.readBySeller) ||
-                      (!currentUser.isSeller && !conver.readByBuyer && (
-                        <Link to={`/message/${currentUser.userId}`}>
-                          <button onClick={() => handleRead(conver.id)}>
-                            Mark as Read
-                          </button>
-                        </Link>
-                      ))}
+                    {(currentUser.roles === "Seller" && !conver.readBySeller) ||
+                      (!currentUser.roles === "Seller" &&
+                        !conver.readByBuyer && (
+                          <Link to={`/message/${currentUser.userId}`}>
+                            <button onClick={() => handleRead(conver.id)}>
+                              Mark as Read
+                            </button>
+                          </Link>
+                        ))}
                   </td>
                 </tr>
               ))}

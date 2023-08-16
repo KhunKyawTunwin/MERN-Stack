@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import Possibility from "./pages/possibility/Possibility";
 import UserLists from "./pages/userLists/UserLists";
+import Profile from "./components/userProfile/Profile";
 
 function App() {
   const queryClient = new QueryClient();
@@ -98,6 +99,10 @@ function App() {
         {
           path: "/success",
           element: <Success />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },

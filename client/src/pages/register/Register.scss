@@ -66,6 +66,16 @@
         align-items: center;
         gap: 10px;
 
+        .selectData {
+          padding: 0.5rem;
+          border-radius: 5px;
+          outline: none;
+
+          option {
+            font-size: 1rem;
+            font-weight: 400;
+          }
+        }
         .switch {
           position: relative;
           display: inline-block;

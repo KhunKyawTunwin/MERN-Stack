@@ -20,13 +20,15 @@ export const verifyToken = (req, res, next) => {
   }
 
   req.userId = decodedToken.userId;
-  req.isSeller = decodedToken.isSeller;
+  req.roles = decodedToken.roles;
+
   next();
 };
 
 export const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, next, () => {
-    if (!req.isAdmin) return next(createError(403, "You are not authorized!"));
+    if (req.roles !== "Admin")
+      return next(createError(403, "You are not authorized!"));
     next();
   });
 };
