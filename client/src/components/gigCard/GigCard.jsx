@@ -13,6 +13,10 @@ const GigCard = ({ item }) => {
       }),
   });
 
+  if (item.postAccept === false) {
+    return null;
+  }
+
   return (
     <div className="gigCard">
       <Link to={`/gig/${item._id}`} className="link">

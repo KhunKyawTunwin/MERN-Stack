@@ -11,39 +11,50 @@ export const createGig = async (req, res, next) => {
       throw new Error("Please fill in all the required fields.");
     }
 
+    const postAccept = req.roles === "Admin";
+    console.log(req.roles);
+
     const newGig = new Gig({
       userId: req.userId,
+      postAccept, // Set the postAccept property
       ...req.body,
     });
 
     const savedGig = await newGig.save();
+
+    // If the user's role is "Admin", update the postAccept property to true
+    if (postAccept) {
+      savedGig.postAccept = true;
+      await savedGig.save();
+    }
+
     res.status(201).json({ savedGig, message: "Gig created successfully!" });
   } catch (err) {
     next(err);
   }
 };
 
-export const gigUpdate = async (req, res) => {
+export const gigUpdate = async (req, res, next) => {
   const { id } = req.params;
+  console.log("id ", id);
+
   try {
     const post = await Gig.findById(id);
-    try {
-      if (!post.userId) {
-        return next(createError(401, "You can update only your post!"));
-      }
-      const updatedPost = await Gig.findByIdAndUpdate(
-        id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      );
-      res.status(200).json(updatedPost);
-    } catch (err) {
-      res.status(500).json(err);
+
+    console.log("post.id", id);
+    if (!post.userId) {
+      return next(createError(401, "You can update only your post!"));
     }
+    const updatedPost = await Gig.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 };
 

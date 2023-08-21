@@ -60,7 +60,7 @@ const MyGigs = () => {
             ) : (
               <tbody>
                 <>
-                  {data.map((gig) => (
+                  {data?.map((gig) => (
                     <tr key={gig._id}>
                       <Link to={`/gig/${gig._id}`} className="link">
                         <td>
@@ -69,15 +69,14 @@ const MyGigs = () => {
                       </Link>
                       <td>{gig.title}</td>
                       <td>{gig.price} MMK</td>
-                      <td>{"Pending"}</td>
+                      <td>{gig.postAccept === true ? "Active" : "Pending"}</td>
                       <td>{gig.sales}</td>
                       <td className="editIcons">
-                        <Link to={`/add`}>
+                        <Link to={`/editgig/${gig._id}`}>
                           <img
                             className="edit"
                             src={isLoading ? "Editing ..." : "/img/edit.png"}
                             alt="DeleteIcon"
-                            onClick=""
                           />
                         </Link>
                         <img

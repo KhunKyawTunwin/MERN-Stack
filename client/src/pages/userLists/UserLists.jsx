@@ -7,10 +7,9 @@ const UserLists = () => {
     queryKey: ["users"],
     queryFn: () => newRequest.get("/users").then((res) => res.data),
   });
-  console.log(data);
 
   return (
-    <section className="user-container">
+    <section className="users-container">
       {isLoading ? (
         "Loading ..."
       ) : error ? (
@@ -35,11 +34,11 @@ const UserLists = () => {
                 </div>
                 <div className="datalist">
                   <h3>
-                    {(user.roles === "Admin") & (user.roles === "Seller")
-                      ? "Admin"
+                    {user.roles === "Admin"
+                      ? "Admin & Seller"
                       : user.roles === "Seller"
                       ? "Seller & Buyer"
-                      : "Normal & Buyer"}
+                      : "User & Buyer"}
                   </h3>
                   <p></p>
                 </div>

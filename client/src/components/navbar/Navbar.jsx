@@ -42,7 +42,7 @@ const Navbar = () => {
       console.log(error);
     }
   };
-
+  // console.log(`Current user Role ${currentUser.roles}`);
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
@@ -77,14 +77,21 @@ const Navbar = () => {
                     </Link>
                   </p>
                   {currentUser?.roles === "Admin" && (
-                    <p className="userInfo">
-                      <Link to="/userslists" className="link">
-                        Register Users Lists
-                      </Link>
-                    </p>
+                    <>
+                      <p className="userInfo">
+                        <Link to="/mydash" className="link">
+                          Dashboard
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link to="/userslists" className="link">
+                          Register Users Lists
+                        </Link>
+                      </p>
+                    </>
                   )}
-                  {currentUser?.roles.includes("Admin") |
-                    currentUser?.roles.includes("Seller") && (
+
+                  {currentUser?.roles === "Admin" || "Seller" ? (
                     <>
                       <p className="userInfo">
                         <Link to="/mygigs" className="link">
@@ -97,6 +104,8 @@ const Navbar = () => {
                         </Link>
                       </p>
                     </>
+                  ) : (
+                    ""
                   )}
                   <p className="userInfo">
                     <Link to="/orders" className="link">

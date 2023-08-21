@@ -1,7 +1,6 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
 import mailer from "nodemailer";
 
 import { createError } from "../utils/createError.js";
@@ -13,25 +12,21 @@ export const register = async (req, res, next) => {
     if (existingUser) {
       return res.status(409).json({ message: "User already exists." });
     }
-
     if ((!username || !email, !password)) {
       return res.status(400).json({ message: error.message });
     }
-
     if (!/^[a-zA-Z ]*$/.test(username)) {
       return res.status(400).json({
         status: "FAILED",
         message: "Invalid name entered",
       });
     }
-
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       return res.status(400).json({
         status: "FAILED",
         message: "Invalid email entered",
       });
     }
-
     if (password.length < 5) {
       return res.status(400).json({
         status: "FAILED",
@@ -40,9 +35,6 @@ export const register = async (req, res, next) => {
     }
     const saltRounds = 10;
     const hashedPw = await bcrypt.hash(password, saltRounds);
-
-    // const id = uuidv4();
-
     const certificate = jwt.sign(
       { username, email, password },
       process.env.JWT_KEY,
@@ -50,7 +42,6 @@ export const register = async (req, res, next) => {
         expiresIn: "20m",
       }
     );
-
     const transporter = mailer.createTransport({
       service: "gmail",
       auth: {
@@ -58,7 +49,6 @@ export const register = async (req, res, next) => {
         pass: process.env.GENPASSWORD,
       },
     });
-
     const mailOptions = {
       from: process.env.EMAIL,
       to: req.body.email,
@@ -66,25 +56,16 @@ export const register = async (req, res, next) => {
       html: `
         <h2>Please click on given link to activate </h2>
         <p>${process.env.CLIENT_URL}/api/auth/verify/${certificate}/${email}</p>
-
-      
       `,
     };
-    // Click to comfirm your mail link
-    //localhost:${5000}/api/auth/verify/${certificate}
-
     transporter.sendMail(mailOptions, async (err, info) => {
-      if (err) {
-        res.status(500).send("Internet Server Error!");
-        return;
-      }
+      if (err) next(err);
 
       const newUser = new User({
         ...req.body,
         password: hashedPw,
         verified: false,
       });
-
       await newUser.save();
       res.status(201).json({ message: "User created!", userId: newUser._id });
     });
@@ -100,7 +81,7 @@ export const verifyGenToken = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user === verifiedTokenLink) {
-      return res.status(404).send("User not found");
+      return res.status(404).send("User not found!");
     }
 
     if (user.verified) {

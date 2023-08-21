@@ -49,11 +49,16 @@ const Slide = () => {
             modules={[FreeMode, Pagination]}
             className="mySwiper"
           >
-            {data.map((card) => (
-              <SwiperSlide key={card._id}>
-                <CatCard items={card} />
-              </SwiperSlide>
-            ))}
+            {data?.map((card) => {
+              if (card?.postAccept) {
+                return (
+                  <SwiperSlide SwiperSlide key={card._id}>
+                    <CatCard item={card} />
+                  </SwiperSlide>
+                );
+              }
+              return null;
+            })}
           </Swiper>
         )}
       </div>

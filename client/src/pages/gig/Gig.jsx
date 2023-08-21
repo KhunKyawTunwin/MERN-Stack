@@ -15,7 +15,7 @@ const Gig = () => {
   const { id } = useParams();
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
-    queryFn: () => newRequest(`/gigs/single/${id}`).then((res) => res.data),
+    queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
 
   const userId = data?.userId;

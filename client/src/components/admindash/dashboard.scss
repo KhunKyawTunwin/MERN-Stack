@@ -1,0 +1,60 @@
+.mydash {
+  display: flex;
+  justify-content: center;
+  min-height: 50vh;
+
+  .dash-container {
+    width: 100%;
+    padding: 1rem 4rem;
+
+    .dash-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  hr {
+    margin-top: 1rem;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      height: 50px;
+
+      th {
+        text-align: left;
+      }
+
+      td {
+        .imgGis {
+          width: 50px;
+          height: 25px;
+          object-fit: cover;
+        }
+
+        &:nth-child(even) {
+          background-color: #1dbf730f;
+        }
+      }
+      .btnFlex {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          border: 1px solid rgb(58, 214, 58);
+          border-radius: 10px;
+          background: rgb(10, 216, 120);
+          padding: 5px 10px;
+          margin: 0px 5px;
+        }
+
+        .delitem {
+          background: tomato;
+        }
+      }
+    }
+  }
+}

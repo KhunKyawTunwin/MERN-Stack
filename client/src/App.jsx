@@ -22,6 +22,8 @@ import React from "react";
 import Possibility from "./pages/possibility/Possibility";
 import UserLists from "./pages/userLists/UserLists";
 import Profile from "./components/userProfile/Profile";
+import UpdatePost from "./pages/updateGig/updatePost";
+import Dashboard from "./components/admindash/Dashboard";
 
 function App() {
   const queryClient = new QueryClient();
@@ -65,12 +67,20 @@ function App() {
           element: <Gig />,
         },
         {
+          path: "/editgig/:id",
+          element: <UpdatePost />,
+        },
+        {
           path: "/orders",
           element: <Orders />,
         },
         {
           path: "/mygigs",
           element: <MyGigs />,
+        },
+        {
+          path: "/mydash",
+          element: <Dashboard />,
         },
         {
           path: "/add",

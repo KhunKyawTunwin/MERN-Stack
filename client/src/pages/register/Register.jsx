@@ -5,13 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "./Register.scss";
 
-// const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-
 const Register = () => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
 
   const [user, setUser] = useState({
     username: "",
@@ -31,12 +28,6 @@ const Register = () => {
     });
   };
 
-  // const handleSeller = (e) => {
-  //   setUser((prev) => {
-  //     return { ...prev, isSeller: e.target.checked };
-  //   });
-  // };
-
   const handleUserRole = (e) => {
     setUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
@@ -54,7 +45,6 @@ const Register = () => {
       setLoad(true);
       navigate("/login");
     } catch (err) {
-      console.log(err);
       throw err;
     }
   };
@@ -68,7 +58,6 @@ const Register = () => {
           <input
             name="username"
             type="text"
-            // autoComplete="off"
             required
             aria-describedby="uidnote"
             placeholder="mrkhuncode"
@@ -76,7 +65,6 @@ const Register = () => {
           />
           <label htmlFor="">Email</label>
           <input
-            // autoComplete="off"
             required
             aria-describedby="uidnote"
             name="email"
@@ -127,14 +115,10 @@ const Register = () => {
               className="selectData"
               onChange={handleUserRole}
             >
-              <option value="user">Default</option>
-              <option value="user">User</option>
-              <option value="seller">Seller</option>
+              <option value="User">Default</option>
+              <option value="User">User</option>
+              <option value="Seller">Seller</option>
             </select>
-            {/* <label className="switch">
-              <input type="checkbox" onChange={handleSeller} />
-              <span className="slider round"></span>
-            </label> */}
           </div>
           <label htmlFor="">Phone Number</label>
           <input

@@ -26,7 +26,6 @@ const UserSchema = new Schema(
     img: {
       type: String,
       required: false,
-      // default: "",
     },
     country: {
       type: String,
@@ -35,6 +34,7 @@ const UserSchema = new Schema(
     phone: {
       type: String,
       required: false,
+      trim: true,
     },
     desc: {
       type: String,
@@ -49,14 +49,6 @@ const UserSchema = new Schema(
       default: "User",
       enum: ["User", "Seller", "Admin"],
     },
-    // isSeller: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // isAdmin: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   { timestamps: true }
 );
