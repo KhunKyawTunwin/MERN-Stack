@@ -2,18 +2,46 @@ import { Link } from "react-router-dom";
 import "./dashboard.scss";
 import currentUserData from "../../utils/currentUserData";
 import { newRequest } from "../../api/url";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
 
 const Dashboard = () => {
   const currentUser = currentUserData();
+  const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
     queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
   });
 
-  console.log("DAta is ", data);
+  const mutation = useMutation({
+    mutationFn: (id) => {
+      return newRequest.delete(`/gigs/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["myGig"]);
+    },
+  });
+
+  const mutationForEdit = useMutation({
+    mutationFn: (id) => {
+      return newRequest.put(`/gigs/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["myGig"]);
+    },
+  });
+
+  const handleDelete = (id) => {
+    mutation.mutate(id);
+  };
+
+  const handleEdit = (id) => {
+    mutationForEdit.mutate(id);
+  };
+
+  console.log(`curret user data is ${currentUser.username}`);
+
   return (
     <div className="mydash">
       <div className="dash-container">
@@ -27,7 +55,7 @@ const Dashboard = () => {
               <tr>
                 <th>Image</th>
                 <th>Title</th>
-                <th>Price</th>
+                <th>Post By</th>
                 <th>Status</th>
                 <th>Sales</th>
                 <th>Action</th>
@@ -49,19 +77,31 @@ const Dashboard = () => {
                           </td>
                         </Link>
                         <td>{gig.title}</td>
-                        <td>{gig.price} MMK</td>
+                        <td>
+                          {gig.userId === currentUser.userId
+                            ? currentUser.username
+                            : gig.userId.substring(0, 10)}
+                          {""}
+                          ....
+                        </td>
                         <td>{"Pending"}</td>
                         <td>{gig.sales}</td>
+
                         {currentUser.roles === "Admin" && (
-                          <td>
-                            <div className="btnFlex">
-                              <Link to="/" className="link">
-                                <span className="delitem">Delete</span>
-                                <span>Accept</span>
-                                <span>Review</span>
-                              </Link>
-                            </div>
-                          </td>
+                          <div className="btnFlex">
+                            <span
+                              onClick={() => handleDelete(gig._id)}
+                              className="delitem"
+                            >
+                              Delete
+                            </span>
+                            <span onClick={() => handleEdit(gig._id)}>
+                              Accept
+                            </span>
+                            <Link to={`/gig/${gig._id}`} className="link">
+                              <span>Review</span>
+                            </Link>
+                          </div>
                         )}
                       </tr>
                     )}

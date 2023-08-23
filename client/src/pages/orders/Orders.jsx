@@ -57,33 +57,35 @@ const Orders = () => {
               </tr>
             </thead>
 
-            <tbody>
-              {data.map((order) => (
-                <tr key={order._id}>
-                  <td>
-                    <Link to={`/gig/${order.gigId}`} className="link">
-                      <img className="imgOrder" src={order.img} alt="" />
-                    </Link>
-                  </td>
-                  <td>{order.title.substring(0, 50)} ...</td>
-                  <td>{order.price} MMK</td>
-                  <td>
-                    {currentUser?.roles === "Seller"
-                      ? order.buyerId.substring(0, 5)
-                      : order.sellerId.substring(0, 10)}
-                    &nbsp;...
-                  </td>
-                  <td>
-                    <img
-                      className="delete"
-                      src="/img/message.png"
-                      alt="chatboxIcon"
-                      onClick={() => handleContact(order)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            {data.map((order) => (
+              <tbody>
+                {order?.gigId && (
+                  <tr key={order._id}>
+                    <td>
+                      <Link to={`/gig/${order.gigId}`} className="link">
+                        <img className="imgOrder" src={order.img} alt="" />
+                      </Link>
+                    </td>
+                    <td>{order.title.substring(0, 50)} ...</td>
+                    <td>{order.price} MMK</td>
+                    <td>
+                      {currentUser?.roles === "Seller"
+                        ? order.buyerId.substring(0, 5)
+                        : order.sellerId.substring(0, 10)}
+                      &nbsp;...
+                    </td>
+                    <td>
+                      <img
+                        className="delete"
+                        src="/img/message.png"
+                        alt="chatboxIcon"
+                        onClick={() => handleContact(order)}
+                      />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            ))}
           </table>
         </div>
       )}

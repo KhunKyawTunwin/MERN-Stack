@@ -12,7 +12,7 @@ const MyGigs = () => {
     queryKey: ["myGigs"],
     queryFn: () =>
       newRequest
-        .get(`/gigs/?userId=${currentUser.userId}`)
+        .get(`/gigs?userId=${currentUser.userId}`)
         .then((res) => res.data),
   });
 
@@ -62,6 +62,7 @@ const MyGigs = () => {
                 <>
                   {data?.map((gig) => (
                     <tr key={gig._id}>
+                      {console.log("Gig data", gig)}
                       <Link to={`/gig/${gig._id}`} className="link">
                         <td>
                           <img className="imgGis" src={gig.cover} alt="" />
@@ -72,7 +73,7 @@ const MyGigs = () => {
                       <td>{gig.postAccept === true ? "Active" : "Pending"}</td>
                       <td>{gig.sales}</td>
                       <td className="editIcons">
-                        <Link to={`/editgig/${gig._id}`}>
+                        <Link to={`/editgig/${gig._id}`} className="link">
                           <img
                             className="edit"
                             src={isLoading ? "Editing ..." : "/img/edit.png"}

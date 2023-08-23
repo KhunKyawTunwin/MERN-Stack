@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken } from "../middleware/is-auth.js";
+import { verifyAdmin, verifyToken } from "../middleware/is-auth.js";
 import {
   createGig,
   deleteGig,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post("/", verifyToken, createGig);
 router.delete("/:id", verifyToken, deleteGig);
-router.put("/:id", verifyToken, gigUpdate);
+router.put("/:id", verifyAdmin, gigUpdate);
 router.get("/single/:id", getGig);
 router.get("/", getGigs);
 

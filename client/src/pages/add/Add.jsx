@@ -62,10 +62,10 @@ const Add = () => {
   };
 
   return (
-    <div className="add">
-      <div className="container">
+    <div className="newAdd">
+      <div className="addContainer">
         <h1>Add New Gig</h1>
-        <div className="sections">
+        <div className="sections_add">
           <div className="left">
             <label htmlFor="">Title</label>
             <input

@@ -12,7 +12,8 @@ export const createGig = async (req, res, next) => {
     }
 
     const postAccept = req.roles === "Admin";
-    console.log(req.roles);
+    console.log("UserId in backend", req.userId);
+    console.log("UserName in backend", req.username);
 
     const newGig = new Gig({
       userId: req.userId,
@@ -47,9 +48,7 @@ export const gigUpdate = async (req, res, next) => {
     }
     const updatedPost = await Gig.findByIdAndUpdate(
       id,
-      {
-        $set: req.body,
-      },
+      { ...req.body, $set: { postAccept: true } },
       { new: true }
     );
     res.status(200).json(updatedPost);
@@ -62,14 +61,15 @@ export const deleteGig = async (req, res, next) => {
   const { id } = req.params;
   try {
     const gig = await Gig.findById(id);
-    if (!req.roles === "Admin")
-      return next(createError(403, "Only sellers can create a gig!"));
+    // if (req.roles !== "Admin")
+    //   return next(createError(403, "Only admin can delete gig!"));
     if (!gig) {
       return next(createError(404, "Gig not found."));
     }
     if (gig.userId !== req.userId) {
       return next(createError(403, "You can delete only at your gigs!"));
     }
+
     await Gig.findByIdAndDelete(id);
     res.status(200).send("Gig has been deleted");
   } catch (err) {
@@ -90,28 +90,48 @@ export const getGig = async (req, res, next) => {
 };
 
 export const getGigs = async (req, res, next) => {
-  // const q = req.query;
-  const { userId, search, min, max, sort, cat } = req.query;
-
+  const q = req.query;
+  console.log("User cat in Qery ", q.search, "User cat is ", q.searchGigs);
   const filters = {
-    ...(userId && { userId }),
-    ...(cat && { cat }),
-    ...((min || max) && {
+    ...(q.userId && { userId: q.userId }),
+    // ...(q.cat && { cat: q.cat }),
+    ...(q.searchGigs && { cat: q.searchGigs }),
+    ...((q.min || q.max) && {
       price: {
-        ...(min && { $gte: min }),
-        ...(max && { $lte: max }),
+        ...(q.min && { $gt: q.min }),
+        ...(q.max && { $lt: q.max }),
       },
     }),
-    ...(search && { title: { $regex: search, $options: "i" } }),
+    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
-
   try {
-    const gigs = await Gig.find(filters).sort({ [sort]: -1 });
-    if (!gigs || gigs.length === 0) {
-      return next(createError(404, "Gigs not found!"));
-    }
-    res.status(200).json(gigs);
+    const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
+    res.status(200).send(gigs);
   } catch (err) {
     next(err);
   }
+
+  // const { userId, min, max, sort, search, cat } = req.query;
+
+  // const filters = {
+  //   ...(userId && { userId }),
+  //   ...(search && { search }),
+  //   ...((min || max) && {
+  //     price: {
+  //       ...(min && { $gte: min }),
+  //       ...(max && { $lte: max }),
+  //     },
+  //   }),
+  //   ...(search && { title: { $regex: search, $options: "i" } }),
+  // };
+
+  // try {
+  //   const gigs = await Gig.find(filters).sort({ [sort]: -1 });
+  //   if (!gigs || gigs.length === 0 || gigs.postAccept === false) {
+  //     return next(createError(404, "Gigs not found!"));
+  //   }
+  //   res.status(200).json(gigs);
+  // } catch (err) {
+  //   next(err);
+  // }
 };

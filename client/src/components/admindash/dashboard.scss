@@ -1,7 +1,7 @@
 .mydash {
   display: flex;
   justify-content: center;
-  min-height: 50vh;
+  min-height: 70vh;
 
   .dash-container {
     width: 100%;
@@ -49,6 +49,7 @@
           background: rgb(10, 216, 120);
           padding: 5px 10px;
           margin: 0px 5px;
+          cursor: pointer;
         }
 
         .delitem {

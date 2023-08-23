@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 
 import "swiper/css";
-// import "swiper/css/pagination";
 import "./slide.scss";
 import CatCard from "../catCard/CatCard";
 
@@ -50,9 +49,9 @@ const Slide = () => {
             className="mySwiper"
           >
             {data?.map((card) => {
-              if (card?.postAccept) {
+              if (card?.postAccept === true) {
                 return (
-                  <SwiperSlide SwiperSlide key={card._id}>
+                  <SwiperSlide key={card._id}>
                     <CatCard item={card} />
                   </SwiperSlide>
                 );

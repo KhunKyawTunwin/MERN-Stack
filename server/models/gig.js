@@ -6,6 +6,11 @@ const GigSchema = new Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: Schema.Types.String,
+      // required: true,
+      ref: "User",
+    },
     title: {
       type: String,
       required: true,

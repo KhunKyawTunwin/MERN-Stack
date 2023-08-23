@@ -42,7 +42,6 @@ const Navbar = () => {
       console.log(error);
     }
   };
-  // console.log(`Current user Role ${currentUser.roles}`);
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
@@ -90,8 +89,8 @@ const Navbar = () => {
                       </p>
                     </>
                   )}
-
-                  {currentUser?.roles === "Admin" || "Seller" ? (
+                  {currentUser.roles === "Admin" ||
+                  currentUser.roles === "Seller" ? (
                     <>
                       <p className="userInfo">
                         <Link to="/mygigs" className="link">
@@ -103,25 +102,41 @@ const Navbar = () => {
                           Add New Assets
                         </Link>
                       </p>
+                      <p className="userInfo">
+                        <Link to="/orders" className="link">
+                          Orders
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link to="/messages" className="link">
+                          Messages
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link onClick={handleLogout} className="link">
+                          Logout
+                        </Link>
+                      </p>
                     </>
                   ) : (
-                    ""
+                    <>
+                      <p className="userInfo">
+                        <Link to="/orders" className="link">
+                          Orders
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link to="/messages" className="link">
+                          Messages
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link onClick={handleLogout} className="link">
+                          Logout
+                        </Link>
+                      </p>
+                    </>
                   )}
-                  <p className="userInfo">
-                    <Link to="/orders" className="link">
-                      Orders
-                    </Link>
-                  </p>
-                  <p className="userInfo">
-                    <Link to="/messages" className="link">
-                      Messages
-                    </Link>
-                  </p>
-                  <p className="userInfo">
-                    <Link onClick={handleLogout} className="link">
-                      Logout
-                    </Link>
-                  </p>
                 </div>
               )}
             </div>
