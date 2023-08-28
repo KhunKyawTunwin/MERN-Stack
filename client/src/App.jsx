@@ -117,7 +117,6 @@ function App() {
       ],
     },
   ]);
-
   return (
     <>
       <div>

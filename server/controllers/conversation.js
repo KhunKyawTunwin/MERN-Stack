@@ -54,7 +54,9 @@ export const updateConversation = async (req, res, next) => {
           // readBySeller: true,
           // readByBuyer: true,
 
-          ...(req.roles ? { readBySeller: true } : { readByBuyer: true }),
+          ...(req.roles === "Admin" || "Seller"
+            ? { readBySeller: true }
+            : { readByBuyer: true }),
         },
       },
       { new: true }

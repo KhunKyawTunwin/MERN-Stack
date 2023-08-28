@@ -20,9 +20,7 @@ export const createGig = async (req, res, next) => {
       postAccept, // Set the postAccept property
       ...req.body,
     });
-
     const savedGig = await newGig.save();
-
     // If the user's role is "Admin", update the postAccept property to true
     if (postAccept) {
       savedGig.postAccept = true;
@@ -37,12 +35,9 @@ export const createGig = async (req, res, next) => {
 
 export const gigUpdate = async (req, res, next) => {
   const { id } = req.params;
-  console.log("id ", id);
 
   try {
     const post = await Gig.findById(id);
-
-    console.log("post.id", id);
     if (!post.userId) {
       return next(createError(401, "You can update only your post!"));
     }
@@ -69,7 +64,6 @@ export const deleteGig = async (req, res, next) => {
     if (gig.userId !== req.userId) {
       return next(createError(403, "You can delete only at your gigs!"));
     }
-
     await Gig.findByIdAndDelete(id);
     res.status(200).send("Gig has been deleted");
   } catch (err) {
@@ -91,10 +85,8 @@ export const getGig = async (req, res, next) => {
 
 export const getGigs = async (req, res, next) => {
   const q = req.query;
-  console.log("User cat in Qery ", q.search, "User cat is ", q.searchGigs);
   const filters = {
     ...(q.userId && { userId: q.userId }),
-    // ...(q.cat && { cat: q.cat }),
     ...(q.searchGigs && { cat: q.searchGigs }),
     ...((q.min || q.max) && {
       price: {
@@ -110,28 +102,4 @@ export const getGigs = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-
-  // const { userId, min, max, sort, search, cat } = req.query;
-
-  // const filters = {
-  //   ...(userId && { userId }),
-  //   ...(search && { search }),
-  //   ...((min || max) && {
-  //     price: {
-  //       ...(min && { $gte: min }),
-  //       ...(max && { $lte: max }),
-  //     },
-  //   }),
-  //   ...(search && { title: { $regex: search, $options: "i" } }),
-  // };
-
-  // try {
-  //   const gigs = await Gig.find(filters).sort({ [sort]: -1 });
-  //   if (!gigs || gigs.length === 0 || gigs.postAccept === false) {
-  //     return next(createError(404, "Gigs not found!"));
-  //   }
-  //   res.status(200).json(gigs);
-  // } catch (err) {
-  //   next(err);
-  // }
 };

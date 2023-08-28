@@ -40,8 +40,6 @@ const Dashboard = () => {
     mutationForEdit.mutate(id);
   };
 
-  console.log(`curret user data is ${currentUser.username}`);
-
   return (
     <div className="mydash">
       <div className="dash-container">
@@ -86,8 +84,7 @@ const Dashboard = () => {
                         </td>
                         <td>{"Pending"}</td>
                         <td>{gig.sales}</td>
-
-                        {currentUser.roles === "Admin" && (
+                        {currentUser.roles === "Admin" ? (
                           <div className="btnFlex">
                             <span
                               onClick={() => handleDelete(gig._id)}
@@ -102,6 +99,8 @@ const Dashboard = () => {
                               <span>Review</span>
                             </Link>
                           </div>
+                        ) : (
+                          <div>Empty</div>
                         )}
                       </tr>
                     )}

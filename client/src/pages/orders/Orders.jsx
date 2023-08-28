@@ -12,6 +12,7 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
   });
+  console.log(`Order list in DB is : ${data}`);
 
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
@@ -59,31 +60,31 @@ const Orders = () => {
 
             {data.map((order) => (
               <tbody>
-                {order?.gigId && (
-                  <tr key={order._id}>
-                    <td>
-                      <Link to={`/gig/${order.gigId}`} className="link">
-                        <img className="imgOrder" src={order.img} alt="" />
-                      </Link>
-                    </td>
-                    <td>{order.title.substring(0, 50)} ...</td>
-                    <td>{order.price} MMK</td>
-                    <td>
-                      {currentUser?.roles === "Seller"
-                        ? order.buyerId.substring(0, 5)
-                        : order.sellerId.substring(0, 10)}
-                      &nbsp;...
-                    </td>
-                    <td>
-                      <img
-                        className="delete"
-                        src="/img/message.png"
-                        alt="chatboxIcon"
-                        onClick={() => handleContact(order)}
-                      />
-                    </td>
-                  </tr>
-                )}
+                {console.log(`Order data is ${order}`)}
+                {console.log(`Current data is ${currentUser}`)}
+                <tr key={order._id}>
+                  <td>
+                    <Link to={`/gig/${order.gigId}`} className="link">
+                      <img className="imgOrder" src={order.img} alt="" />
+                    </Link>
+                  </td>
+                  <td>{order.title.substring(0, 50)} ...</td>
+                  <td>{order.price} MMK</td>
+                  <td>
+                    {currentUser?.roles === "Seller"
+                      ? order.buyerId.substring(0, 5)
+                      : order.sellerId.substring(0, 10)}
+                    &nbsp;...
+                  </td>
+                  <td>
+                    <img
+                      className="delete"
+                      src="/img/message.png"
+                      alt="chatboxIcon"
+                      onClick={() => handleContact(order)}
+                    />
+                  </td>
+                </tr>
               </tbody>
             ))}
           </table>

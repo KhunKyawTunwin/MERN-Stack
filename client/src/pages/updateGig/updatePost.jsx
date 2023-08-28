@@ -22,11 +22,17 @@ const UpdatePost = () => {
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
 
-  useEffect(() => {
-    if (data) {
-      setState(data);
-    }
-  }, [data]);
+  // console.log(`Single gigs data is ${data}`);
+
+  // useEffect(() => {
+  //   const dataItem = data.map((realData) => {
+  //     console.log(realData);
+  //     // return realData;
+  //   });
+  //   if (dataItem) {
+  //     setState(dataItem);
+  //   }
+  // }, []);
 
   const mutation = useMutation({
     mutationFn: (id) => {
