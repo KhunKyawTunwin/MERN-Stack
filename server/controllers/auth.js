@@ -118,6 +118,7 @@ export const login = async (req, res, next) => {
       process.env.JWT_KEY,
       { expiresIn: "10h" }
     );
+
     res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
       userId: user._id,
       username: user.username,

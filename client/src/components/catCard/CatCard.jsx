@@ -6,8 +6,8 @@ const CatCard = ({ item }) => {
     <div className="catCard">
       <Link to={`/gigs?searchGigs=${item.cat}`} className="link">
         <img src={item.cover} alt="profileImg" />
+        <span className="title">{item.cat.toUpperCase()}</span>
         <span className="desc">{item.title}</span>
-        <span className="title">{item.cat}</span>
       </Link>
     </div>
   );

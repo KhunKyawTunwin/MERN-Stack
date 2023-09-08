@@ -12,9 +12,6 @@ export const createGig = async (req, res, next) => {
     }
 
     const postAccept = req.roles === "Admin";
-    console.log("UserId in backend", req.userId);
-    console.log("UserName in backend", req.username);
-
     const newGig = new Gig({
       userId: req.userId,
       postAccept, // Set the postAccept property
@@ -35,7 +32,6 @@ export const createGig = async (req, res, next) => {
 
 export const gigUpdate = async (req, res, next) => {
   const { id } = req.params;
-
   try {
     const post = await Gig.findById(id);
     if (!post.userId) {
@@ -56,16 +52,17 @@ export const deleteGig = async (req, res, next) => {
   const { id } = req.params;
   try {
     const gig = await Gig.findById(id);
-    // if (req.roles !== "Admin")
-    //   return next(createError(403, "Only admin can delete gig!"));
     if (!gig) {
       return next(createError(404, "Gig not found."));
     }
+
     if (gig.userId !== req.userId) {
       return next(createError(403, "You can delete only at your gigs!"));
     }
-    await Gig.findByIdAndDelete(id);
-    res.status(200).send("Gig has been deleted");
+    if (req.roles === "Admin" || req.roles === req.userId) {
+      await Gig.findByIdAndDelete(id);
+      res.status(200).send("Gig has been deleted");
+    }
   } catch (err) {
     next(err);
   }

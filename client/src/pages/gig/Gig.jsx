@@ -10,6 +10,7 @@ import { Reviews } from "../../components";
 
 import "./Gig.scss";
 import "./slide.css";
+import currentUserData from "../../utils/currentUserData";
 
 const Gig = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const Gig = () => {
     queryKey: ["gig"],
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
+
+  const currentUser = currentUserData();
 
   const userId = data?.userId;
   const {
@@ -161,9 +164,15 @@ const Gig = () => {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`} className="">
-              <button>Continue</button>
-            </Link>
+            {currentUser ? (
+              <Link to={`/pay/${id}`} className="">
+                <button>Continue</button>
+              </Link>
+            ) : (
+              <Link to={`/register`} className="">
+                <button>Continue</button>
+              </Link>
+            )}
           </div>
         </div>
       )}

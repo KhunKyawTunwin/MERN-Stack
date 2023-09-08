@@ -104,6 +104,11 @@ const Register = () => {
             <Link to="/login">
               <span>Login</span>
             </Link>
+            <Link>
+              <div className="socialLogin">
+                <span>Google Login</span>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="right">
