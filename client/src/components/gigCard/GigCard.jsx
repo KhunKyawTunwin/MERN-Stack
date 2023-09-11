@@ -32,6 +32,14 @@ const GigCard = ({ item }) => {
           <div className="user">
             <img src={data.img || "/img/eth.png"} alt="" />
             <span>{data.username}</span>
+
+            <div className="star">
+              <img src="./img/star.png" alt="" />
+              <span>
+                {!isNaN(item.totalStars / item.startNumber) &&
+                  Math.round(item.totalStars / item.startNumber)}
+              </span>
+            </div>
           </div>
         )}
         <Link to={`/gig/${item._id}`}>
@@ -41,22 +49,36 @@ const GigCard = ({ item }) => {
               : `${item.desc.substr(0, 100)}   Read more ...`}
           </p>
         </Link>
-        <div className="star">
-          <img src="./img/star.png" alt="" />
+        <div className="investList">
+          <h3>Investment Amount</h3>
+          <p>$ {item.totalInvestAmount} M</p>
           <span>
-            {!isNaN(item.totalStars / item.startNumber) &&
-              Math.round(item.totalStars / item.startNumber)}
+            From <h3>{item.totalInvestor}</h3> Investor
           </span>
         </div>
       </div>
       <hr />
       <div className="details">
-        <img className="heartIcon" src="./img/heart.png" alt="" />
-        <span>{moment(item.createdAt).fromNow()}</span>
-        <div className="price">
-          <samp>Starting At</samp>
+        <div className="iconAndDate">
+          <img className="heartIcon" src="./img/heart.png" alt="" />
+          <span>{moment(item.createdAt).fromNow()}</span>
+        </div>
+        <div className="dateLimit">
+          <span>
+            Start: {new Date(item.createdAt).getDate()}/
+            {new Date(item.createdAt).getMonth() + 1}/
+            {new Date(item.createdAt).getFullYear()}
+          </span>
+          <span>
+            End: {new Date(item.endDate).getDate()}/
+            {new Date(item.endDate).getMonth() + 1}/
+            {new Date(item.endDate).getFullYear()}
+          </span>
+        </div>
+        <div className="startPrice">
+          <span>Starting Invest Amount</span>
           <hr />
-          <h2>{item.price} MMK</h2>
+          <h2>150 $</h2>
         </div>
       </div>
     </div>

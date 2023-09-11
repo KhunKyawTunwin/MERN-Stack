@@ -51,6 +51,7 @@ const Orders = () => {
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
+                <th>Items</th>
                 <th>
                   {currentUser?.roles === "Seller" ? "Buyer" : "Seller"} ID
                 </th>
@@ -60,8 +61,6 @@ const Orders = () => {
 
             {data.map((order) => (
               <tbody>
-                {console.log(`Order data is ${order}`)}
-                {console.log(`Current data is ${currentUser}`)}
                 <tr key={order._id}>
                   <td>
                     <Link to={`/gig/${order.gigId}`} className="link">
@@ -70,6 +69,7 @@ const Orders = () => {
                   </td>
                   <td>{order.title.substring(0, 50)} ...</td>
                   <td>{order.price} MMK</td>
+                  <td>1 Investment</td>
                   <td>
                     {currentUser?.roles === "Seller"
                       ? order.buyerId.substring(0, 5)

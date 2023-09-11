@@ -16,6 +16,7 @@ const MyGigs = () => {
         .then((res) => res.data),
   });
 
+  console.log("Gigs list in data is ", data);
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.delete(`/gigs/${id}`);
@@ -33,7 +34,7 @@ const MyGigs = () => {
     <div className="myGigs">
       <div className="container">
         <div className="title">
-          <h1>{currentUser.username} #Assets</h1>
+          <h1>{currentUser.username} # Assets</h1>
           {currentUser.roles === ("Admin" || "Seller") && (
             <Link to="/add" className="link">
               <button>Add New</button>
@@ -62,7 +63,7 @@ const MyGigs = () => {
                 <>
                   {data?.map((gig) => (
                     <tr key={gig._id}>
-                      {console.log("Gig data", gig)}
+                      {console.log(gig)}
                       <Link to={`/gig/${gig._id}`} className="link">
                         <td>
                           <img className="imgGis" src={gig.cover} alt="" />
@@ -70,8 +71,10 @@ const MyGigs = () => {
                       </Link>
                       <td>{gig.title}</td>
                       <td>{gig.price} MMK</td>
-                      <td>{gig.postAccept === true ? "Active" : "Pending"}</td>
-                      <td>{gig.sales}</td>
+                      <td>{gig.postAccept === false ? "Pending" : "Active"}</td>
+                      <td className="investors">
+                        {gig.sales} <Link>Investors</Link>
+                      </td>
                       <td className="editIcons">
                         <Link to={`/editgig/${gig._id}`} className="link">
                           <img

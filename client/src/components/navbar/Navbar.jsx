@@ -103,7 +103,7 @@ const Navbar = () => {
                       </p>
                       <p className="userInfo">
                         <Link to="/orders" className="link">
-                          Orders
+                          Investment Lists
                         </Link>
                       </p>
                       <p className="userInfo">

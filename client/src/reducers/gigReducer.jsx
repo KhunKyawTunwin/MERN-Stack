@@ -7,7 +7,7 @@ export const INITIAL_STATE = {
   desc: "",
   shortTitle: "",
   shortDesc: "",
-  deliveryTime: 0,
+  endDate: 0,
   revisionNumber: 0,
   features: [],
   price: 0,

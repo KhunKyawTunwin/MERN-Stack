@@ -44,7 +44,10 @@ const Dashboard = () => {
     <div className="mydash">
       <div className="dash-container">
         <div className="dash-title">
-          <h1>{currentUser.username} # Post Review</h1>
+          <h1>
+            <span className="adminCheck">Admin </span>
+            {currentUser.username} {"> >"} Post Review
+          </h1>
         </div>
         <hr />
         <div>
@@ -79,12 +82,11 @@ const Dashboard = () => {
                           {gig.userId === currentUser.userId
                             ? currentUser.username
                             : gig.userId.substring(0, 10)}
-                          {""}
                           ....
                         </td>
                         <td>{"Pending"}</td>
                         <td>{gig.sales}</td>
-                        {currentUser.roles === "Admin" ? (
+                        {currentUser.roles === "Admin" && (
                           <div className="btnFlex">
                             <span
                               onClick={() => handleDelete(gig._id)}
@@ -99,8 +101,6 @@ const Dashboard = () => {
                               <span>Review</span>
                             </Link>
                           </div>
-                        ) : (
-                          <div>Empty</div>
                         )}
                       </tr>
                     )}

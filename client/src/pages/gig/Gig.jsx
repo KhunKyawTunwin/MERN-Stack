@@ -22,6 +22,7 @@ const Gig = () => {
   const currentUser = currentUserData();
 
   const userId = data?.userId;
+
   const {
     isLoading: isLoadingUser,
     error: errorUser,

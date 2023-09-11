@@ -20,6 +20,7 @@
     .user {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
 
       img {
@@ -27,30 +28,55 @@
         height: 26px;
         border-radius: 50%;
       }
+
+      .star {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        img {
+          width: 14px;
+          height: 14px;
+        }
+
+        span {
+          font-size: 14px;
+          font-weight: bold;
+          color: #ffc105f8;
+        }
+      }
     }
 
     p {
       color: #111;
-    }
-
-    p:hover {
-      color: rgb(0, 183, 255) !important;
-    }
-
-    .star {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-
-      img {
-        width: 14px;
-        height: 14px;
+      &:hover {
+        color: rgb(0, 166, 255) !important;
       }
+    }
+  }
 
-      span {
-        font-size: 14px;
-        font-weight: bold;
-        color: #ffc108;
+  .investList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-size: 12px;
+    }
+
+    p {
+      width: 100%;
+      margin-left: 20px;
+      // color: blue;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      h3:hover {
+        color: blue;
       }
     }
   }
@@ -62,18 +88,44 @@
 
   .details {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px;
 
-    .heartIcon {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
+    .iconAndDate {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      .heartIcon {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      span {
+        font-weight: 200;
+        font-size: 12px;
+      }
     }
-    span {
-      font-weight: 200;
-      font-size: 12px;
+
+    .dateLimit {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      span {
+        font-size: 12px;
+      }
+    }
+
+    .startPrice {
+      text-align: center;
+
+      span {
+        font-size: 12px;
+        font-weight: 500;
+      }
     }
   }
 }

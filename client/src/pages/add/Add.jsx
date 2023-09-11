@@ -129,13 +129,8 @@ const Add = () => {
               name="shortDesc"
               placeholder="Short description of your service."
             ></textarea>
-            <label htmlFor="">Delivery Time</label>
-            <input
-              type="number"
-              name="deliveryTime"
-              min={1}
-              onChange={handleChange}
-            />
+            <label htmlFor="">End Date</label>
+            <input type="text" name="endDate" min={1} onChange={handleChange} />
             <label htmlFor="">Country Code</label>
             <input
               type="number"

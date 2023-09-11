@@ -27,8 +27,6 @@ const app = express();
 
 connectDB();
 
-// app.use(logger);
-
 app.use(credentials);
 
 app.use(cors(corsOptions));
@@ -77,24 +75,4 @@ mongoose.connection.once("open", () => {
 
 mongoose.connection.on("error", (err) => {
   console.log(err);
-  // logEvents(
-  //   `${err.no}: ${err.code}\t${err.syscall}\t${err.hotname}`,
-  //   "mongoErrLog.log"
-  // );
 });
-
-/* const mongodbConnect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URL);
-    console.log("Connected to mongoDB");
-  } catch (error) {
-    console.log(`Error with ${error}`);
-  }
-}; */
-
-// Server
-/* app.listen(process.env.PORT, () => {
-  mongodbConnect();
-  console.log(`Server running on port:http://localhost:${process.env.PORT}`);
-});
- */

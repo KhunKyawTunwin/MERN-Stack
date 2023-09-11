@@ -8,7 +8,6 @@ const GigSchema = new Schema(
     },
     username: {
       type: Schema.Types.String,
-      // required: true,
       ref: "User",
     },
     title: {
@@ -51,10 +50,7 @@ const GigSchema = new Schema(
       type: String,
       required: true,
     },
-    deliveryTime: {
-      type: Number,
-      required: true,
-    },
+
     revisionNumber: {
       type: Number,
       required: true,
@@ -71,8 +67,25 @@ const GigSchema = new Schema(
       type: Number,
       default: 0,
     },
+    endDate: {
+      type: String,
+      require: true,
+    },
+    totalInvestAmount: {
+      type: String,
+      default: "0",
+    },
+    totalInvestor: {
+      type: String,
+      default: "0",
+    },
   },
   { timestamps: true }
 );
 
 export default mongoose.model("Gig", GigSchema);
+
+// deliveryTime: {
+//   type: Number,
+//   required: true,
+// },
