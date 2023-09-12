@@ -1,19 +1,16 @@
 import { Link } from "react-router-dom";
-import "./MyGigs.scss";
+import "./gigsLists.scss";
 import currentUserData from "../../utils/currentUserData";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
 
-const MyGigs = () => {
+const GigsList = () => {
   const currentUser = currentUserData();
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
-    queryFn: () =>
-      newRequest
-        .get(`/gigs?userId=${currentUser.userId}`)
-        .then((res) => res.data),
+    queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
   });
 
   console.log("Gigs list in data is ", data);
@@ -35,11 +32,7 @@ const MyGigs = () => {
       <div className="container">
         <div className="title">
           <h1>{currentUser.username} # Assets</h1>
-          {currentUser.roles === ("Admin" || "Seller") && (
-            <Link to="/add" className="link">
-              <button>Add New</button>
-            </Link>
-          )}
+          <button className="link">All Assets</button>
         </div>
         <hr />
         <div>
@@ -101,4 +94,5 @@ const MyGigs = () => {
     </div>
   );
 };
-export default MyGigs;
+
+export default GigsList;

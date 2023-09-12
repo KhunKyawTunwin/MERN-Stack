@@ -24,6 +24,7 @@ import UserLists from "./pages/userLists/UserLists";
 import Profile from "./components/userProfile/Profile";
 import UpdatePost from "./pages/updateGig/updatePost";
 import Dashboard from "./components/admindash/Dashboard";
+import GigsList from "./pages/gigsList/GigsList";
 
 function App() {
   const queryClient = new QueryClient();
@@ -57,6 +58,10 @@ function App() {
         {
           path: "/gigs",
           element: <Gigs />,
+        },
+        {
+          path: "/gigslist",
+          element: <GigsList />,
         },
         {
           path: "/userslists",

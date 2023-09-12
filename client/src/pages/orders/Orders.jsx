@@ -12,7 +12,6 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
   });
-  console.log(`Order list in DB is : ${data}`);
 
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
@@ -32,7 +31,6 @@ const Orders = () => {
     }
   };
 
-  // const regex = /0\d{3}\.\.\.\d{3}/;
   return (
     <div className="orders">
       {isLoading ? (
@@ -41,53 +39,174 @@ const Orders = () => {
         "Something went wrong!"
       ) : (
         <div className="container">
-          <div className="title">
-            <h1>Investment Orders Lists</h1>
-          </div>
+          {currentUser?.roles === "Admin" || currentUser?.roles === "Seller" ? (
+            <>
+              <div className="ownerLists">
+                <div className="title">
+                  <h1>Investment Lists by Owner</h1>
+                </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Items</th>
-                <th>
-                  {currentUser?.roles === "Seller" ? "Buyer" : "Seller"} ID
-                </th>
-                <th>Contact</th>
-              </tr>
-            </thead>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Items</th>
+                      <th>
+                        {currentUser?.roles === "Admim" ||
+                        currentUser?.roles === "Seller"
+                          ? "Buyer"
+                          : "Seller"}
+                        ID
+                      </th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
 
-            {data.map((order) => (
-              <tbody>
-                <tr key={order._id}>
-                  <td>
-                    <Link to={`/gig/${order.gigId}`} className="link">
-                      <img className="imgOrder" src={order.img} alt="" />
-                    </Link>
-                  </td>
-                  <td>{order.title.substring(0, 50)} ...</td>
-                  <td>{order.price} MMK</td>
-                  <td>1 Investment</td>
-                  <td>
-                    {currentUser?.roles === "Seller"
-                      ? order.buyerId.substring(0, 5)
-                      : order.sellerId.substring(0, 10)}
-                    &nbsp;...
-                  </td>
-                  <td>
-                    <img
-                      className="delete"
-                      src="/img/message.png"
-                      alt="chatboxIcon"
-                      onClick={() => handleContact(order)}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            ))}
-          </table>
+                  {data?.map((order) => (
+                    <tbody>
+                      {currentUser.roles === "Admin" && (
+                        <tr key={order._id}>
+                          <td>
+                            <Link to={`/gig/${order.gigId}`} className="link">
+                              <img
+                                className="imgOrder"
+                                src={order.img}
+                                alt=""
+                              />
+                            </Link>
+                          </td>
+                          <td>{order.title.substring(0, 50)} ...</td>
+                          <td>{order.price} MMK</td>
+                          <td> 1 Investment</td>
+                          <td>
+                            {currentUser?.roles === "Seller"
+                              ? order.buyerId.substring(0, 5)
+                              : order.sellerId.substring(0, 10)}
+                            &nbsp;...
+                          </td>
+                          <td>
+                            <img
+                              className="delete"
+                              src="/img/message.png"
+                              alt="chatboxIcon"
+                              onClick={() => handleContact(order)}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+
+              {/* Right Side */}
+              <div className="investorLists">
+                <div className="title">
+                  <h1>Investment Lists by Investor</h1>
+                </div>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Items</th>
+                      <th>
+                        {currentUser?.roles === "Seller" ? "Buyer" : "Seller"}{" "}
+                        ID
+                      </th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+
+                  {data?.map((order) => (
+                    <tbody>
+                      <tr key={order._id}>
+                        <td>
+                          <Link to={`/gig/${order.gigId}`} className="link">
+                            <img className="imgOrder" src={order.img} alt="" />
+                          </Link>
+                        </td>
+                        <td>{order.title.substring(0, 50)} ...</td>
+                        <td>{order.price} MMK</td>
+                        <td>1 Investment</td>
+                        <td>
+                          {currentUser?.roles === "Seller"
+                            ? order.buyerId.substring(0, 5)
+                            : order.sellerId.substring(0, 10)}
+                          &nbsp;...
+                        </td>
+                        <td>
+                          <img
+                            className="delete"
+                            src="/img/message.png"
+                            alt="chatboxIcon"
+                            onClick={() => handleContact(order)}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="investorLists">
+                <div className="title">
+                  <h1>Investment Lists by Investor</h1>
+                </div>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Price</th>
+                      <th>Items</th>
+                      <th>
+                        {currentUser?.roles === "Seller" ? "Buyer" : "Seller"}
+                        ID
+                      </th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+
+                  {data?.map((order) => (
+                    <tbody>
+                      <tr key={order._id}>
+                        <td>
+                          <Link to={`/gig/${order.gigId}`} className="link">
+                            <img className="imgOrder" src={order.img} alt="" />
+                          </Link>
+                        </td>
+                        <td>{order.title.substring(0, 50)} ...</td>
+                        <td>{order.price} MMK</td>
+                        <td>1 Investment</td>
+                        <td>
+                          {currentUser?.roles === "Seller"
+                            ? order.buyerId.substring(0, 5)
+                            : order.sellerId.substring(0, 10)}
+                          &nbsp;...
+                        </td>
+                        <td>
+                          <img
+                            className="delete"
+                            src="/img/message.png"
+                            alt="chatboxIcon"
+                            onClick={() => handleContact(order)}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

@@ -91,20 +91,24 @@
         }
       }
       .userInfo {
-        button {
-          color: #ffffff;
-          font-weight: 500;
-          padding: 8px 20px;
-          border-radius: 5px;
-          border: 1px solid rgb(5, 216, 150);
-          cursor: pointer;
-          background-color: transparent;
-
-          &:hover {
-            background-color: #1dbf73;
-            color: #fff;
-          }
+        font-weight: 500;
+        &:hover {
+          color: rgb(57, 134, 250);
         }
+        // button {
+        //   color: #ffffff;
+        //   font-weight: 500;
+        //   padding: 8px 20px;
+        //   border-radius: 5px;
+        //   border: 1px solid rgb(5, 216, 150);
+        //   cursor: pointer;
+        //   background-color: transparent;
+
+        //   &:hover {
+        //     background-color: #1dbf73;
+        //     color: #fff;
+        //   }
+        // }
       }
     }
   }

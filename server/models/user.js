@@ -44,6 +44,12 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product", // Reference to the Product model
+      },
+    ],
     roles: {
       type: String,
       default: "User",

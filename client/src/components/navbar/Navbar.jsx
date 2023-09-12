@@ -86,19 +86,24 @@ const Navbar = () => {
                           Register Users Lists
                         </Link>
                       </p>
+                      <p className="userInfo">
+                        <Link to="/gigslist" className="link">
+                          Total All assets
+                        </Link>
+                      </p>
                     </>
                   )}
                   {currentUser.roles === "Admin" ||
                   currentUser.roles === "Seller" ? (
                     <>
                       <p className="userInfo">
-                        <Link to="/mygigs" className="link">
-                          Assets
+                        <Link to="/add" className="link">
+                          Add New Assets
                         </Link>
                       </p>
                       <p className="userInfo">
-                        <Link to="/add" className="link">
-                          Add New Assets
+                        <Link to="/mygigs" className="link">
+                          Own Assets
                         </Link>
                       </p>
                       <p className="userInfo">
@@ -121,7 +126,7 @@ const Navbar = () => {
                     <>
                       <p className="userInfo">
                         <Link to="/orders" className="link">
-                          Orders
+                          Investment Lists
                         </Link>
                       </p>
                       <p className="userInfo">

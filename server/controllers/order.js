@@ -72,11 +72,16 @@ export const paymentConfirm = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      ...(req.roles === "Seller" || "Admin"
+      ...(req.roles === "Admin" || "Seller"
         ? { sellerId: req.userId }
         : { buyerId: req.userId }),
+
       isCompleted: true,
     });
+
+    if (orders.gigId === Gig.userId) {
+    }
+
     res.status(200).send(orders);
   } catch (err) {
     next(err);
