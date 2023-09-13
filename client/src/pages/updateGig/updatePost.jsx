@@ -22,18 +22,6 @@ const UpdatePost = () => {
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
 
-  // console.log(`Single gigs data is ${data}`);
-
-  // useEffect(() => {
-  //   const dataItem = data.map((realData) => {
-  //     console.log(realData);
-  //     // return realData;
-  //   });
-  //   if (dataItem) {
-  //     setState(dataItem);
-  //   }
-  // }, []);
-
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.put(`/gigs/${id}`);
@@ -55,29 +43,6 @@ const UpdatePost = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  // const handleFeature = (e) => {
-  //   e.preventDefault();
-  //   dispatch({ type: "ADD_FEATURES", payload: e.target[0].value });
-  //   e.target[0].value = "";
-  // };
-
-  // const handleUpload = async () => {
-  //   setUploading(true);
-  //   try {
-  //     const cover = await upload(singleFile);
-  //     const images = await Promise.all(
-  //       [...files].map(async (file) => {
-  //         const url = await upload(file);
-  //         return url;
-  //       })
-  //     );
-  //     setUploading(false);
-  //     dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
-  //   } catch (err) {
-  //     console.log(err.stack);
-  //   }
-  // };
 
   return (
     <div className="add">
@@ -108,32 +73,6 @@ const UpdatePost = () => {
                 <option value="hotels">Hotels</option>
                 <option value="apartments">Apartments</option>
               </select>
-
-              {/* <div className="images">
-                <div className="imagesInputs">
-                  <label htmlFor="">
-                    {!uploading ? "Cover Image" : "Added Image"}
-                  </label>
-                  <input
-                    type="file"
-                    name="cover"
-                    onChange={(e) => setSingleFile(e.target.files[0])}
-                  />
-                  <label htmlFor="">
-                    {!uploading ? "Upload Images" : "Added Image"}
-                  </label>
-                  <input
-                    type="file"
-                    name="images"
-                    multiple
-                    onChange={(e) => setFiles(e.target.files)}
-                  />
-                </div>
-                <img src={result?.cover} alt="" />
-                <button onChange={handleUpload}>
-                  {!uploading ? "Upload" : "Uploading ..."}
-                </button>
-              </div> */}
 
               <label>Description</label>
               <textarea

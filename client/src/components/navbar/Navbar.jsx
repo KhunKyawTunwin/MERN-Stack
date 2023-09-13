@@ -54,7 +54,9 @@ const Navbar = () => {
           <Link to="business">
             <span>Ethnic Business</span>
           </Link>
-          <span>Explore</span>
+          <Link to="/gigs?search">
+            <span>Explore</span>
+          </Link>
           <span>English</span>
           {!currentUser?.roles === "Seller" && (
             <Link to="/register" className="link">

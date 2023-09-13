@@ -16,7 +16,6 @@ const MyGigs = () => {
         .then((res) => res.data),
   });
 
-  console.log("Gigs list in data is ", data);
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.delete(`/gigs/${id}`);
@@ -63,7 +62,6 @@ const MyGigs = () => {
                 <>
                   {data?.map((gig) => (
                     <tr key={gig._id}>
-                      {console.log(gig)}
                       <Link to={`/gig/${gig._id}`} className="link">
                         <td>
                           <img className="imgGis" src={gig.cover} alt="" />
