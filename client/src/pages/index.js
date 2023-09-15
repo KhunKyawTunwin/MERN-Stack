@@ -13,3 +13,4 @@ export { default as Success } from "./success/Success";
 export { default as UserLists } from "./userLists/UserLists";
 export { default as Possibility } from "./possibility/Possibility";
 export { default as GigsList } from "./gigsList/GigsList";
+export { default as UpdatePost } from "./updateGig/updatePost";

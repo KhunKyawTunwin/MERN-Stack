@@ -19,6 +19,7 @@ import {
   Possibility,
   Register,
   Success,
+  UpdatePost,
   UserLists,
 } from "./pages";
 
