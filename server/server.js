@@ -14,14 +14,6 @@ import conversationRoute from "./routes/conversation.js";
 import messageRoute from "./routes/message.js";
 import credentials from "./middleware/credentials.js";
 import corsOptions from "./config/corsOptions.js";
-// import errorHandler from "./middleware/errorHandler.js";
-// import { logEvents, logger } from "./middleware/logger.js";
-
-// import path from "path";
-
-// const currentFilePath = new URL(import.meta.url).pathname;
-// const currentDirectory = path.dirname(currentFilePath);
-// const logsDirPath = path.join(currentDirectory, "views", "404.html");
 
 const app = express();
 
@@ -45,24 +37,11 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/reviews", reviewRoute);
 
-// app.all("/*", (req, res) => {
-//   console.log("Request data is", res);
-//   res.status(404);
-//   if (req.accepts("html")) {
-//     res.sendFile(logsDirPath);
-//   } else if (req.accepts("json")) {
-//     res.json({ error: "404 Not Found" });
-//   } else {
-//     res.type("txt").send("404 Not Found");
-//   }
-// });
-
 // app.use(errorHandler);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong.";
-
   return res.status(errorStatus).send(errorMessage);
 });
 

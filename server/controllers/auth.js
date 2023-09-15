@@ -42,6 +42,7 @@ export const register = async (req, res, next) => {
         expiresIn: "20m",
       }
     );
+
     const transporter = mailer.createTransport({
       service: "gmail",
       auth: {
