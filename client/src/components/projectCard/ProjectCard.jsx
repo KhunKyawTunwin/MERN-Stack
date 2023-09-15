@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import "./projectcard.scss";
 
 // import currentUserData from "../../utils/currentUserData";

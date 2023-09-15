@@ -1,30 +1,28 @@
+import React from "react";
 import "./App.scss";
-import Footer from "./components/footer/Footer";
-import Navbar from "./components/navbar/Navbar";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./pages/home/Home";
+
 import {
   Add,
   Gig,
   Gigs,
+  GigsList,
+  Home,
   Login,
   Message,
   Messages,
   MyGigs,
   Orders,
   Pay,
+  Possibility,
   Register,
   Success,
+  UserLists,
 } from "./pages";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React from "react";
-import Possibility from "./pages/possibility/Possibility";
-import UserLists from "./pages/userLists/UserLists";
-import Profile from "./components/userProfile/Profile";
-import UpdatePost from "./pages/updateGig/updatePost";
-import Dashboard from "./components/admindash/Dashboard";
-import GigsList from "./pages/gigsList/GigsList";
+import { Dashboard, Footer, Navbar, Profile } from "./components";
 
 function App() {
   const queryClient = new QueryClient();

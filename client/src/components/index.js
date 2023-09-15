@@ -7,3 +7,6 @@ export { default as TrustedBy } from "./trustedBy/TrustedBy";
 export { default as GigCard } from "./gigCard/GigCard";
 export { default as Reviews } from "./reviews/Reviews";
 export { default as CheckoutForm } from "./checkoutform/CheckoutForm";
+export { default as Dashboard } from "./admindash/Dashboard";
+export { default as ProjectCArd } from "./projectCard/ProjectCard";
+export { default as Profile } from "./userProfile/Profile";
