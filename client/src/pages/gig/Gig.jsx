@@ -166,7 +166,7 @@ const Gig = () => {
               ))}
             </div>
             {currentUser ? (
-              <Link to={`/pay/${id}`} className="">
+              <Link to={`/inveatamount`} className="">
                 <button>Continue</button>
               </Link>
             ) : (

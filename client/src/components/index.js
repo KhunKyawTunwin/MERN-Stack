@@ -10,3 +10,4 @@ export { default as CheckoutForm } from "./checkoutform/CheckoutForm";
 export { default as Dashboard } from "./admindash/Dashboard";
 export { default as ProjectCArd } from "./projectCard/ProjectCard";
 export { default as Profile } from "./userProfile/Profile";
+export { default as Brand } from "./brand/Brand";

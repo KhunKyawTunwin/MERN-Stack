@@ -1,60 +1,71 @@
-// import "./userprofile.scss";
+import { useQuery } from "@tanstack/react-query";
+import currentUserData from "../../utils/currentUserData";
+import "./userprofile.scss";
+import { newRequest } from "../../api/url";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
+  const currentUser = currentUserData();
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => newRequest.get("/users").then((res) => res.data),
+  });
+
   return (
-    // <section>
-    //   <div classNameName="user-container_data">
-    //     <div classNameName="user-profile">
-    //       <img
-    //         src="https://images.unsplash.com/photo-1687360440648-ec9708d52086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=976&q=80"
-    //         alt=""
-    //       />
-    //       <div classNameName="about">
-    //         <h2>About Me</h2>
-    //         <p>
-    //           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
-    //           deleniti natus a esse cupiditate nulla nobis est corrupti mollitia
-    //           dolorum doloremque nisi cum molestias, sequi at? Architecto vitae
-    //           odit fugiat?
-    //         </p>
-    //       </div>
-    //     </div>
-    //     <div classNameName="user-info">
-    //       <h2>name : Khunkyaw TunWin</h2>
-    //       <p>Contact Number :</p>
-    //       <span>Address :</span>
-    //       <p>Location :</p>
-    //     </div>
-    //   </div>
-    //   {/* <div classNameName="user-update">
-    //     <button>Edit</button>
-    //     <br />
-    //     <button>Delete</button>
-    //   </div> */}
-    // </section>
     <>
-      <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <div className="text-center">
-          <p className="text-base font-semibold text-indigo-600">404</p>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-            Page not found
-          </h1>
-          <p className="mt-6 text-base leading-7 text-gray-600">
-            Sorry, we couldn’t find the page you’re looking for.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href="#"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Go back home
-            </a>
-            <a href="#" className="text-sm font-semibold text-gray-900">
-              Contact support <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+      <section className="users-container">
+        {isLoading ? (
+          "Loading ..."
+        ) : error ? (
+          "Something went wrog!"
+        ) : (
+          <>
+            <div className="header-container">
+              <div className="headlist">
+                <h2>Register Users Lists </h2>
+                <h2>User Informations</h2>
+                <h2>Total Assets</h2>
+                <p className="activelist">
+                  <span>Status</span>
+                </p>
+              </div>
+              {data.map((user) => (
+                <div className="userlists" key={user._id}>
+                  {currentUser.userId === user._id && (
+                    <>
+                      <img src={user.img} alt="userProfile" />
+
+                      <div className="userInfo">
+                        <p>Name :{user.username}</p>
+                        <span>Country :{user.country}</span>
+                      </div>
+                      <div className="userInfo">
+                        <p>Name :{user.username}</p>
+                        <span>Country :{user.country}</span>
+                      </div>
+                      <div className="datalist">
+                        <h3>
+                          {user.roles === "Admin"
+                            ? "Admin & Seller"
+                            : user.roles === "Seller"
+                            ? "Seller & Buyer"
+                            : "User & Buyer"}
+                        </h3>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+        <div>
+          <Link to="/">
+            <button>Home</button>
+          </Link>
         </div>
-      </main>
+      </section>
     </>
   );
 };

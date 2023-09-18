@@ -23,14 +23,16 @@ const Featured = () => {
         </p>
 
         <div className="gpt3__header-content__input">
-          <input
-            type="text"
-            placeholder="Try to find the best investment products!"
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button type="submit" onClick={handleSubmit}>
-            Search
-          </button>
+          <form action="" style={{ display: "flex", width: "100%" }}>
+            <input
+              type="text"
+              placeholder="Try to find the best investment products!"
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <button type="submit" onClick={handleSubmit}>
+              Search
+            </button>
+          </form>
         </div>
 
         <div className="gpt3__header-content__people">

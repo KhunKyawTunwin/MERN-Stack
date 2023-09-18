@@ -24,6 +24,7 @@ import {
 } from "./pages";
 
 import { Dashboard, Footer, Navbar, Profile } from "./components";
+import InputForm from "./pages/pay/inputForm/InputForm";
 
 function App() {
   const queryClient = new QueryClient();
@@ -109,6 +110,10 @@ function App() {
         {
           path: "/pay/:id",
           element: <Pay />,
+        },
+        {
+          path: "/inveatamount",
+          element: <InputForm />,
         },
         {
           path: "/success",
