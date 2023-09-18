@@ -8,7 +8,7 @@ const Featured = () => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    navigate(`/gigs?search=${input}`);
+    navigate(`/gigs?searchGigs=${input}`);
   };
 
   return (
@@ -19,7 +19,7 @@ const Featured = () => {
         </h1>
         <p>
           Get equity and front row seats to the startups and small businesses
-          you love—⁠for as little as $100.
+          you love-for as little as $100.
         </p>
 
         <div className="gpt3__header-content__input">

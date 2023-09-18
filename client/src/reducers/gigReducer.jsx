@@ -13,24 +13,22 @@ export const INITIAL_STATE = {
   price: 0,
 };
 
-export const gigReducer = (state, action) => {
-  switch (action.type) {
+export const gigReducer = (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
     case "CHANGE_INPUT":
-      return { ...state, [action.payload.name]: action.payload.value };
+      return { ...state, [payload.name]: payload.value };
     case "ADD_IMAGES":
       return {
         ...state,
-        cover: action.payload.cover,
-        images: action.payload.images,
+        cover: payload.cover,
+        images: payload.images,
       };
     case "ADD_FEATURES":
-      return { ...state, features: [...state.features, action.payload] };
+      return { ...state, features: [...state.features, payload] };
     case "REMOVE_FEATURE":
       return {
         ...state,
-        features: state.features.filter(
-          (feature) => feature !== action.payload
-        ),
+        features: state.features.filter((feature) => feature !== payload),
       };
 
     default:
