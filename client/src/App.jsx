@@ -24,7 +24,7 @@ import {
 } from "./pages";
 
 import { Dashboard, Footer, Navbar, Profile } from "./components";
-import InputForm from "./pages/pay/inputForm/InputForm";
+import InputForm from "./pages/inputForm/InputForm";
 
 function App() {
   const queryClient = new QueryClient();
