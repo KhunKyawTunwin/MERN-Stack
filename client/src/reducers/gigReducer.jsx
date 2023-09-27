@@ -23,6 +23,7 @@ export const gigReducer = (state = INITIAL_STATE, { type, payload }) => {
         cover: payload.cover,
         images: payload.images,
       };
+
     case "ADD_FEATURES":
       return { ...state, features: [...state.features, payload] };
     case "REMOVE_FEATURE":

@@ -1,10 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./GigCard.scss";
 import moment from "moment";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
+import { calculateBarPercentage, daysLeft } from "../../utils";
+daysLeft;
 
 const GigCard = ({ item }) => {
+  /* 
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["gig"],
+    queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
+  });
+
+  const currentUser = currentUserData();
+
+  const userId = data?.userId;
+
+  const {
+    isLoading: isLoadingUser,
+    error: errorUser,
+    data: dataUser,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => newRequest.get(`/users/${userId}`).then((res) => res.data),
+    enabled: !!userId,
+  });
+  */
   const { isLoading, error, data } = useQuery({
     queryKey: [item.userId],
     queryFn: () =>
@@ -12,6 +34,14 @@ const GigCard = ({ item }) => {
         return res.data;
       }),
   });
+
+  // const { data: gigData } = useQuery({
+  //   queryKey: ["gig"],
+  //   queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
+  // });
+  console.log("End Date from data is ", item.endDate);
+
+  const remainDays = daysLeft(item.endDate);
 
   if (item.postAccept === false) {
     return null;
@@ -22,7 +52,6 @@ const GigCard = ({ item }) => {
       <Link to={`/gig/${item._id}`} className="link">
         <img src={item.cover} alt="" />
       </Link>
-
       <div className="info">
         {isLoading ? (
           "Loading ..."
@@ -30,8 +59,8 @@ const GigCard = ({ item }) => {
           "Something went wrong!"
         ) : (
           <div className="user">
-            <img src={data.img || "/img/eth.png"} alt="" />
-            <span>{data.username}</span>
+            <img src={data?.img || "/img/eth.png"} alt="" />
+            <span>{data?.username}</span>
 
             <div className="star">
               <img src="./img/star.png" alt="" />
@@ -57,10 +86,25 @@ const GigCard = ({ item }) => {
           </span>
         </div>
       </div>
-      <hr />
+      <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
+        <div
+          className="absolute h-full bg-[#4acd8d]"
+          style={{
+            width: `${calculateBarPercentage(
+              item.priceGoal,
+              item.totalInvestAmount
+            )}%`,
+            maxWidth: "100%",
+          }}
+        ></div>
+      </div>
       <div className="details">
         <div className="iconAndDate">
-          <img className="heartIcon" src="./img/heart.png" alt="" />
+          {/* <img className="heartIcon" src="./img/heart.png" alt="" /> */}
+          <small>
+            {item.priceGoal} M<h3>Goal</h3>
+          </small>
+
           <span>{moment(item.createdAt).fromNow()}</span>
         </div>
         <div className="dateLimit">
@@ -76,9 +120,9 @@ const GigCard = ({ item }) => {
           </span>
         </div>
         <div className="startPrice">
-          <span>Starting Invest Amount</span>
+          <span>{remainDays}</span>
           <hr />
-          <h2>150 $</h2>
+          <h2>Days Left</h2>
         </div>
       </div>
     </div>

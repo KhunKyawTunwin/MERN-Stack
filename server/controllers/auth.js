@@ -101,7 +101,12 @@ export const verifyGenToken = async (req, res) => {
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
+    if (!email || !password) {
+      return next(createError(400, `This user eamil ${email} not valid. `));
+    }
+
     const user = await User.findOne({ email });
+
     if (!user.verified)
       return next(
         createError(400, "A user with this email need to verify account!")

@@ -73,8 +73,14 @@
     }
 
     span {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 500;
+      color: gray;
+      text-align: center;
+      h3 {
+        text-align: center;
+      }
+
       h3:hover {
         color: blue;
       }
@@ -98,6 +104,17 @@
       align-items: center;
       flex-direction: column;
 
+      small {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        h3 {
+          color: goldenrod;
+          font-weight: 600;
+        }
+      }
+
       .heartIcon {
         width: 16px;
         height: 16px;
@@ -105,7 +122,7 @@
       }
 
       span {
-        font-weight: 200;
+        font-weight: 500;
         font-size: 12px;
       }
     }

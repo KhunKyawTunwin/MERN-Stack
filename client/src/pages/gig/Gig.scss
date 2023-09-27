@@ -228,6 +228,25 @@
             width: 20px;
           }
         }
+
+        .formData {
+          gap: 10px;
+          margin-top: 15px;
+          padding: 5px;
+
+          .formData-lists {
+            display: flex;
+            flex-direction: column;
+            input {
+              margin-top: 10px;
+              padding: 5px 15px;
+              border: 1px solid gray;
+              outline: none;
+              border-radius: 10px;
+              color: gray;
+            }
+          }
+        }
       }
 
       button {

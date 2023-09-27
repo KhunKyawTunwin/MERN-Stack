@@ -11,13 +11,26 @@ import { Reviews } from "../../components";
 import "./Gig.scss";
 import "./slide.css";
 import currentUserData from "../../utils/currentUserData";
+import { useState } from "react";
 
 const Gig = () => {
   const { id } = useParams();
+  const [investAmount, setInvestAmount] = useState({ amount: "300" });
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
+  const bntSubmit = async () => {
+    if (!investAmount) {
+      return null;
+    }
+  };
+
+  const handleOnchange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInvestAmount({ ...investAmount, [name]: value });
+  };
 
   const currentUser = currentUserData();
 
@@ -158,16 +171,30 @@ const Gig = () => {
               </div>
             </div>
             <div className="featureslist">
-              {data.features.map((feature) => (
+              {data?.features.map((feature) => (
                 <div className="item" key={feature}>
                   <img src="/img/greencheck.png" alt="" />
                   <span>{feature}</span>
                 </div>
               ))}
+              <div className="formData">
+                <form className="formData-lists" onSubmit={handleOnchange}>
+                  <label>Invest Amount</label>
+                  <input
+                    type="number"
+                    name="amount"
+                    value={investAmount.amount}
+                    onChange={(e) => {
+                      setInvestAmount(e.target.value);
+                    }}
+                    placeholder="Invest Amount"
+                  />
+                </form>
+              </div>
             </div>
             {currentUser ? (
-              <Link to={`/inveatamount`} className="">
-                <button>Continue</button>
+              <Link to={`/pay/${id}`} className="">
+                <button onClick={bntSubmit}>Continue</button>
               </Link>
             ) : (
               <Link to={`/register`} className="">

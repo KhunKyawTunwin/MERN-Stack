@@ -2,7 +2,9 @@ import React from "react";
 import "./App.scss";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Dashboard, Footer, Navbar, Profile } from "./components";
 
 import {
   Add,
@@ -10,6 +12,7 @@ import {
   Gigs,
   GigsList,
   Home,
+  InputForm,
   Login,
   Message,
   Messages,
@@ -22,9 +25,6 @@ import {
   UpdatePost,
   UserLists,
 } from "./pages";
-
-import { Dashboard, Footer, Navbar, Profile } from "./components";
-import InputForm from "./pages/inputForm/InputForm";
 
 function App() {
   const queryClient = new QueryClient();

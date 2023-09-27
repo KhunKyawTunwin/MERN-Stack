@@ -1,4 +1,5 @@
 export { default as Add } from "./add/Add";
+export { default as InputForm } from "./inputForm/InputForm";
 export { default as Home } from "./home/Home";
 export { default as Gig } from "./gig/Gig";
 export { default as Gigs } from "./gigs/Gigs";

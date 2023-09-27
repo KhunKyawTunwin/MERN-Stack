@@ -7,7 +7,7 @@ const GigSchema = new Schema(
       required: true,
     },
     username: {
-      type: Schema.Types.String,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     title: {
@@ -30,7 +30,7 @@ const GigSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
+    priceGoal: {
       type: Number,
       required: true,
     },

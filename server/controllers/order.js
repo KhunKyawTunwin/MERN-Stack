@@ -41,28 +41,32 @@ export const paymentConfirm = async (req, res, next) => {
   const { payment_intent } = req.body;
 
   try {
-    const order = await Order.findOne({
-      payment_intent,
-    });
+    const order = await Order.findOneAndUpdate(
+      {
+        payment_intent,
+      },
+      {
+        $set: {
+          isCompleted: true,
+        },
+      }
+    );
 
     if (!order) {
-      return next(createError(404, "Order not found or saleAmount mismatch."));
+      return next(createError(404, "Order not found or saleAmount."));
     }
-
     if (order.isCompleted && order.payment_intent) {
       return next(
         createError(200, "Order has already been confirmed and paid.")
       );
     }
-    order.isCompleted = true;
-    order.payment_intent = payment_intent;
 
-    await order.save();
     await Gig.findByIdAndUpdate(
       order.gigId,
       { $inc: { sales: 1 } },
       { new: true }
     );
+
     res.status(200).send("Orders has been confirmed!👏");
   } catch (err) {
     next(err);
@@ -72,15 +76,12 @@ export const paymentConfirm = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      ...(req.roles === "Admin" || "Seller"
+      ...(req.roles === "Admin" || req.roles === "Seller"
         ? { sellerId: req.userId }
         : { buyerId: req.userId }),
 
       isCompleted: true,
     });
-
-    if (orders.gigId === Gig.userId) {
-    }
 
     res.status(200).send(orders);
   } catch (err) {

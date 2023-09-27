@@ -71,11 +71,6 @@ const Navbar = () => {
               </span>
               {toggle && (
                 <div className="options">
-                  <p className="userInfo">
-                    <Link to="/profile" className="link">
-                      Profile
-                    </Link>
-                  </p>
                   {currentUser?.roles === "Admin" && (
                     <>
                       <p className="userInfo">
@@ -103,11 +98,7 @@ const Navbar = () => {
                           Add New Assets
                         </Link>
                       </p>
-                      <p className="userInfo">
-                        <Link to="/mygigs" className="link">
-                          Own Assets
-                        </Link>
-                      </p>
+
                       <p className="userInfo">
                         <Link to="/orders" className="link">
                           Investment Lists
@@ -116,6 +107,17 @@ const Navbar = () => {
                       <p className="userInfo">
                         <Link to="/messages" className="link">
                           Messages
+                        </Link>
+                      </p>
+                      <hr />
+                      <p className="userInfo">
+                        <Link to="/profile" className="link">
+                          Profile
+                        </Link>
+                      </p>
+                      <p className="userInfo">
+                        <Link to="/mygigs" className="link">
+                          Own Assets
                         </Link>
                       </p>
                       <p className="userInfo">

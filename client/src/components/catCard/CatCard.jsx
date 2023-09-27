@@ -12,4 +12,5 @@ const CatCard = ({ item }) => {
     </div>
   );
 };
+
 export default CatCard;

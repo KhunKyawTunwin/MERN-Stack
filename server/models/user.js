@@ -46,8 +46,8 @@ const UserSchema = new Schema(
     },
     products: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product", // Reference to the Product model
+        type: Schema.Types.ObjectId,
+        ref: "Gig", // Reference to the Product model
       },
     ],
     roles: {

@@ -71,7 +71,7 @@ export const deleteGig = async (req, res, next) => {
 export const getGig = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const gig = await Gig.findById(id);
+    const gig = await Gig.findById(id).populate("username").exec();
     if (!gig || !id)
       return next(createError(404, "Gig not found related with this ID!"));
     return res.status(200).send(gig);
@@ -98,7 +98,10 @@ export const getGigs = async (req, res, next) => {
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
   try {
-    const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
+    const gigs = await Gig.find(filters)
+      .sort({ [q.sort]: -1 })
+      .populate("username")
+      .exec();
     res.status(200).send(gigs);
   } catch (err) {
     next(err);

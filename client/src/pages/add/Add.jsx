@@ -34,7 +34,7 @@ const Add = () => {
   const handleChange = (e) => {
     dispatch({
       type: "CHANGE_INPUT",
-      payload: { name: e.target.name, value: e.target.value },
+      payload: { [e.target.name]: e.target.value },
     });
   };
 
@@ -130,7 +130,7 @@ const Add = () => {
               placeholder="Short description of your service."
             ></textarea>
             <label htmlFor="">End Date</label>
-            <input type="text" name="endDate" min={1} onChange={handleChange} />
+            <input type="date" name="endDate" min={1} onChange={handleChange} />
             <label htmlFor="">Country Code</label>
             <input
               type="number"
@@ -152,7 +152,7 @@ const Add = () => {
                 </div>
               ))}
             </div>
-            <label htmlFor="">Price</label>
+            <label htmlFor="">Target Goal</label>
             <input type="number" name="price" onChange={handleChange} min={1} />
           </div>
         </div>
