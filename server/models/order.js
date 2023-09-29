@@ -14,10 +14,6 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     sellerId: {
       type: String,
       required: true,
@@ -33,6 +29,10 @@ const OrderSchema = new Schema(
     payment_intent: {
       type: String,
       required: true,
+    },
+    investAmount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

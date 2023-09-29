@@ -68,7 +68,7 @@ const MyGigs = () => {
                         </td>
                       </Link>
                       <td>{gig.title}</td>
-                      <td>{gig.price} MMK</td>
+                      <td>{gig.priceGoal} M</td>
                       <td>{gig.postAccept === false ? "Pending" : "Active"}</td>
                       <td className="investors">
                         {gig.sales} <Link to="/orders">Investors</Link>

@@ -4,14 +4,14 @@ import Stripe from "stripe";
 import { createError } from "../utils/createError.js";
 
 export const paymentAmount = async (req, res, next) => {
-  const { id } = req.params;
+  const { id, amount } = req.params;
 
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const gig = await Gig.findById(id);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: gig.price * 100,
+      amount: amount * 100,
       currency: "usd",
       automatic_payment_methods: {
         enabled: true,
@@ -24,10 +24,9 @@ export const paymentAmount = async (req, res, next) => {
       title: gig.title,
       buyerId: req.userId,
       sellerId: gig.userId,
-      price: gig.price,
+      investAmount: amount,
       payment_intent: paymentIntent.id,
     });
-
     await newOrder.save();
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
@@ -45,6 +44,7 @@ export const paymentConfirm = async (req, res, next) => {
       {
         payment_intent,
       },
+
       {
         $set: {
           isCompleted: true,
@@ -61,12 +61,16 @@ export const paymentConfirm = async (req, res, next) => {
       );
     }
 
-    await Gig.findByIdAndUpdate(
-      order.gigId,
-      { $inc: { sales: 1 } },
-      { new: true }
-    );
+    const gig = await Gig.findByIdAndUpdate(order.gigId);
+    if (gig) {
+      gig.sales += 1;
+      gig.totalInvestAmount += order.investAmount;
+      gig.totalInvestor += 1;
+    }
+    console.log("Order invest amount", order.investAmount);
+    console.log("Totlal invest amu", gig.totalInvestAmount);
 
+    await gig.save();
     res.status(200).send("Orders has been confirmed!👏");
   } catch (err) {
     next(err);

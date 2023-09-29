@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.get("/", verifyToken, getOrders);
-router.post("/create-payment-intent/:id", verifyToken, paymentAmount);
+router.post("/create-payment-intent/:id/:amount", verifyToken, paymentAmount);
 router.put("/", verifyToken, paymentConfirm);
 
 export default router;

@@ -1,16 +1,15 @@
 export const INITIAL_STATE = {
   userId: JSON.parse(localStorage.getItem("currentUser"))?.userId,
   title: "",
-  cat: "",
+  cat: "houses",
   cover: "",
   images: "",
   desc: "",
   shortTitle: "",
   shortDesc: "",
   endDate: 0,
-  revisionNumber: 0,
   features: [],
-  price: 0,
+  priceGoal: 0,
 };
 
 export const gigReducer = (state = INITIAL_STATE, { type, payload }) => {

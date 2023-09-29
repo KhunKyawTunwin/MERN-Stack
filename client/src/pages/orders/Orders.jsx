@@ -79,7 +79,7 @@ const Orders = () => {
                             </Link>
                           </td>
                           <td>{order.title.substring(0, 50)} ...</td>
-                          <td>{order.price} MMK</td>
+                          <td>{order.investAmount} MMK</td>
                           <td>
                             {currentUser?.roles === "Seller"
                               ? order.buyerId.substring(0, 5)

@@ -2,12 +2,12 @@ import Gig from "../models/gig.js";
 import { createError } from "../utils/createError.js";
 
 export const createGig = async (req, res, next) => {
-  const { title, desc, cover, price } = req.body;
+  const { title, desc, cover, priceGoal } = req.body;
   try {
     if (!req.roles === "Seller")
       return next(createError(403, "You must be a seller to create a gig."));
 
-    if (!title || !desc || !cover || !price) {
+    if (!title || !desc || !cover || !priceGoal) {
       throw new Error("Please fill in all the required fields.");
     }
 
@@ -71,7 +71,7 @@ export const deleteGig = async (req, res, next) => {
 export const getGig = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const gig = await Gig.findById(id).populate("username").exec();
+    const gig = await Gig.findById(id);
     if (!gig || !id)
       return next(createError(404, "Gig not found related with this ID!"));
     return res.status(200).send(gig);
@@ -98,10 +98,7 @@ export const getGigs = async (req, res, next) => {
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
   try {
-    const gigs = await Gig.find(filters)
-      .sort({ [q.sort]: -1 })
-      .populate("username")
-      .exec();
+    const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
     res.status(200).send(gigs);
   } catch (err) {
     next(err);

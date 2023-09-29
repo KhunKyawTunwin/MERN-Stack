@@ -12,7 +12,6 @@ import {
   Gigs,
   GigsList,
   Home,
-  InputForm,
   Login,
   Message,
   Messages,
@@ -30,15 +29,13 @@ function App() {
   const queryClient = new QueryClient();
   const Layout = () => {
     return (
-      <React.StrictMode>
-        <div className="app">
-          <QueryClientProvider client={queryClient}>
-            <Navbar />
-            <Outlet />
-            <Footer />
-          </QueryClientProvider>
-        </div>
-      </React.StrictMode>
+      <div className="app">
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </QueryClientProvider>
+      </div>
     );
   };
 
@@ -108,12 +105,8 @@ function App() {
           element: <Login />,
         },
         {
-          path: "/pay/:id",
+          path: "/pay/:id/:amount",
           element: <Pay />,
-        },
-        {
-          path: "/inveatamount",
-          element: <InputForm />,
         },
         {
           path: "/success",

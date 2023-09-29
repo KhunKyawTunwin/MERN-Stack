@@ -6,10 +6,6 @@ const GigSchema = new Schema(
       type: String,
       required: true,
     },
-    username: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
     title: {
       type: String,
       required: true,
@@ -51,10 +47,6 @@ const GigSchema = new Schema(
       required: true,
     },
 
-    revisionNumber: {
-      type: Number,
-      required: true,
-    },
     features: {
       type: [String],
       required: false,
@@ -72,11 +64,11 @@ const GigSchema = new Schema(
       require: true,
     },
     totalInvestAmount: {
-      type: String,
+      type: Number,
       default: "0",
     },
     totalInvestor: {
-      type: String,
+      type: Number,
       default: "0",
     },
   },

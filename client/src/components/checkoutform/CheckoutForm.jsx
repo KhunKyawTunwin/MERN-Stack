@@ -7,12 +7,13 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ amount }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
+  const [editAmount, setEditAmount] = useState(amount);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -78,6 +79,17 @@ const CheckoutForm = () => {
 
   return (
     <form className="paymentForm" id="payment-form" onSubmit={handleSubmit}>
+      <div className="investAmount">
+        <label>Invested amount :</label>
+        <input
+          className="inputAmount"
+          type="text"
+          value={editAmount}
+          onChange={(e) => {
+            setEditAmount(e.target.value);
+          }}
+        />
+      </div>
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.target.value)}

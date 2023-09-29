@@ -16,7 +16,7 @@ const Review = ({ review }) => {
         "Something went wrong!"
       ) : (
         <div className="user">
-          <img className="proImg" src={data.img || "/img/person.gif"} alt="" />
+          <img className="proImg" src={data.img} alt="" />
           <div className="info">
             <span>{data.username}</span>
             <div className="country">

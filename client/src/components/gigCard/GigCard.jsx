@@ -7,6 +7,9 @@ import { calculateBarPercentage, daysLeft } from "../../utils";
 daysLeft;
 
 const GigCard = ({ item }) => {
+  console.log("Price Goal is", item.priceGoal);
+  console.log("Total investment is", item.totalInvestAmount);
+
   /* 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
@@ -34,12 +37,6 @@ const GigCard = ({ item }) => {
         return res.data;
       }),
   });
-
-  // const { data: gigData } = useQuery({
-  //   queryKey: ["gig"],
-  //   queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
-  // });
-  console.log("End Date from data is ", item.endDate);
 
   const remainDays = daysLeft(item.endDate);
 
@@ -80,9 +77,14 @@ const GigCard = ({ item }) => {
         </Link>
         <div className="investList">
           <h3>Investment Amount</h3>
-          <p>$ {item.totalInvestAmount} M</p>
+          <div className="raiseAmount">
+            <p>Raise to {item.totalInvestAmount} M </p>
+            <p className="leftamount">
+              Left {item.priceGoal - item.totalInvestAmount} M{" "}
+            </p>
+          </div>
           <span>
-            From <h3>{item.totalInvestor}</h3> Investor
+            From <h4>{item.totalInvestor}</h4> Investor
           </span>
         </div>
       </div>
@@ -96,13 +98,13 @@ const GigCard = ({ item }) => {
             )}%`,
             maxWidth: "100%",
           }}
-        ></div>
+        />
       </div>
       <div className="details">
         <div className="iconAndDate">
           {/* <img className="heartIcon" src="./img/heart.png" alt="" /> */}
           <small>
-            {item.priceGoal} M<h3>Goal</h3>
+            {item.priceGoal} M<h3>Goal*</h3>
           </small>
 
           <span>{moment(item.createdAt).fromNow()}</span>
@@ -120,9 +122,19 @@ const GigCard = ({ item }) => {
           </span>
         </div>
         <div className="startPrice">
-          <span>{remainDays}</span>
-          <hr />
-          <h2>Days Left</h2>
+          {item.totalInvestAmount == item.priceGoal ? (
+            <>
+              <h3 className="hitTarget">Hit Target</h3>
+              <hr />
+              <h2>Days Left</h2>
+            </>
+          ) : (
+            <>
+              <span>{remainDays}</span>
+              <hr />
+              <h2>Days Left</h2>
+            </>
+          )}
         </div>
       </div>
     </div>

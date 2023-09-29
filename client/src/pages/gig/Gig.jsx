@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Reviews } from "../../components";
 
@@ -15,21 +15,19 @@ import { useState } from "react";
 
 const Gig = () => {
   const { id } = useParams();
-  const [investAmount, setInvestAmount] = useState({ amount: "300" });
+  const [investAmount, setInvestAmount] = useState("300");
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
     queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
   });
-  const bntSubmit = async () => {
-    if (!investAmount) {
-      return null;
-    }
-  };
+  const navigate = useNavigate();
 
   const handleOnchange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setInvestAmount({ ...investAmount, [name]: value });
+
+    navigate(`/pay/${id}/${investAmount}`);
   };
 
   const currentUser = currentUserData();
@@ -75,8 +73,8 @@ const Gig = () => {
                   <div className="stars">
                     {Array(Math.round(data.totalStars / data.starNumber))
                       .fill()
-                      .map((item) => (
-                        <img src="/img/star.png" alt="starIcon" key={item} />
+                      .map((item, i) => (
+                        <img src={`/img/star.png`} alt="starIcon" key={i} />
                       ))}
                     <span>{Math.round(data.totalStars / data.starNumber)}</span>
                   </div>
@@ -95,7 +93,7 @@ const Gig = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <h2>About This {data.cat}</h2>
+            <h2>About This{data.cat}</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (
               "Loading ..."
@@ -112,12 +110,8 @@ const Gig = () => {
                       <div className="stars">
                         {Array(Math.round(data.totalStars / data.starNumber))
                           .fill()
-                          .map((item) => (
-                            <img
-                              src="/img/star.png"
-                              alt="starIcon"
-                              key={item}
-                            />
+                          .map((item, i) => (
+                            <img src="/img/star.png" alt="starIcon" key={i} />
                           ))}
                         <span>
                           {Math.round(data.totalStars / data.starNumber)}
@@ -157,7 +151,7 @@ const Gig = () => {
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
-              <h2>$ {data.price}M</h2>
+              <h2>$ {data.priceGoal}M</h2>
             </div>
             <p>{data.shortDesc}</p>
             <div className="details">
@@ -171,36 +165,35 @@ const Gig = () => {
               </div>
             </div>
             <div className="featureslist">
-              {data?.features.map((feature) => (
-                <div className="item" key={feature}>
+              {data?.features.map((feature, i) => (
+                <div className="item" key={i}>
                   <img src="/img/greencheck.png" alt="" />
                   <span>{feature}</span>
                 </div>
               ))}
               <div className="formData">
-                <form className="formData-lists" onSubmit={handleOnchange}>
-                  <label>Invest Amount</label>
-                  <input
-                    type="number"
-                    name="amount"
-                    value={investAmount.amount}
-                    onChange={(e) => {
-                      setInvestAmount(e.target.value);
-                    }}
-                    placeholder="Invest Amount"
-                  />
-                </form>
+                {currentUser ? (
+                  <form className="formData-lists" onSubmit={handleOnchange}>
+                    <label>Invest Amount</label>
+                    <input
+                      type="number"
+                      name="amount"
+                      step={50}
+                      value={investAmount}
+                      onChange={(e) => {
+                        setInvestAmount(e.target.value);
+                      }}
+                      placeholder="Invest Amount"
+                    />
+                    <button type="submit">Continue</button>
+                  </form>
+                ) : (
+                  <Link to={`/register`} className="">
+                    <button>Continue</button>
+                  </Link>
+                )}
               </div>
             </div>
-            {currentUser ? (
-              <Link to={`/pay/${id}`} className="">
-                <button onClick={bntSubmit}>Continue</button>
-              </Link>
-            ) : (
-              <Link to={`/register`} className="">
-                <button>Continue</button>
-              </Link>
-            )}
           </div>
         </div>
       )}

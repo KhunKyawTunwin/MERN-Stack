@@ -9,19 +9,21 @@ import { CheckoutForm } from "../../components";
 const stripePromise = loadStripe(
   "pk_test_51MJAwaKh0CzTf5yO1o2B9kovAzPGvZ6BLpQO521TAZaqGHv2hUp0S8phmRRDxgUiq8goQfeQjv3VXOY99CU746le0051IBqnDa"
 );
+// const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY);
 
 const Pay = () => {
   const [clientSecret, setClientSecret] = useState("");
-  const { id } = useParams();
+  const { id, amount } = useParams();
+
+  console.log("Amount data is:", amount);
 
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await newRequest.post(
-          `/orders/create-payment-intent/${id}`
+        const { data } = await newRequest.post(
+          `/orders/create-payment-intent/${id}/${amount}`
         );
-
-        return setClientSecret(res.data.clientSecret);
+        return setClientSecret(data.clientSecret);
       } catch (error) {
         console.log(error);
       }
@@ -41,7 +43,7 @@ const Pay = () => {
     <div className="pay">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm amount={amount} />
         </Elements>
       )}
     </div>

@@ -59,22 +59,30 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 
     h3 {
-      font-size: 12px;
+      max-width: 100px;
     }
+    .raiseAmount {
+      display: flex;
+      flex-direction: column;
 
-    p {
-      width: 100%;
-      margin-left: 20px;
-      // color: blue;
-      font-weight: 600;
-      cursor: pointer;
+      p {
+        width: 100%;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .leftamount {
+        color: rgb(245, 121, 50);
+      }
     }
 
     span {
       font-size: 12px;
       font-weight: 500;
+      line-height: 14px;
       color: gray;
       text-align: center;
       h3 {
@@ -138,6 +146,12 @@
 
     .startPrice {
       text-align: center;
+
+      .hitTarget {
+        color: rgb(3, 124, 96);
+        font-size: 14px;
+        font-weight: 500;
+      }
 
       span {
         font-size: 12px;

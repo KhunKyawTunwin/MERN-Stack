@@ -13,6 +13,7 @@ const Add = () => {
   const [uploading, setUploading] = useState(false);
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
+  console.log("Data from state is ", state);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -32,9 +33,10 @@ const Add = () => {
   };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     dispatch({
       type: "CHANGE_INPUT",
-      payload: { [e.target.name]: e.target.value },
+      payload: { name, value },
     });
   };
 
@@ -108,11 +110,7 @@ const Add = () => {
               onChange={handleChange}
               placeholder="Brief description to introduce your service to customers."
             />
-            <button onClick={handleSubmit}>
-              {handleSubmit && mutation.isError
-                ? "Creating ..."
-                : "Create Assets"}
-            </button>
+            <button onClick={handleSubmit}>create</button>
           </div>
 
           <div className="right">
@@ -130,14 +128,7 @@ const Add = () => {
               placeholder="Short description of your service."
             ></textarea>
             <label htmlFor="">End Date</label>
-            <input type="date" name="endDate" min={1} onChange={handleChange} />
-            <label htmlFor="">Country Code</label>
-            <input
-              type="number"
-              name="revision555Number"
-              min={2}
-              onChange={handleChange}
-            />
+            <input type="date" name="endDate" onChange={handleChange} />
             <label htmlFor="">Add Features</label>
             <form className="add" onSubmit={handleFeature} action="">
               <input type="text" placeholder="Project page design" />
@@ -153,7 +144,12 @@ const Add = () => {
               ))}
             </div>
             <label htmlFor="">Target Goal</label>
-            <input type="number" name="price" onChange={handleChange} min={1} />
+            <input
+              type="number"
+              name="priceGoal"
+              onChange={handleChange}
+              step={50}
+            />
           </div>
         </div>
       </div>
