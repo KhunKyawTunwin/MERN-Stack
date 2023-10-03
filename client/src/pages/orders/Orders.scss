@@ -39,7 +39,8 @@
           }
 
           td {
-            padding-left: 15px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
 
             .imgOrder {
@@ -58,6 +59,18 @@
             background-color: #1dbf730f;
           }
         }
+      }
+    }
+    .allinvestoramount {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      span {
+        font-weight: 500;
+        font-size: 24px;
       }
     }
   }

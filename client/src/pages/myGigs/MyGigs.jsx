@@ -15,7 +15,13 @@ const MyGigs = () => {
         .get(`/gigs?userId=${currentUser.userId}`)
         .then((res) => res.data),
   });
-
+  console.log(
+    "Current user data and id",
+    currentUser.userId,
+    "Name",
+    currentUser.username,
+    data
+  );
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.delete(`/gigs/${id}`);
@@ -54,13 +60,21 @@ const MyGigs = () => {
               </tr>
             </thead>
             {isLoading ? (
-              "Loading ..."
-            ) : error ? (
-              "Create new assets. 😩"
-            ) : (
               <tbody>
-                <>
-                  {data?.map((gig) => (
+                <tr>
+                  <td colSpan="6">Loading ...</td>
+                </tr>
+              </tbody>
+            ) : error ? (
+              <tbody>
+                <tr>
+                  <td colSpan="6">Create new assets. 😩</td>
+                </tr>
+              </tbody>
+            ) : (
+              <>
+                {data?.map((gig) => (
+                  <tbody>
                     <tr key={gig._id}>
                       <Link to={`/gig/${gig._id}`} className="link">
                         <td>
@@ -68,7 +82,14 @@ const MyGigs = () => {
                         </td>
                       </Link>
                       <td>{gig.title}</td>
-                      <td>{gig.priceGoal} M</td>
+                      <td>
+                        {gig.priceGoal.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD", // Replace 'USD' with your desired currency code
+                          minimumFractionDigits: 0, // Number of decimal places
+                          maximumFractionDigits: 0, // Number of decimal places
+                        })}
+                      </td>
                       <td>{gig.postAccept === false ? "Pending" : "Active"}</td>
                       <td className="investors">
                         {gig.sales} <Link to="/orders">Investors</Link>
@@ -89,9 +110,9 @@ const MyGigs = () => {
                         />
                       </td>
                     </tr>
-                  ))}
-                </>
-              </tbody>
+                  </tbody>
+                ))}
+              </>
             )}
           </table>
         </div>

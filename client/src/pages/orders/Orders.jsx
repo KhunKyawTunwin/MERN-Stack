@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import "./Orders.scss";
 import { newRequest } from "../../api/url";
+import { useMemo } from "react";
 
 const Orders = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -12,7 +13,13 @@ const Orders = () => {
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
   });
-  console.log("Order data is ", data);
+
+  // const totalInvestAmount = useMemo(() => {
+  //   if (data) {
+  //     return data.reduce((total, order) => total + order.totalInvestAmount, 0);
+  //   }
+  //   return 0;
+  // }, [data]);
 
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
@@ -40,11 +47,13 @@ const Orders = () => {
         "Something went wrong!"
       ) : (
         <div className="container">
-          {currentUser?.roles === "Admin" || currentUser?.roles === "Seller" ? (
+          {currentUser?.roles === "Admin" ||
+          currentUser?.roles === "Seller" ||
+          currentUser.roles === "User" ? (
             <>
               <div className="ownerLists">
                 <div className="title">
-                  <h1>Investment Lists by Owner</h1>
+                  <h1>Investment Lists</h1>
                 </div>
 
                 <table>
@@ -52,7 +61,8 @@ const Orders = () => {
                     <tr>
                       <th>Image</th>
                       <th>Title</th>
-                      <th>Price</th>
+                      <th>Invest Amount</th>
+                      <th>Interest 10 %</th>
                       <th>
                         {currentUser?.roles === "Admim" ||
                         currentUser?.roles === "Seller"
@@ -66,9 +76,11 @@ const Orders = () => {
                   </thead>
 
                   {data?.map((order) => (
-                    <tbody>
-                      {currentUser.roles === "Admin" && (
-                        <tr key={order._id}>
+                    <tbody key={order._id}>
+                      {(currentUser.roles === "Admin" ||
+                        currentUser.roles === "Seller" ||
+                        currentUser.roles === "User") && (
+                        <tr>
                           <td>
                             <Link to={`/gig/${order.gigId}`} className="link">
                               <img
@@ -78,8 +90,16 @@ const Orders = () => {
                               />
                             </Link>
                           </td>
-                          <td>{order.title.substring(0, 50)} ...</td>
-                          <td>{order.investAmount} MMK</td>
+                          <td>{order.title.substring(0, 20)} ...</td>
+                          <td>
+                            {order.investAmount.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD", // Replace 'USD' with your desired currency code
+                              minimumFractionDigits: 1, // Number of decimal places
+                              maximumFractionDigits: 1, // Number of decimal places
+                            })}
+                          </td>
+                          <td>10% for Interestrate</td>
                           <td>
                             {currentUser?.roles === "Seller"
                               ? order.buyerId.substring(0, 5)
@@ -100,6 +120,17 @@ const Orders = () => {
                     </tbody>
                   ))}
                 </table>
+                <hr style={{ marginTop: "50px" }} />
+                {/* <div className="allinvestoramount">
+                  <div className="amountList">
+                    <span>Total Invest amount from all user</span>
+                    <p> $</p>
+                  </div>
+                  <div className="interestList">
+                    <span>Total Interest and Capital Money</span>
+                    <p>300000 $</p>
+                  </div>
+                </div> */}
               </div>
             </>
           ) : (

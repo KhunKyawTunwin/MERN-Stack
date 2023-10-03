@@ -15,8 +15,6 @@ const Pay = () => {
   const [clientSecret, setClientSecret] = useState("");
   const { id, amount } = useParams();
 
-  console.log("Amount data is:", amount);
-
   useEffect(() => {
     const makeRequest = async () => {
       try {

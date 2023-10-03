@@ -73,6 +73,7 @@ const Add = () => {
             <input
               type="text"
               name="title"
+              required
               onChange={handleChange}
               placeholder="I'm full-stack Webdeveloper."
             />

@@ -25,6 +25,26 @@ const Gig = () => {
   const handleOnchange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
+
+    console.log("Price gola is", data.priceGoal + "and value", investAmount);
+    if (investAmount !== 0 && investAmount < 300) {
+      return alert("Minimum order must be 300 $ or more.");
+    }
+    const fitAmount = (data.priceGoal - data.totalInvestAmount).toLocaleString(
+      "en-US",
+      {
+        style: "currency",
+        currency: "USD", // Replace 'USD' with your desired currency code
+        minimumFractionDigits: 0, // Number of decimal places
+        maximumFractionDigits: 0, // Number of decimal places
+      }
+    );
+    if (
+      investAmount > data.priceGoal ||
+      investAmount > data.priceGoal - data.totalInvestAmount
+    ) {
+      return alert(`Total Invest amount ${fitAmount} Left.`);
+    }
     setInvestAmount({ ...investAmount, [name]: value });
 
     navigate(`/pay/${id}/${investAmount}`);
@@ -151,7 +171,35 @@ const Gig = () => {
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
-              <h2>$ {data.priceGoal}M</h2>
+              <div className="goalandleft">
+                <p className="goalPrice">
+                  Goal :
+                  <span>
+                    {data.priceGoal.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD", // Replace 'USD' with your desired currency code
+                      minimumFractionDigits: 0, // Number of decimal places
+                      maximumFractionDigits: 0, // Number of decimal places
+                    })}
+                  </span>
+                </p>
+                {data.totalInvestAmount !== 0 && (
+                  <p className="leftlive">
+                    Total Left :
+                    <span>
+                      {(data.priceGoal - data.totalInvestAmount).toLocaleString(
+                        "en-US",
+                        {
+                          style: "currency",
+                          currency: "USD", // Replace 'USD' with your desired currency code
+                          minimumFractionDigits: 0, // Number of decimal places
+                          maximumFractionDigits: 0, // Number of decimal places
+                        }
+                      )}
+                    </span>
+                  </p>
+                )}
+              </div>
             </div>
             <p>{data.shortDesc}</p>
             <div className="details">
@@ -181,14 +229,21 @@ const Gig = () => {
                       step={50}
                       value={investAmount}
                       onChange={(e) => {
-                        setInvestAmount(e.target.value);
+                        setInvestAmount(
+                          e.target.value.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD", // Replace 'USD' with your desired currency code
+                            minimumFractionDigits: 0, // Number of decimal places
+                            maximumFractionDigits: 0, // Number of decimal places
+                          })
+                        );
                       }}
                       placeholder="Invest Amount"
                     />
                     <button type="submit">Continue</button>
                   </form>
                 ) : (
-                  <Link to={`/register`} className="">
+                  <Link to={`/register`}>
                     <button>Continue</button>
                   </Link>
                 )}

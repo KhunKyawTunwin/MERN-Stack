@@ -63,7 +63,14 @@ const GigsList = () => {
                         </td>
                       </Link>
                       <td>{gig.title}</td>
-                      <td>{gig?.priceGoal} M</td>
+                      <td>
+                        {gig?.priceGoal.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD", // Replace 'USD' with your desired currency code
+                          minimumFractionDigits: 1, // Number of decimal places
+                          maximumFractionDigits: 1, // Number of decimal places
+                        })}
+                      </td>
                       <td>{gig.postAccept === false ? "Pending" : "Active"}</td>
                       <td className="investors">
                         {gig.sales} <Link to="/orders">Investors</Link>

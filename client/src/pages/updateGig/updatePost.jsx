@@ -1,6 +1,6 @@
 import "./updatepost.scss";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import upload from "../../utils/upload";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { newRequest } from "../../api/url";
@@ -8,10 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 // import { INITIAL_STATE } from "../../reducers/gigReducer";
 
 const UpdatePost = () => {
-  // const [singleFile, setSingleFile] = useState(undefined);
-  // const [files, setFiles] = useState([]);
-  // const [uploading, setUploading] = useState(false);
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [result, setState] = useState(null);

@@ -7,29 +7,7 @@ import { calculateBarPercentage, daysLeft } from "../../utils";
 daysLeft;
 
 const GigCard = ({ item }) => {
-  console.log("Price Goal is", item.priceGoal);
-  console.log("Total investment is", item.totalInvestAmount);
-
-  /* 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["gig"],
-    queryFn: () => newRequest.get(`/gigs/single/${id}`).then((res) => res.data),
-  });
-
-  const currentUser = currentUserData();
-
-  const userId = data?.userId;
-
-  const {
-    isLoading: isLoadingUser,
-    error: errorUser,
-    data: dataUser,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => newRequest.get(`/users/${userId}`).then((res) => res.data),
-    enabled: !!userId,
-  });
-  */
+  // console.log("Git cart items is", item);
   const { isLoading, error, data } = useQuery({
     queryKey: [item.userId],
     queryFn: () =>
@@ -78,13 +56,36 @@ const GigCard = ({ item }) => {
         <div className="investList">
           <h3>Investment Amount</h3>
           <div className="raiseAmount">
-            <p>Raise to {item.totalInvestAmount} M </p>
-            <p className="leftamount">
-              Left {item.priceGoal - item.totalInvestAmount} M{" "}
+            <p>
+              Raise to {""}
+              {item.totalInvestAmount.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD", // Replace 'USD' with your desired currency code
+                minimumFractionDigits: 0, // Number of decimal places
+                maximumFractionDigits: 0, // Number of decimal places
+              })}
             </p>
+
+            <>
+              {item.totalInvestAmount !== 0 && (
+                <p className="leftamount">
+                  Left{" "}
+                  {(item.priceGoal - item.totalInvestAmount).toLocaleString(
+                    "en-US",
+                    {
+                      style: "currency",
+                      currency: "USD", // Replace 'USD' with your desired currency code
+                      minimumFractionDigits: 0, // Number of decimal places
+                      maximumFractionDigits: 0, // Number of decimal places
+                    }
+                  )}
+                </p>
+              )}
+            </>
           </div>
           <span>
-            From <h4>{item.totalInvestor}</h4> Investor
+            From <h4>{item.totalInvestor}</h4>
+            Investor
           </span>
         </div>
       </div>
@@ -104,7 +105,13 @@ const GigCard = ({ item }) => {
         <div className="iconAndDate">
           {/* <img className="heartIcon" src="./img/heart.png" alt="" /> */}
           <small>
-            {item.priceGoal} M<h3>Goal*</h3>
+            {item.priceGoal.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD", // Replace 'USD' with your desired currency code
+              minimumFractionDigits: 0, // Number of decimal places
+              maximumFractionDigits: 0, // Number of decimal places
+            })}
+            <h3>Goal*</h3>
           </small>
 
           <span>{moment(item.createdAt).fromNow()}</span>

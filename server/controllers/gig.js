@@ -4,25 +4,25 @@ import { createError } from "../utils/createError.js";
 export const createGig = async (req, res, next) => {
   const { title, desc, cover, priceGoal } = req.body;
   try {
-    if (!req.roles === "Seller")
-      return next(createError(403, "You must be a seller to create a gig."));
+    if (req.roles !== "Seller")
+      return next(createError(403, "You can not create a gig."));
 
     if (!title || !desc || !cover || !priceGoal) {
       throw new Error("Please fill in all the required fields.");
     }
-
     const postAccept = req.roles === "Admin";
+
     const newGig = new Gig({
       userId: req.userId,
-      postAccept, // Set the postAccept property
+      postAccept,
       ...req.body,
     });
-    const savedGig = await newGig.save();
-    // If the user's role is "Admin", update the postAccept property to true
+
     if (postAccept) {
-      savedGig.postAccept = true;
-      await savedGig.save();
+      newGig.postAccept = true;
     }
+
+    const savedGig = await newGig.save();
 
     res.status(201).json({ savedGig, message: "Gig created successfully!" });
   } catch (err) {

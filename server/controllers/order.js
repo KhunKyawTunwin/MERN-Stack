@@ -18,6 +18,10 @@ export const paymentAmount = async (req, res, next) => {
       },
     });
 
+    if (amount > gig.priceGoal) {
+      return next(createError(409, "Order amount not valid."));
+    }
+
     const newOrder = new Order({
       gigId: gig._id,
       img: gig.cover,
@@ -44,7 +48,6 @@ export const paymentConfirm = async (req, res, next) => {
       {
         payment_intent,
       },
-
       {
         $set: {
           isCompleted: true,
@@ -67,8 +70,6 @@ export const paymentConfirm = async (req, res, next) => {
       gig.totalInvestAmount += order.investAmount;
       gig.totalInvestor += 1;
     }
-    console.log("Order invest amount", order.investAmount);
-    console.log("Totlal invest amu", gig.totalInvestAmount);
 
     await gig.save();
     res.status(200).send("Orders has been confirmed!👏");
@@ -80,13 +81,11 @@ export const paymentConfirm = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      ...(req.roles === "Admin" || req.roles === "Seller"
+      ...(req.roles === "Admin"
         ? { sellerId: req.userId }
         : { buyerId: req.userId }),
-
       isCompleted: true,
     });
-
     res.status(200).send(orders);
   } catch (err) {
     next(err);

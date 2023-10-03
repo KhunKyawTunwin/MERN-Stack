@@ -59,7 +59,7 @@ const Navbar = () => {
             <span>Explore</span>
           </Link>
           <span>English</span>
-          {!currentUser?.roles === "Seller" && (
+          {currentUser?.roles === "User" && (
             <Link to="/register" className="link">
               <span>Become a Seller</span>
             </Link>
@@ -69,6 +69,7 @@ const Navbar = () => {
               <img className="curPointer" src={currentUser?.img} alt="" />
               <span className="userName">
                 {currentUser?.username.substring(0, 4)}...
+                {console.log("current user is ", currentUser.username)}
               </span>
               {toggle && (
                 <div className="options">
