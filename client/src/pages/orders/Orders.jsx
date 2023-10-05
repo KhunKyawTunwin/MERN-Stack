@@ -2,16 +2,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import "./Orders.scss";
 import { newRequest } from "../../api/url";
-import { useMemo } from "react";
+import currentUserData from "../../utils/currentUserData";
+// import { useMemo } from "react";
 
 const Orders = () => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
   const navigate = useNavigate();
+  const currentUser = currentUserData();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () => newRequest.get("/orders").then((res) => res.data),
+  });
+
+  const {
+    isLoading: fetchUser,
+    error: userError,
+    data: usersData,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => newRequest.get("/users/getUsers").then((res) => res.data),
   });
 
   // const totalInvestAmount = useMemo(() => {
@@ -55,26 +64,24 @@ const Orders = () => {
                 <div className="title">
                   <h1>Investment Lists</h1>
                 </div>
-
                 <table>
                   <thead>
                     <tr>
                       <th>Image</th>
                       <th>Title</th>
                       <th>Invest Amount</th>
-                      <th>Interest 10 %</th>
+                      <th>Interest Rate 10%</th>
                       <th>
                         {currentUser?.roles === "Admim" ||
                         currentUser?.roles === "Seller"
                           ? "Buyer"
-                          : "Seller"}
-                        ID
+                          : "Seller"}{" "}
+                        Name
                       </th>
                       <th>Contact</th>
                       <th>Invested Date</th>
                     </tr>
                   </thead>
-
                   {data?.map((order) => (
                     <tbody key={order._id}>
                       {(currentUser.roles === "Admin" ||
@@ -94,18 +101,18 @@ const Orders = () => {
                           <td>
                             {order.investAmount.toLocaleString("en-US", {
                               style: "currency",
-                              currency: "USD", // Replace 'USD' with your desired currency code
-                              minimumFractionDigits: 1, // Number of decimal places
-                              maximumFractionDigits: 1, // Number of decimal places
+                              currency: "USD",
+                              minimumFractionDigits: 1,
+                              maximumFractionDigits: 1,
                             })}
                           </td>
-                          <td>10% for Interestrate</td>
                           <td>
-                            {currentUser?.roles === "Seller"
-                              ? order.buyerId.substring(0, 5)
-                              : order.sellerId.substring(0, 10)}
-                            &nbsp;...
+                            <small>
+                              You will recived 10% profit after the target Goal.
+                            </small>
                           </td>
+                          <td>{order.buyerId.slice(0, 12)}</td>
+
                           <td>
                             <img
                               className="delete"
@@ -120,15 +127,14 @@ const Orders = () => {
                     </tbody>
                   ))}
                 </table>
-                <hr style={{ marginTop: "50px" }} />
-                {/* <div className="allinvestoramount">
+                {/* <hr style={{ marginTop: "50px" }} />
+                <div className="allinvestoramount">
                   <div className="amountList">
                     <span>Total Invest amount from all user</span>
-                    <p> $</p>
+                    <p>3000$</p>
                   </div>
                   <div className="interestList">
                     <span>Total Interest and Capital Money</span>
-                    <p>300000 $</p>
                   </div>
                 </div> */}
               </div>

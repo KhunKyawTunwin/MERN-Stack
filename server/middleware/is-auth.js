@@ -26,9 +26,10 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyAdmin = (req, res, next) => {
-  verifyToken(req, res, next, () => {
-    if (req.roles !== "Admin")
-      return next(createError(403, "You are not authorized!"));
+  verifyToken(req, res, () => {
+    if (!req.roles || !req.roles.includes("Admin")) {
+      return next(createError(403, "You are not authorized as an admin."));
+    }
     next();
   });
 };

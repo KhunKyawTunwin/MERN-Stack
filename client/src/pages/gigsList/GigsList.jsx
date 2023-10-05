@@ -13,7 +13,6 @@ const GigsList = () => {
     queryFn: () => newRequest.get(`/gigs`).then((res) => res.data),
   });
 
-  console.log("Gigs list in data is ", data);
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.delete(`/gigs/${id}`);

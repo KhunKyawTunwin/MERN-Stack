@@ -65,7 +65,7 @@ const Navbar = () => {
             </Link>
           )}
           {currentUser ? (
-            <div className="user" onClick={() => setToggle(!toggle)}>
+            <div className="user user_hover" onClick={() => setToggle(!toggle)}>
               <img className="curPointer" src={currentUser?.img} alt="" />
               <span className="userName">
                 {currentUser?.username.substring(0, 4)}...
@@ -152,11 +152,6 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              {/* <p className="userInfo">
-                <Link to="/login" className="link sign">
-                  Sign in
-                </Link>
-              </p> */}
               <p className="userInfo">
                 <Link className="link join" to="/register">
                   <button>Join</button>

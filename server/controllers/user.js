@@ -4,7 +4,7 @@ import { createError } from "../utils/createError.js";
 export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
-    if (!users?.length)
+    if (!users.length)
       return next(createError(404, "Users could not be found."));
 
     res.status(200).send(users);

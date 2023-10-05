@@ -103,7 +103,6 @@ const GigCard = ({ item }) => {
       </div>
       <div className="details">
         <div className="iconAndDate">
-          {/* <img className="heartIcon" src="./img/heart.png" alt="" /> */}
           <small>
             {item.priceGoal.toLocaleString("en-US", {
               style: "currency",
